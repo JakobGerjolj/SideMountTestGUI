@@ -18,12 +18,15 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>20</y>
+      <y>30</y>
       <width>172</width>
-      <height>951</height>
+      <height>901</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="2,8,2">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="2,5,2">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinAndMaxSize</enum>
+     </property>
      <item>
       <widget class="QPushButton" name="pushButton_4">
        <property name="enabled">
@@ -82,17 +85,6 @@
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>540</y>
-      <width>160</width>
-      <height>80</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
