@@ -99,7 +99,7 @@
      <string>Employee</string>
     </property>
    </widget>
-   <widget class="QFrame" name="frame">
+   <widget class="QFrame" name="check_pins_frame">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -128,7 +128,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_2">
+   <widget class="QFrame" name="can_frame">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -157,7 +157,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_3">
+   <widget class="QFrame" name="button_frame">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -225,7 +225,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_4">
+   <widget class="QFrame" name="hal_frame">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -267,7 +267,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_5">
+   <widget class="QFrame" name="t1_frame">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -309,7 +309,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_6">
+   <widget class="QFrame" name="t2_frame">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -351,7 +351,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_7">
+   <widget class="QFrame" name="buttons_check_frame">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -379,7 +379,7 @@
       <string>BUTTONS</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_3">
+    <widget class="QPushButton" name="Buttons_OK">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -392,7 +392,7 @@
       <string>OK</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_4">
+    <widget class="QPushButton" name="Buttons_NOK">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -406,7 +406,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_8">
+   <widget class="QFrame" name="nfc_check_frame">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -434,7 +434,7 @@
       <string>NFC</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_5">
+    <widget class="QPushButton" name="NFC_OK">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -447,7 +447,7 @@
       <string>OK</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
+    <widget class="QPushButton" name="NFC_NOK">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -461,7 +461,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_9">
+   <widget class="QFrame" name="hal_check_frame">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -489,7 +489,7 @@
       <string>HAL</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_7">
+    <widget class="QPushButton" name="HAL_OK">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -502,7 +502,7 @@
       <string>OK</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_8">
+    <widget class="QPushButton" name="HAL_NOK">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -516,7 +516,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_10">
+   <widget class="QFrame" name="zero_check_frame">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -544,7 +544,7 @@
       <string>ZERO</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_9">
+    <widget class="QPushButton" name="ZERO_OK">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -557,7 +557,7 @@
       <string>OK</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_10">
+    <widget class="QPushButton" name="ZERO_NOK">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -571,7 +571,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QFrame" name="frame_11">
+   <widget class="QFrame" name="led_check_frame">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -599,7 +599,7 @@
       <string>LED</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_11">
+    <widget class="QPushButton" name="LED_OK">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -612,7 +612,7 @@
       <string>OK</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_12">
+    <widget class="QPushButton" name="LED_NOK">
      <property name="geometry">
       <rect>
        <x>200</x>
@@ -652,7 +652,7 @@
      <string>REPORT</string>
     </property>
    </widget>
-   <widget class="QFrame" name="frame_12">
+   <widget class="QFrame" name="nfc_frame">
     <property name="geometry">
      <rect>
       <x>190</x>

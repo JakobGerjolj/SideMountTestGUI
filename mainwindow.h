@@ -19,18 +19,19 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_4_clicked();
+    void on_Buttons_OK_clicked();
+
+    void on_Buttons_NOK_clicked();
+
+    void on_NFC_OK_clicked();
+
+    void on_NFC_NOK_clicked();
+
+    void on_HAL_OK_clicked();
+
+    void on_HAL_NOK_clicked();
 
 
-    void on_pushButton_3_clicked();
-
-    void on_pushButton_5_clicked();
-
-    void on_pushButton_6_clicked();
-
-    void on_pushButton_7_clicked();
-
-    void on_pushButton_8_clicked();
 
 private:
     Ui::MainWindow *ui;
