@@ -12,8 +12,10 @@ class Dialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit Dialog(QWidget *parent = nullptr);
+    explicit Dialog(QWidget *parent = nullptr, QString message="Hello");
     ~Dialog();
+
+
 
 private:
     Ui::Dialog *ui;
