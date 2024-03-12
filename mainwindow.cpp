@@ -5,7 +5,14 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
+
     ui->setupUi(this);
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    ui->dateTimeEdit->setDateTime(currentDateTime);
+    QStringList boys ={"Jakob Gerjolj","Anže Štravs","Jaka Dejak", "Nejc Česen"};
+    ui->comboBox->addItems(boys);
+
 }
 
 MainWindow::~MainWindow()
@@ -84,6 +91,25 @@ void MainWindow::on_LED_NOK_clicked()
     Dialog* myDialog = new Dialog(this,"What is wrong with LEDs: ");
     myDialog->show();
     ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+
+}
+
+
+
+
+void MainWindow::on_dateTimeEdit_timeChanged(const QTime &time)
+{
+
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    ui->dateTimeEdit->setDateTime(currentDateTime);
+}
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    ui->dateTimeEdit->setDateTime(currentDateTime);
 
 }
 

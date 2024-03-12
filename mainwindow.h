@@ -41,6 +41,10 @@ private slots:
 
     void on_LED_NOK_clicked();
 
+    void on_dateTimeEdit_timeChanged(const QTime &time);
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
