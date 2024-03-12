@@ -10,8 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QDateTime currentDateTime = QDateTime::currentDateTime();
     ui->dateTimeEdit->setDateTime(currentDateTime);
+    //ui->buttons_check_frame->setEnabled(false); How to grey out
     QStringList boys ={"Jakob Gerjolj","Anže Štravs","Jaka Dejak", "Nejc Česen"};
     ui->comboBox->addItems(boys);
+
 
 }
 

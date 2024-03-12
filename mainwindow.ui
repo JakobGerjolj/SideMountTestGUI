@@ -185,7 +185,7 @@
       <string>BUTTON:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="last_button_value">
      <property name="geometry">
       <rect>
        <x>90</x>
@@ -211,7 +211,7 @@
       <string>BUTTON COUNTER:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_8">
+    <widget class="QLabel" name="button_counter_value">
      <property name="geometry">
       <rect>
        <x>350</x>
@@ -240,7 +240,7 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_12">
+    <widget class="QLabel" name="hal_value">
      <property name="geometry">
       <rect>
        <x>210</x>
@@ -295,7 +295,7 @@
       <string>T1:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_13">
+    <widget class="QLabel" name="t1_value">
      <property name="geometry">
       <rect>
        <x>210</x>
@@ -337,7 +337,7 @@
       <string>T2:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_14">
+    <widget class="QLabel" name="t2_value">
      <property name="geometry">
       <rect>
        <x>210</x>
@@ -680,7 +680,7 @@
       <string>NFC:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_21">
+    <widget class="QLabel" name="NFC_status">
      <property name="geometry">
       <rect>
        <x>210</x>

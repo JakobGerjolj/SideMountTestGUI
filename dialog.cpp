@@ -14,3 +14,10 @@ Dialog::~Dialog()
 {
     delete ui;
 }
+
+void Dialog::on_buttonBox_accepted()
+{
+    qDebug() << ui->textEdit->toPlainText(); // how to get text
+
+}
+
