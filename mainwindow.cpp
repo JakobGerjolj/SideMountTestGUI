@@ -16,6 +16,13 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_4_clicked()
 {
     Dialog* myDialog = new Dialog(this,"What is wrong with buttons: ");
+
+    QColor greenColor(255,0,0);
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, greenColor);
+
+    ui->frame_7->setStyleSheet("background-color: rgb(200,0,0)");
+
     myDialog->show();
 
 
