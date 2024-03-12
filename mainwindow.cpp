@@ -17,9 +17,7 @@ void MainWindow::on_pushButton_4_clicked()
 {
     Dialog* myDialog = new Dialog(this,"What is wrong with buttons: ");
 
-    QColor greenColor(255,0,0);
-    QPalette palette;
-    palette.setColor(QPalette::WindowText, greenColor);
+
 
     ui->frame_7->setStyleSheet("background-color: rgb(200,0,0)");
 
@@ -34,14 +32,48 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::on_pushButton_3_clicked()
 {
 
-    QColor greenColor(0,255,0);
-    QPalette palette;
-    palette.setColor(QPalette::WindowText, greenColor);
+
 
     ui->frame_7->setStyleSheet("background-color: rgb(0,200,0)");
 
 
 
+
+}
+
+
+void MainWindow::on_pushButton_5_clicked()
+{
+
+
+
+    ui->frame_8->setStyleSheet("background-color: rgb(0,200,0)");
+
+
+
+
+}
+
+
+void MainWindow::on_pushButton_6_clicked()
+{
+
+    ui->frame_8->setStyleSheet("background-color: rgb(200,0,0)");
+
+}
+
+
+void MainWindow::on_pushButton_7_clicked()
+{
+
+    ui->frame_9->setStyleSheet("background-color: rgb(0,200,0)");
+
+}
+
+
+void MainWindow::on_pushButton_8_clicked()
+{
+     ui->frame_9->setStyleSheet("background-color: rgb(200,0,0)");
 
 }
 
