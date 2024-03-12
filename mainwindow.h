@@ -33,6 +33,14 @@ private slots:
 
 
 
+    void on_ZERO_OK_clicked();
+
+    void on_ZERO_NOK_clicked();
+
+    void on_LED_OK_clicked();
+
+    void on_LED_NOK_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -60,3 +60,30 @@ void MainWindow::on_HAL_NOK_clicked()
 
 }
 
+
+void MainWindow::on_ZERO_OK_clicked()
+{
+    ui->zero_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+}
+
+
+void MainWindow::on_ZERO_NOK_clicked()
+{
+    ui->zero_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+}
+
+
+void MainWindow::on_LED_OK_clicked()
+{
+    ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+}
+
+
+void MainWindow::on_LED_NOK_clicked()
+{
+    Dialog* myDialog = new Dialog(this,"What is wrong with LEDs: ");
+    myDialog->show();
+    ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+
+}
+
