@@ -447,6 +447,29 @@
       </widget>
      </item>
      <item>
+      <widget class="QFrame" name="check_pins_frame_2">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QLabel" name="label_6">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>30</y>
+          <width>101</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>CHECK PINS</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
       <widget class="QFrame" name="can_frame">
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>

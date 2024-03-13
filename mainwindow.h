@@ -46,5 +46,6 @@ private:
     QSerialPort *m_serial = nullptr;
     QString buffer;
     bool isFullBuffer;
+    int stateOfCan;
 };
 #endif // MAINWINDOW_H
