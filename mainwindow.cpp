@@ -67,13 +67,55 @@ void MainWindow::readData(){
     QStringList listOfValues =temp.split(",");
 
     if(listOfValues.at(0)=="0"){
+
+
+
+
        // ui->check_pins_frame
-       ui->check_pins_frame->setStyleSheet("background-color: rgb(200,0,0)");
-       ui->check_pins_frame->resize(411,150);
+
+      // ui->check_pins_frame->resize(411,150);
+
+       QVBoxLayout *labelsLayout1 = new QVBoxLayout(ui->check_pins_frame);
+
+       QLabel *label1 = new QLabel("Label 1");
+       QLabel *label2 = new QLabel("Label 2");
+       QLabel *label3 = new QLabel("Label 3");
+
+       labelsLayout1->addWidget(label1);
+       labelsLayout1->addWidget(label2);
+       labelsLayout1->addWidget(label3);
+
+       ui->check_pins_frame->setLayout(labelsLayout1);
+
+        ui->verticalLayout_2->setStretch(0,3);
+        ui->verticalLayout_2->setStretch(1,1);
+        ui->verticalLayout_2->setStretch(2,1);
+        ui->verticalLayout_2->setStretch(3,1);
+        ui->verticalLayout_2->setStretch(4,1);
+        ui->verticalLayout_2->setStretch(5,1);
+        ui->verticalLayout_2->setStretch(6,1);
+
+        ui->check_pins_frame->setStyleSheet("background-color: rgb(200,0,0)");
 
     }else {
+
+        ui->check_pins_frame->setLayout(nullptr);
+
+        QVBoxLayout *labelsLayout2 = new QVBoxLayout(ui->check_pins_frame);
+        QLabel *label4 = new QLabel("PINS");
+        labelsLayout2->addWidget(label4);
+        ui->check_pins_frame->setLayout(labelsLayout2);
+
+        ui->verticalLayout_2->setStretch(0,1);
+        ui->verticalLayout_2->setStretch(1,1);
+        ui->verticalLayout_2->setStretch(2,1);
+        ui->verticalLayout_2->setStretch(3,1);
+        ui->verticalLayout_2->setStretch(4,1);
+        ui->verticalLayout_2->setStretch(5,1);
+        ui->verticalLayout_2->setStretch(6,1);
         ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
-        ui->check_pins_frame->resize(411,71);
+       // ui->check_pins_frame->resize(411,71);
+
 
 
     }
