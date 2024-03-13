@@ -5,6 +5,7 @@
 #include <QSerialPort>
 #include <QDebug>
 #include <QCoreApplication>
+#include <QTimer>
 #include "dialog.h"
 
 QT_BEGIN_NAMESPACE

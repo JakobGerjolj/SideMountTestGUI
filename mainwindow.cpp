@@ -82,29 +82,65 @@ void MainWindow::readData(){
         ui->verticalLayout_2->setStretch(5,1);
         ui->verticalLayout_2->setStretch(6,1);
         ui->verticalLayout_2->setStretch(7,1);
+        ui->verticalLayout_2->setStretch(8,1);
 
         ui->label_pin4V_SW->setText(listOfValues.at(1));
         ui->label_pin3_3V_SW->setText(listOfValues.at(2));
         ui->label_pin5_SW->setText(listOfValues.at(3));
         ui->label_12V->setText(listOfValues.at(4));
-        ui->label_pin3_3V->setText(listOfValues.at(5));
-        ui->label_pin4V->setText(listOfValues.at(6));
+
+        ui->button_frame->setEnabled(false);
+        ui->can_frame->setEnabled(false);
+        ui->hal_frame->setEnabled(false);
+        ui->nfc_frame->setEnabled(false);
+        ui->t1_frame->setEnabled(false);
+        ui->t2_frame->setEnabled(false);
+        ui->zero_frame->setEnabled(false);
+
+        ui->button_frame->setStyleSheet("");
+        ui->can_frame->setStyleSheet("");
+        ui->hal_frame->setStyleSheet("");
+        ui->nfc_frame->setStyleSheet("");
+        ui->t1_frame->setStyleSheet("");
+        ui->t2_frame->setStyleSheet("");
+        ui->zero_frame->setStyleSheet("");
+
+
+        if(listOfValues.at(5)=="5.00"){
+        ui->label_pin3_3V->setText("HIGH");
+        }else  ui->label_pin3_3V->setText("LOW");
+        if(listOfValues.at(6)=="5.00"){
+            ui->label_pin4V->setText("HIGH");
+        }else  ui->label_pin4V->setText("LOW");
+
 
         ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
 
     }else {
+
+        ui->button_frame->setEnabled(true);
+        ui->can_frame->setEnabled(true);
+        ui->hal_frame->setEnabled(true);
+        ui->nfc_frame->setEnabled(true);
+        ui->t1_frame->setEnabled(true);
+        ui->t2_frame->setEnabled(true);
+        ui->zero_frame->setEnabled(true);
+
+
+
         QLayout* existingLayout = ui->check_pins_frame->layout();
 
         ui->check_pins_frame->setVisible(true);
         ui->check_pins_frame_2->setVisible(false);
-        QVBoxLayout *labelsLayout2 = new QVBoxLayout(ui->check_pins_frame);
-        QLabel *label4 = new QLabel("PINS OK");
-        labelsLayout2->addWidget(label4);
-        if(stateOfCan==0){
-            ui->check_pins_frame->setLayout(labelsLayout2);
-            stateOfCan=2;
-        }
+       // QVBoxLayout *labelsLayout2 = new QVBoxLayout(ui->check_pins_frame);
+       // QLabel *label4 = new QLabel("PINS OK");
+        //labelsLayout2->addWidget(label4);
+        // if(!ui->check_pins_frame->layout()){
+        //     ui->check_pins_frame->setLayout(labelsLayout2);
 
+        // }
+
+        ui->label_3->setText("PINS OK");
 
         ui->verticalLayout_2->setStretch(0,1);
         ui->verticalLayout_2->setStretch(1,1);
@@ -114,8 +150,11 @@ void MainWindow::readData(){
         ui->verticalLayout_2->setStretch(5,1);
         ui->verticalLayout_2->setStretch(6,1);
         ui->verticalLayout_2->setStretch(7,1);
+        ui->verticalLayout_2->setStretch(8,1);
         ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
-        ui->button_frame->setStyleSheet("background-color: rgb(230,228,0)"); // ce beremo
+
+
+        ui->button_frame->setStyleSheet("background-color: rgb(0,0,200)"); // ce beremo
         if(listOfValues.at(1)=='X'){
             ui->last_button_value->setText("X");
         }else if(listOfValues.at(1)=='3'){
@@ -127,15 +166,38 @@ void MainWindow::readData(){
         ui->button_counter_value->setText(listOfValues.at(2));
 
 
+
+
+        ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
         if(listOfValues.at(3)=="1"){ //NFC
-            ui->NFC_status->setText("DETECTED");
-            ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
+
+            QTimer::singleShot(1500, this, [this](){
+                ui->NFC_status->setText("DETECTED");
+                ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
+
+
+
+
+            });
+
+
+
         }
 
 
 
-         ui->button_frame->setStyleSheet("background-color: rgb(0,108,179)");
+        ui->hal_frame->setStyleSheet("background-color: rgb(0,0,200)");
         ui->hal_value->setText(listOfValues.at(4)); //HAL
+
+        ui->zero_frame->setStyleSheet("background-color: rgb(0,0,200)");
+        ui->zero_value->setText(listOfValues.at(5));//ZERO
+
+        ui->t1_frame->setStyleSheet("background-color: rgb(0,0,200)");
+        ui->t1_value->setText(listOfValues.at(6)); //T1
+
+        ui->t2_frame->setStyleSheet("background-color: rgb(0,0,200)");
+        ui->t2_value->setText(listOfValues.at(7)); //T2
+
 
     }
     }

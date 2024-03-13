@@ -105,7 +105,7 @@
       <x>720</x>
       <y>60</y>
       <width>521</width>
-      <height>91</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -158,9 +158,9 @@
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>160</y>
+      <y>150</y>
       <width>521</width>
-      <height>91</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -213,9 +213,9 @@
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>260</y>
+      <y>240</y>
       <width>521</width>
-      <height>91</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -268,9 +268,9 @@
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>360</y>
+      <y>330</y>
       <width>521</width>
-      <height>91</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -323,9 +323,9 @@
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>460</y>
+      <y>420</y>
       <width>521</width>
-      <height>91</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -626,24 +626,37 @@
       </widget>
      </item>
      <item>
-      <widget class="QFrame" name="can_frame">
+      <widget class="QFrame" name="t1_frame">
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QLabel" name="label_4">
+       <widget class="QLabel" name="label_10">
         <property name="geometry">
          <rect>
-          <x>170</x>
+          <x>100</x>
           <y>20</y>
-          <width>101</width>
+          <width>67</width>
           <height>17</height>
          </rect>
         </property>
         <property name="text">
-         <string>CAN</string>
+         <string>T1:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="t1_value">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>20</y>
+          <width>67</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>X</string>
         </property>
        </widget>
       </widget>
@@ -685,6 +698,42 @@
       </widget>
      </item>
      <item>
+      <widget class="QFrame" name="zero_frame">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QLabel" name="zero_value">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>20</y>
+          <width>67</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_14">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>20</y>
+          <width>67</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ZERO:</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
       <widget class="QFrame" name="nfc_frame">
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -710,7 +759,7 @@
          <rect>
           <x>210</x>
           <y>20</y>
-          <width>67</width>
+          <width>121</width>
           <height>17</height>
          </rect>
         </property>
@@ -783,42 +832,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QFrame" name="t1_frame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <widget class="QLabel" name="label_10">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>20</y>
-          <width>67</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>T1:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="t1_value">
-        <property name="geometry">
-         <rect>
-          <x>210</x>
-          <y>20</y>
-          <width>67</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>X</string>
-        </property>
-       </widget>
-      </widget>
-     </item>
-     <item>
       <widget class="QFrame" name="hal_frame">
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -855,6 +868,74 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QFrame" name="can_frame">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>510</y>
+      <width>521</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>10</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CAN</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_15">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>10</y>
+       <width>89</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEST LEDS</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="LED_OK_2">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>30</y>
+       <width>89</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="LED_NOK_2">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>30</y>
+       <width>89</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>NOT OK</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
