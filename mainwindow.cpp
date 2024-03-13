@@ -311,3 +311,15 @@ void MainWindow::on_pushButton_3_clicked()
 
 }
 
+
+void MainWindow::on_LED_OK_2_clicked()
+{
+    ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");
+}
+
+
+void MainWindow::on_LED_NOK_2_clicked()
+{
+    ui->can_frame->setStyleSheet("background-color: rgb(200,0,0)");
+}
+

@@ -42,6 +42,10 @@ private slots:
     void on_dateTimeEdit_timeChanged(const QTime &time);
     void on_pushButton_3_clicked();
 
+    void on_LED_OK_2_clicked();
+
+    void on_LED_NOK_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     QSerialPort *m_serial = nullptr;
