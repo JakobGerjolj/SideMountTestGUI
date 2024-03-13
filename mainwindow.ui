@@ -907,7 +907,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>TEST LEDS</string>
+      <string>TEST CAN</string>
      </property>
     </widget>
     <widget class="QPushButton" name="LED_OK_2">

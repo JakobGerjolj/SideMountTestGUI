@@ -26,6 +26,7 @@ signals:
     void appOpenSignal();
 
 private slots:
+    void writeData(const QByteArray &data1);
     void readData();
     void openSerialPort();
     void closeSerialPort();
@@ -45,6 +46,8 @@ private slots:
     void on_LED_OK_2_clicked();
 
     void on_LED_NOK_2_clicked();
+
+    void on_pushButton_13_clicked();
 
 private:
     Ui::MainWindow *ui;

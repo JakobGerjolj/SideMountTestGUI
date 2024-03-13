@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QDateTime currentDateTime = QDateTime::currentDateTime();
     ui->dateTimeEdit->setDateTime(currentDateTime);
-    //ui->buttons_check_frame->setEnabled(false); How to grey out
     QStringList boys ={"Jakob Gerjolj","Anže Štravs","Jaka Dejak", "Nejc Česen"};
     ui->comboBox->addItems(boys);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
@@ -218,6 +217,21 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::writeData(const QByteArray &data1)
+{
+
+    const qint64 written = m_serial->write(data1);
+    if (written == data1.size()) {
+        qDebug()<<"Written well";
+    } else {
+        const QString error = tr("Failed to write all data to port %1.\n"
+                                 "Error: %2").arg(m_serial->portName(),
+                                       m_serial->errorString());
+        qDebug()<<error;
+    }
+
+}
+
 void MainWindow::on_Buttons_OK_clicked()
 {
 
@@ -321,5 +335,12 @@ void MainWindow::on_LED_OK_2_clicked()
 void MainWindow::on_LED_NOK_2_clicked()
 {
     ui->can_frame->setStyleSheet("background-color: rgb(200,0,0)");
+}
+
+
+void MainWindow::on_pushButton_13_clicked()
+{
+    QString testS="TEST LED PRESSED!";
+    writeData(testS.toUtf8());
 }
 
