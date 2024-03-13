@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QSerialPort>
+#include <QDebug>
+#include <QCoreApplication>
 #include "dialog.h"
 
 QT_BEGIN_NAMESPACE
@@ -18,6 +20,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+signals:
+    void appOpenSignal();
 
 private slots:
     void readData();
@@ -39,5 +44,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QSerialPort *m_serial = nullptr;
+    QString buffer;
+    bool isFullBuffer;
 };
 #endif // MAINWINDOW_H

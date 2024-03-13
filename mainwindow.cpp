@@ -1,19 +1,20 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
 
-
+    openSerialPort();
     ui->setupUi(this);
     QDateTime currentDateTime = QDateTime::currentDateTime();
     ui->dateTimeEdit->setDateTime(currentDateTime);
     //ui->buttons_check_frame->setEnabled(false); How to grey out
     QStringList boys ={"Jakob Gerjolj","Anže Štravs","Jaka Dejak", "Nejc Česen"};
     ui->comboBox->addItems(boys);
-
+    connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
 
 }
 
@@ -37,8 +38,50 @@ void MainWindow::openSerialPort(){
 void MainWindow::readData(){
 
     const QByteArray data = m_serial->readAll();
-    qDebug()<<data;
 
+    QString str = QString::fromUtf8(data);
+    str.replace("\r\n","");
+
+    if(!str.isEmpty()){
+    if(str[0]=='<' && str[str.size() - 1] == '>'){
+        buffer=str;
+        isFullBuffer=true;
+    }else if(str[0]=='<' &&  str[str.size() - 1] != '>'){
+        buffer=str;
+        isFullBuffer=false;
+
+    }else if(str[0]!='<' && str[str.size()-1] == '>'){
+        buffer.append(str);
+        isFullBuffer=true;
+    }
+    }
+    if(isFullBuffer){
+    qDebug()<<buffer;
+    }
+
+    //Parsing here myb move it later
+    if(isFullBuffer){
+        QString temp=buffer;
+    temp.replace("<","");
+    temp.replace(">","");
+    QStringList listOfValues =temp.split(",");
+
+    if(listOfValues.at(0)=="0"){
+       // ui->check_pins_frame
+       ui->check_pins_frame->setStyleSheet("background-color: rgb(200,0,0)");
+       ui->check_pins_frame->resize(411,150);
+
+    }else {
+        ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
+        ui->check_pins_frame->resize(411,71);
+
+
+    }
+
+    qDebug()<<listOfValues.at(1);
+
+
+    }
 
 }
 
