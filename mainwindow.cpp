@@ -109,8 +109,8 @@ void MainWindow::readData(){
 
              //need to display values add later
 
-        ui->verticalLayout_2->setStretch(0,4);
-        ui->verticalLayout_2->setStretch(1,4);
+        ui->verticalLayout_2->setStretch(0,2);
+        ui->verticalLayout_2->setStretch(1,2);
         ui->verticalLayout_2->setStretch(2,1);
         ui->verticalLayout_2->setStretch(3,1);
         ui->verticalLayout_2->setStretch(4,1);
@@ -118,6 +118,13 @@ void MainWindow::readData(){
         ui->verticalLayout_2->setStretch(6,1);
         ui->verticalLayout_2->setStretch(7,1);
 
+
+        ui->label_pin4V_SW->setText(listOfValues.at(1));
+        ui->label_pin3_3V_SW->setText(listOfValues.at(2));
+        ui->label_pin5_SW->setText(listOfValues.at(3));
+        ui->label_12V->setText(listOfValues.at(4));
+        ui->label_pin3_3V->setText(listOfValues.at(5));
+        ui->label_pin4V->setText(listOfValues.at(6));
 
         ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
 
