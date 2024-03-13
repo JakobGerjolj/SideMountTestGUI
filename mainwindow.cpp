@@ -42,6 +42,7 @@ void MainWindow::readData(){
     const QByteArray data = m_serial->readAll();
 
     QString str = QString::fromUtf8(data);
+   // qDebug()<<data;
     str.replace("\r\n","");
 
     if(!str.isEmpty()){
@@ -340,7 +341,14 @@ void MainWindow::on_LED_NOK_2_clicked()
 
 void MainWindow::on_pushButton_13_clicked()
 {
-    QString testS="TEST LED PRESSED!";
+    QString testS="<LED>";
+    writeData(testS.toUtf8());
+}
+
+
+void MainWindow::on_pushButton_15_clicked()
+{
+    QString testS="<CAN>";
     writeData(testS.toUtf8());
 }
 
