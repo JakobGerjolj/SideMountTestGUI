@@ -71,43 +71,8 @@ void MainWindow::readData(){
 
     if(listOfValues.at(0)=="0"){
 
-        // QLayout* existingLayout = ui->check_pins_frame->layout();
-
         ui->check_pins_frame->setVisible(false);
         ui->check_pins_frame_2->setVisible(true);
-
-        // if (existingLayout && stateOfCan!=1 && false) {
-        //     QLayoutItem* child;
-        //     while ((child = existingLayout->takeAt(0)) != nullptr) {
-        //         delete child->widget();
-        //         delete child;
-        //     }
-
-        //     ui->check_pins_frame->setLayout(nullptr);
-        //     stateOfCan=0;
-        // }
-
-
-       // ui->check_pins_frame
-
-      // ui->check_pins_frame->resize(411,150);
-
-       QVBoxLayout *labelsLayout1 = new QVBoxLayout(ui->check_pins_frame);
-
-       QLabel *label1 = new QLabel("Label 1");
-       QLabel *label2 = new QLabel("Label 2");
-       QLabel *label3 = new QLabel("Label 3");
-
-       labelsLayout1->addWidget(label1);
-       labelsLayout1->addWidget(label2);
-       labelsLayout1->addWidget(label3);
-
-      // if(stateOfCan==2){
-       ui->check_pins_frame->setLayout(labelsLayout1);
-             stateOfCan=1;
-     //  }
-
-             //need to display values add later
 
         ui->verticalLayout_2->setStretch(0,2);
         ui->verticalLayout_2->setStretch(1,2);
@@ -117,7 +82,6 @@ void MainWindow::readData(){
         ui->verticalLayout_2->setStretch(5,1);
         ui->verticalLayout_2->setStretch(6,1);
         ui->verticalLayout_2->setStretch(7,1);
-
 
         ui->label_pin4V_SW->setText(listOfValues.at(1));
         ui->label_pin3_3V_SW->setText(listOfValues.at(2));
@@ -133,20 +97,6 @@ void MainWindow::readData(){
 
         ui->check_pins_frame->setVisible(true);
         ui->check_pins_frame_2->setVisible(false);
-
-        if (existingLayout && stateOfCan!=2 && false) {
-            // Remove all child widgets from the layout and delete them
-            QLayoutItem* child;
-            while ((child = existingLayout->takeAt(0)) != nullptr) {
-                delete child->widget();
-                delete child;
-            }
-
-            ui->check_pins_frame->setLayout(nullptr);
-            stateOfCan=0;
-        }
-
-
         QVBoxLayout *labelsLayout2 = new QVBoxLayout(ui->check_pins_frame);
         QLabel *label4 = new QLabel("PINS OK");
         labelsLayout2->addWidget(label4);
@@ -165,9 +115,7 @@ void MainWindow::readData(){
         ui->verticalLayout_2->setStretch(6,1);
         ui->verticalLayout_2->setStretch(7,1);
         ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
-       // ui->check_pins_frame->resize(411,71);
-
-        ui->button_frame->setStyleSheet("background-color: rgb(0,108,179)"); // ce beremo
+        ui->button_frame->setStyleSheet("background-color: rgb(230,228,0)"); // ce beremo
         if(listOfValues.at(1)=='X'){
             ui->last_button_value->setText("X");
         }else if(listOfValues.at(1)=='3'){
@@ -178,23 +126,18 @@ void MainWindow::readData(){
 
         ui->button_counter_value->setText(listOfValues.at(2));
 
-       // listOfValues.at(3) // NFC
 
-        if(listOfValues.at(3)=="1"){
+        if(listOfValues.at(3)=="1"){ //NFC
             ui->NFC_status->setText("DETECTED");
             ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
         }
 
-        //listOfValues.at(4) // HAL
+
 
          ui->button_frame->setStyleSheet("background-color: rgb(0,108,179)");
-        ui->hal_value->setText(listOfValues.at(4));
+        ui->hal_value->setText(listOfValues.at(4)); //HAL
 
     }
-
-    qDebug()<<listOfValues.at(1);
-    qDebug()<<stateOfCan;
-
     }
 
 }
