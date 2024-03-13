@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSerialPort>
 #include "dialog.h"
 
 QT_BEGIN_NAMESPACE
@@ -19,6 +20,9 @@ public:
     ~MainWindow();
 
 private slots:
+    void readData();
+    void openSerialPort();
+    void closeSerialPort();
     void on_Buttons_OK_clicked();
     void on_Buttons_NOK_clicked();
     void on_NFC_OK_clicked();
@@ -34,5 +38,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QSerialPort *m_serial = nullptr;
 };
 #endif // MAINWINDOW_H

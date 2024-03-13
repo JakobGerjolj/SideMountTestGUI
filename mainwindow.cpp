@@ -17,8 +17,42 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
+void MainWindow::openSerialPort(){
+
+    m_serial = new QSerialPort;
+    m_serial->setPortName("/dev/ttyACM0");
+    m_serial->setBaudRate(115200);
+    m_serial->setDataBits(QSerialPort::Data8);
+    m_serial->setParity(QSerialPort::NoParity);
+    m_serial->setStopBits(QSerialPort::OneStop);
+    m_serial->setFlowControl(QSerialPort::NoFlowControl);
+    if (!(m_serial->open(QIODevice::ReadWrite))) {
+        qDebug() << "Serial Open error" << "\n";
+    } else {
+        qDebug() << "Serial port Open" << "\n";
+    }
+
+}
+
+void MainWindow::readData(){
+
+    const QByteArray data = m_serial->readAll();
+    qDebug()<<data;
+
+
+}
+
+void MainWindow::closeSerialPort(){
+
+    if (m_serial->isOpen())
+        m_serial->close();
+    qDebug() << "Disconnected"<< "\n";
+
+}
+
 MainWindow::~MainWindow()
 {
+    closeSerialPort();
     delete ui;
 }
 
