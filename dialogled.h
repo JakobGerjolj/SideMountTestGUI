@@ -15,6 +15,9 @@ public:
     explicit DialogLED(QWidget *parent = nullptr);
     ~DialogLED();
 
+signals:
+    void triggerLEDs();
+
 private slots:
     void on_led1_OK_clicked();
 
@@ -55,6 +58,7 @@ private slots:
     void on_pushButton_clicked();
 
 private:
+    void triggerLED();
     Ui::DialogLED *ui;
 };
 

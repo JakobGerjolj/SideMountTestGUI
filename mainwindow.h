@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QCoreApplication>
 #include <QTimer>
+#include "storage.h"
 #include "dialog.h"
 #include "dialogled.h"
 
@@ -20,14 +21,18 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    void writeData(const QByteArray &data1);
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 signals:
     void appOpenSignal();
 
+public slots:
+    void onTriggerLED();
+
 private slots:
-    void writeData(const QByteArray &data1);
+
     void readData();
     void openSerialPort();
     void closeSerialPort();

@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     QStringList boys ={"Jakob Gerjolj","Anže Štravs","Jaka Dejak", "Nejc Česen"};
     ui->comboBox->addItems(boys);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
+   // storage::
+
 
 
 
@@ -89,13 +91,13 @@ void MainWindow::readData(){
         ui->label_pin5_SW->setText(listOfValues.at(3));
         ui->label_12V->setText(listOfValues.at(4));
 
-        ui->button_frame->setEnabled(false);
-        ui->can_frame->setEnabled(false);
-        ui->hal_frame->setEnabled(false);
-        ui->nfc_frame->setEnabled(false);
-        ui->t1_frame->setEnabled(false);
-        ui->t2_frame->setEnabled(false);
-        ui->zero_frame->setEnabled(false);
+        // ui->button_frame->setEnabled(false);
+        // ui->can_frame->setEnabled(false);
+        // ui->hal_frame->setEnabled(false);
+        // ui->nfc_frame->setEnabled(false);
+        // ui->t1_frame->setEnabled(false);
+        // ui->t2_frame->setEnabled(false);
+        // ui->zero_frame->setEnabled(false);
 
         ui->button_frame->setStyleSheet("");
         ui->can_frame->setStyleSheet("");
@@ -118,13 +120,13 @@ void MainWindow::readData(){
 
     }else {
 
-        ui->button_frame->setEnabled(true);
-        ui->can_frame->setEnabled(true);
-        ui->hal_frame->setEnabled(true);
-        ui->nfc_frame->setEnabled(true);
-        ui->t1_frame->setEnabled(true);
-        ui->t2_frame->setEnabled(true);
-        ui->zero_frame->setEnabled(true);
+        // ui->button_frame->setEnabled(true);
+        // ui->can_frame->setEnabled(true);
+        // ui->hal_frame->setEnabled(true);
+        // ui->nfc_frame->setEnabled(true);
+        // ui->t1_frame->setEnabled(true);
+        // ui->t2_frame->setEnabled(true);
+        // ui->zero_frame->setEnabled(true);
 
 
 
@@ -218,6 +220,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::onTriggerLED()
+{
+    qDebug()<<"Signal reached Main!";
+    writeData("<LED>");
+
+}
+
 void MainWindow::writeData(const QByteArray &data1)
 {
 
@@ -304,6 +313,7 @@ void MainWindow::on_LED_NOK_clicked()
     DialogLED* myDialog = new DialogLED(this);
     myDialog->show();
     ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    connect(myDialog, &DialogLED::triggerLEDs, this, &MainWindow::onTriggerLED);
 
 }
 

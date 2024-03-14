@@ -225,6 +225,13 @@ void DialogLED::on_led9_NOK_clicked()
 void DialogLED::on_pushButton_clicked()
 {
 
+    triggerLED();
     //send data to serial to test
+}
+
+void DialogLED::triggerLED()
+{
+    emit triggerLEDs();
+
 }
 
