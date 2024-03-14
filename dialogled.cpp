@@ -6,6 +6,7 @@ DialogLED::DialogLED(QWidget *parent)
     , ui(new Ui::DialogLED)
 {
     ui->setupUi(this);
+    this->setWindowTitle("What is wrong with LEDs");
 }
 
 DialogLED::~DialogLED()
@@ -102,6 +103,81 @@ void DialogLED::on_led5_NOK_clicked()
     ui->led5_NOK->setStyleSheet("background-color: rgb(200,0,0)");
     ui->led5_OK->setStyleSheet("");
     ui->led5_NOK_label->setVisible(true);
-    ui->led5_OK->setVisible(false);
+    ui->led5_OK_label->setVisible(false);
+}
+
+
+void DialogLED::on_led6_OK_clicked()
+{
+    ui->led6_OK->setStyleSheet("background-color: rgb(0,200,0)");
+    ui->led6_NOK->setStyleSheet("");
+    ui->led6_NOK_label->setVisible(false);
+    ui->led6_OK_label->setVisible(true);
+}
+
+
+void DialogLED::on_led6_NOK_clicked()
+{
+    ui->led6_OK->setStyleSheet("");
+    ui->led6_NOK->setStyleSheet("background-color: rgb(200,0,0)");
+    ui->led6_NOK_label->setVisible(true);
+    ui->led6_OK_label->setVisible(false);
+}
+
+
+void DialogLED::on_led7_OK_clicked()
+{
+    ui->led7_NOK->setStyleSheet("");
+    ui->led7_OK->setStyleSheet("background-color: rgb(0,200,0)");
+    ui->led7_NOK_label->setVisible(false);
+    ui->led7_OK_label->setVisible(true);
+
+}
+
+
+void DialogLED::on_led7_NOK_clicked()
+{
+    ui->led7_NOK->setStyleSheet("background-color: rgb(200,0,0)");
+    ui->led7_OK->setStyleSheet("");
+    ui->led7_NOK_label->setVisible(true);
+    ui->led7_OK_label->setVisible(false);
+
+}
+
+
+void DialogLED::on_led8_OK_clicked()
+{
+    ui->led8_NOK->setStyleSheet("");
+    ui->led8_OK->setStyleSheet("background-color: rgb(0,200,0)");
+    ui->led8_NOK_label->setVisible(false);
+    ui->led8_OK_label->setVisible(true);
+
+}
+
+
+void DialogLED::on_led8_NOK_clicked()
+{
+    ui->led8_NOK->setStyleSheet("background-color: rgb(200,0,0)");
+    ui->led8_OK->setStyleSheet("");
+    ui->led8_NOK_label->setVisible(true);
+    ui->led8_OK_label->setVisible(false);
+}
+
+
+void DialogLED::on_led9_OK_clicked()
+{
+    ui->led9_NOK->setStyleSheet("");
+    ui->led9_OK->setStyleSheet("background-color: rgb(0,200,0)");
+    ui->led9_NOK_label->setVisible(false);
+    ui->led9_OK_label->setVisible(true);
+}
+
+
+void DialogLED::on_led9_NOK_clicked()
+{
+    ui->led9_NOK->setStyleSheet("background-color: rgb(200,0,0)");
+    ui->led9_OK->setStyleSheet("");
+    ui->led9_NOK_label->setVisible(true);
+    ui->led9_OK_label->setVisible(false);
 }
 

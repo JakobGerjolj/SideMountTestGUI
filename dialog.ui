@@ -29,24 +29,11 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>20</y>
-     <width>261</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Describe NOT OK</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>70</y>
+     <y>30</y>
      <width>81</width>
      <height>17</height>
     </rect>
@@ -59,7 +46,7 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>70</y>
+     <y>30</y>
      <width>31</width>
      <height>25</height>
     </rect>
@@ -72,7 +59,7 @@
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>70</y>
+     <y>30</y>
      <width>31</width>
      <height>25</height>
     </rect>
@@ -85,7 +72,7 @@
    <property name="geometry">
     <rect>
      <x>105</x>
-     <y>50</y>
+     <y>10</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -98,7 +85,7 @@
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>50</y>
+     <y>10</y>
      <width>31</width>
      <height>17</height>
     </rect>
@@ -111,7 +98,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>150</y>
+     <y>140</y>
      <width>81</width>
      <height>17</height>
     </rect>
@@ -124,7 +111,7 @@
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>150</y>
+     <y>140</y>
      <width>31</width>
      <height>25</height>
     </rect>
@@ -137,7 +124,7 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>150</y>
+     <y>140</y>
      <width>31</width>
      <height>25</height>
     </rect>
@@ -150,7 +137,7 @@
    <property name="geometry">
     <rect>
      <x>190</x>
-     <y>70</y>
+     <y>30</y>
      <width>171</width>
      <height>70</height>
     </rect>
@@ -160,7 +147,7 @@
    <property name="geometry">
     <rect>
      <x>190</x>
-     <y>150</y>
+     <y>140</y>
      <width>171</width>
      <height>70</height>
     </rect>
@@ -170,7 +157,7 @@
    <property name="geometry">
     <rect>
      <x>100</x>
-     <y>130</y>
+     <y>120</y>
      <width>21</width>
      <height>20</height>
     </rect>
@@ -183,7 +170,7 @@
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>130</y>
+     <y>120</y>
      <width>31</width>
      <height>17</height>
     </rect>

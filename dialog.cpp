@@ -6,9 +6,9 @@ Dialog::Dialog(QWidget *parent, QString message)
     , ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-    ui->label->setText(message);
     ui->textEdit->setVisible(false);
     ui->textEdit_2->setVisible(false);
+    this->setWindowTitle("What is wrong with the buttons");
 
 }
 

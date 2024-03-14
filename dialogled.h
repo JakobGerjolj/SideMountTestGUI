@@ -36,6 +36,22 @@ private slots:
 
     void on_led5_NOK_clicked();
 
+    void on_led7_OK_clicked();
+
+    void on_led6_OK_clicked();
+
+    void on_led6_NOK_clicked();
+
+    void on_led7_NOK_clicked();
+
+    void on_led8_OK_clicked();
+
+    void on_led8_NOK_clicked();
+
+    void on_led9_OK_clicked();
+
+    void on_led9_NOK_clicked();
+
 private:
     Ui::DialogLED *ui;
 };
