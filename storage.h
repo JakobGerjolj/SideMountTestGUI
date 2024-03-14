@@ -16,8 +16,8 @@ public:
     static void addLedData(const std::string& ledName);
     static std::pair<bool,std::string> getLedData(const std::string ledName);
     static void setLedData(const std::string& ledName, bool isOK, std::string desc);
-    static void setButtonData(const std::string& buttonName);
-    static void addButtonData(const std::string& buttonName, bool isOK, std::string desc);
+    static void addButtonData(const std::string& buttonName);
+    static void setButtonData(const std::string& buttonName, bool isOK, std::string desc);
     static std::pair<bool,std::string> getButtonData(const std::string& buttonName);
 
 

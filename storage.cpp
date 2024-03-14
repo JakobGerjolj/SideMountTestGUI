@@ -37,13 +37,13 @@ void storage::setLedData(const std::string &ledName, bool isOK, std::string desc
 
 }
 
-void storage::setButtonData(const std::string &buttonName)
+void storage::addButtonData(const std::string &buttonName)
 {
     m_ButtonDataMap[buttonName]=std::make_pair(false,"");
 
 }
 
-void storage::addButtonData(const std::string &buttonName, bool isOK, std::string desc)
+void storage::setButtonData(const std::string &buttonName, bool isOK, std::string desc)
 {
     m_ButtonDataMap[buttonName].first=isOK;
     m_ButtonDataMap[buttonName].second=desc;

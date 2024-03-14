@@ -14,11 +14,23 @@ MainWindow::MainWindow(QWidget *parent)
     QStringList boys ={"Jakob Gerjolj","Anže Štravs","Jaka Dejak", "Nejc Česen"};
     ui->comboBox->addItems(boys);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
-   // storage::
-
-
-
-
+    storage::addPinData("pin4V_SW");
+    storage::addPinData("pin3_3V_SW");
+    storage::addPinData("pin5V_SW");
+    storage::addPinData("pin12V");
+    storage::addPinData("pin3_3V");
+    storage::addPinData("pin4V");
+    storage::addLedData("LED1");
+    storage::addLedData("LED2");
+    storage::addLedData("LED3");
+    storage::addLedData("LED4");
+    storage::addLedData("LED5");
+    storage::addLedData("LED6");
+    storage::addLedData("LED7");
+    storage::addLedData("LED8");
+    storage::addLedData("LED9");
+    storage::addButtonData("BUTTON1");
+    storage::addButtonData("BUTTON2");
 
 }
 
