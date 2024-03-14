@@ -103,7 +103,7 @@ void MainWindow::readData(){
         ui->label_pin3_3V_SW->setText(listOfValues.at(2));
         storage::setPinData("pin3_3V_SW", false, listOfValues.at(2).toFloat());
         ui->label_pin5_SW->setText(listOfValues.at(3));
-        storage::setPinData("pin5V_SW", false, listOfValues.at(2).toFloat());
+        storage::setPinData("pin5V_SW", false, listOfValues.at(2).toFloat()); //need to add arduino
         ui->label_12V->setText(listOfValues.at(4));
         storage::setPinData("pin12V", false, listOfValues.at(2).toFloat());
 
