@@ -52,6 +52,8 @@ private slots:
 
     void on_led9_NOK_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::DialogLED *ui;
 };
