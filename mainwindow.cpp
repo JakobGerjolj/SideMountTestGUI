@@ -99,17 +99,13 @@ void MainWindow::readData(){
         ui->verticalLayout_2->setStretch(8,1);
 
         ui->label_pin4V_SW->setText(listOfValues.at(1));
+        storage::setPinData("pin4V_SW", false, listOfValues.at(1).toFloat());
         ui->label_pin3_3V_SW->setText(listOfValues.at(2));
+        storage::setPinData("pin3_3V_SW", false, listOfValues.at(2).toFloat());
         ui->label_pin5_SW->setText(listOfValues.at(3));
+        storage::setPinData("pin5V_SW", false, listOfValues.at(2).toFloat());
         ui->label_12V->setText(listOfValues.at(4));
-
-        // ui->button_frame->setEnabled(false);
-        // ui->can_frame->setEnabled(false);
-        // ui->hal_frame->setEnabled(false);
-        // ui->nfc_frame->setEnabled(false);
-        // ui->t1_frame->setEnabled(false);
-        // ui->t2_frame->setEnabled(false);
-        // ui->zero_frame->setEnabled(false);
+        storage::setPinData("pin12V", false, listOfValues.at(2).toFloat());
 
         ui->button_frame->setStyleSheet("");
         ui->can_frame->setStyleSheet("");
@@ -132,27 +128,11 @@ void MainWindow::readData(){
 
     }else {
 
-        // ui->button_frame->setEnabled(true);
-        // ui->can_frame->setEnabled(true);
-        // ui->hal_frame->setEnabled(true);
-        // ui->nfc_frame->setEnabled(true);
-        // ui->t1_frame->setEnabled(true);
-        // ui->t2_frame->setEnabled(true);
-        // ui->zero_frame->setEnabled(true);
-
-
 
         QLayout* existingLayout = ui->check_pins_frame->layout();
 
         ui->check_pins_frame->setVisible(true);
         ui->check_pins_frame_2->setVisible(false);
-       // QVBoxLayout *labelsLayout2 = new QVBoxLayout(ui->check_pins_frame);
-       // QLabel *label4 = new QLabel("PINS OK");
-        //labelsLayout2->addWidget(label4);
-        // if(!ui->check_pins_frame->layout()){
-        //     ui->check_pins_frame->setLayout(labelsLayout2);
-
-        // }
 
         ui->label_3->setText("PINS OK");
 
