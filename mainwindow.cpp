@@ -301,7 +301,7 @@ void MainWindow::on_LED_OK_clicked()
 
 void MainWindow::on_LED_NOK_clicked()
 {
-    Dialog* myDialog = new Dialog(this,"What is wrong with LEDs: ");
+    DialogLED* myDialog = new DialogLED(this);
     myDialog->show();
     ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
 
@@ -350,5 +350,13 @@ void MainWindow::on_pushButton_15_clicked()
 {
     QString testS="<CAN>";
     writeData(testS.toUtf8());
+}
+
+
+void MainWindow::on_pushButton_16_clicked()
+{
+    QString testS="<CANLED>";
+    writeData(testS.toUtf8());
+
 }
 

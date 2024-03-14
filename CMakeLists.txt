@@ -25,6 +25,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         dialog.h dialog.cpp dialog.ui
+        dialogled.h dialogled.cpp dialogled.ui
 
     )
 # Define target properties for Android with Qt 6 as:
