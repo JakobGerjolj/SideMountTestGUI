@@ -1,18 +1,18 @@
-SN87348231>Fri Mar 15 11:57:23 2024>Jakob Gerjolj
-pin4V_SW>NOT OK>0
-pin3_3V_SW>0
-pin5V_SW>NOT OK>0
-pin12V>NOT OK>0
-pin3_3V>0
-pin4V>NOT OK>0
-LED1>OK
-LED2>NOT OK: G Monalisa
-LED3>OK
-LED4>NOT OK: R Moon landing
-LED5>OK
-LED6>NOT OK: B is fake
-LED7>OK
-LED8>NOT OK: R Retard
-LED9>OK
+SN5672234>Fri Mar 15 13:33:56 2024>Jakob Gerjolj
+pin4V_SWOK
+pin3_3V_SW>5
+pin5V_SW>OK
+pin12V>OK
+pin3_3V>5
+pin4V>5
+LED1>NOT OK: B Light not work
+LED2>OK
+LED3>NOT OK: G Light not work
+LED4>OK
+LED5>NOT OK: B Light not work
+LED6>OK
+LED7>NOT OK: R G B Light not work
+LED8>OK
+LED9>NOT OK: Light not work
 NFC>NOT OK
 HAL>OK

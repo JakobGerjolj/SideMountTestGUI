@@ -83,7 +83,7 @@ void MainWindow::readData(){
         temp.replace(">","");
         QStringList listOfValues =temp.split(",");
 
-
+        if(listOfValues.size()==20){
         if(listOfValues.at(0)=="0"){
             ui->check_pins_frame->setVisible(false);
             ui->check_pins_frame_2->setVisible(true);
@@ -190,10 +190,10 @@ void MainWindow::readData(){
             // }
 
             ui->last_button_value->setText(listOfValues.at(13));
-            ui->button_counter_value->setText(listOfValues.at(2));
+            ui->button_counter_value->setText(listOfValues.at(14));
 
             ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
-            if(listOfValues.at(3)=="1"){ //NFC
+            if(listOfValues.at(15)=="1"){ //NFC
                 QTimer::singleShot(1500, this, [this](){
                     ui->NFC_status->setText("DETECTED");
                     ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
@@ -207,19 +207,19 @@ void MainWindow::readData(){
 
 
             ui->hal_frame->setStyleSheet("background-color: rgb(0,0,200)");
-            ui->hal_value->setText(listOfValues.at(4)); //HAL
+            ui->hal_value->setText(listOfValues.at(16)); //HAL
 
             ui->zero_frame->setStyleSheet("background-color: rgb(0,0,200)");
-            ui->zero_value->setText(listOfValues.at(5));//ZERO
+            ui->zero_value->setText(listOfValues.at(17));//ZERO
 
             ui->t1_frame->setStyleSheet("background-color: rgb(0,0,200)");
-            ui->t1_value->setText(listOfValues.at(6)); //T1
+            ui->t1_value->setText(listOfValues.at(18)); //T1
 
             ui->t2_frame->setStyleSheet("background-color: rgb(0,0,200)");
-            ui->t2_value->setText(listOfValues.at(7)); //T2
+            ui->t2_value->setText(listOfValues.at(19)); //T2
 
 
-
+        }
     }
 
 }
