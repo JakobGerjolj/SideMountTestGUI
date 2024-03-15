@@ -73,7 +73,7 @@ void MainWindow::readData(){
         }
     }
     if(isFullBuffer){
-        // qDebug()<<buffer;
+         qDebug()<<buffer;
     }
 
     //Parsing here myb move it later
@@ -83,8 +83,8 @@ void MainWindow::readData(){
         temp.replace(">","");
         QStringList listOfValues =temp.split(",");
 
-        if(listOfValues.at(0)=="0"){
 
+        if(listOfValues.at(0)=="0"){
             ui->check_pins_frame->setVisible(false);
             ui->check_pins_frame_2->setVisible(true);
 
@@ -97,8 +97,25 @@ void MainWindow::readData(){
             ui->verticalLayout_2->setStretch(6,1);
             ui->verticalLayout_2->setStretch(7,1);
             ui->verticalLayout_2->setStretch(8,1);
+        }else{
+            ui->check_pins_frame->setVisible(true);
+            ui->check_pins_frame_2->setVisible(false);
+            ui->label_3->setText("PINS OK");
+            ui->verticalLayout_2->setStretch(0,1);
+            ui->verticalLayout_2->setStretch(1,1);
+            ui->verticalLayout_2->setStretch(2,1);
+            ui->verticalLayout_2->setStretch(3,1);
+            ui->verticalLayout_2->setStretch(4,1);
+            ui->verticalLayout_2->setStretch(5,1);
+            ui->verticalLayout_2->setStretch(6,1);
+            ui->verticalLayout_2->setStretch(7,1);
+            ui->verticalLayout_2->setStretch(8,1);
+            ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
 
-            ui->label_pin4V_SW->setText(listOfValues.at(1));
+
+        }
+
+            ui->label_pin4V_SW->setText(listOfValues.at(1));//ADD MORE LABELS???
 
             bool temp_bool;
 
@@ -123,13 +140,13 @@ void MainWindow::readData(){
             }else temp_bool=true;
             storage::setPinData("pin12V", temp_bool, listOfValues.at(2).toFloat());
 
-            ui->button_frame->setStyleSheet("");
-            ui->can_frame->setStyleSheet("");
-            ui->hal_frame->setStyleSheet("");
-            ui->nfc_frame->setStyleSheet("");
-            ui->t1_frame->setStyleSheet("");
-            ui->t2_frame->setStyleSheet("");
-            ui->zero_frame->setStyleSheet("");
+            // ui->button_frame->setStyleSheet("");
+            // ui->can_frame->setStyleSheet("");
+            // ui->hal_frame->setStyleSheet("");
+            // ui->nfc_frame->setStyleSheet("");
+            // ui->t1_frame->setStyleSheet("");
+            // ui->t2_frame->setStyleSheet("");
+            // ui->zero_frame->setStyleSheet("");
 
 
             if(listOfValues.at(5)=="5.00"){
@@ -151,7 +168,7 @@ void MainWindow::readData(){
             // qDebug()<<storage::getPinData("pin4V");
             ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
 
-        }else {
+
 
             storage::setPinData("pin4V_SW",true,5.0);
             storage::setPinData("pin3_3V_SW",true,5.0);
@@ -160,46 +177,26 @@ void MainWindow::readData(){
             storage::setPinData("pin3_3V",true,5.0);
             storage::setPinData("pin4V",true,5.0);
 
-            ui->check_pins_frame->setVisible(true);
-            ui->check_pins_frame_2->setVisible(false);
-
-            ui->label_3->setText("PINS OK");
-
-            ui->verticalLayout_2->setStretch(0,1);
-            ui->verticalLayout_2->setStretch(1,1);
-            ui->verticalLayout_2->setStretch(2,1);
-            ui->verticalLayout_2->setStretch(3,1);
-            ui->verticalLayout_2->setStretch(4,1);
-            ui->verticalLayout_2->setStretch(5,1);
-            ui->verticalLayout_2->setStretch(6,1);
-            ui->verticalLayout_2->setStretch(7,1);
-            ui->verticalLayout_2->setStretch(8,1);
-            ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
 
 
-            ui->button_frame->setStyleSheet("background-color: rgb(0,0,200)"); // ce beremo
-            if(listOfValues.at(1)=='X'){
-                ui->last_button_value->setText("X");
-            }else if(listOfValues.at(1)=='3'){
-                ui->last_button_value->setText("3");
-            }else if(listOfValues.at(1)=='4'){
-                ui->last_button_value->setText("4");
-            }
 
+            ui->button_frame->setStyleSheet("background-color: rgb(0,0,200)"); // skos
+            // if(listOfValues.at(1)=='X'){
+            //     ui->last_button_value->setText("X");
+            // }else if(listOfValues.at(1)=='3'){
+            //     ui->last_button_value->setText("3");//?? do it in one line
+            // }else if(listOfValues.at(1)=='4'){
+            //     ui->last_button_value->setText("4");
+            // }
+
+            ui->last_button_value->setText(listOfValues.at(13));
             ui->button_counter_value->setText(listOfValues.at(2));
-
-
-
 
             ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
             if(listOfValues.at(3)=="1"){ //NFC
-
                 QTimer::singleShot(1500, this, [this](){
                     ui->NFC_status->setText("DETECTED");
                     ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
-
-
-
 
                 });
 
@@ -222,7 +219,7 @@ void MainWindow::readData(){
             ui->t2_value->setText(listOfValues.at(7)); //T2
 
 
-        }
+
     }
 
 }
