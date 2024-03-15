@@ -525,6 +525,20 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
         }
 
+        if(storage::getNFCStatus()){
+            stream<<"NFC>OK\n";
+        }else {
+            stream<<"NFC>NOT OK\n";
+        }
+
+        if(storage::getHALStatus()){
+            stream<<"HAL>OK\n";
+
+        }else {
+            stream<<"NFC>NOT OK\n";
+
+        }
+
 
     }
 
