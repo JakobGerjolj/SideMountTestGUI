@@ -20,7 +20,8 @@ Dialog::~Dialog()
 void Dialog::on_buttonBox_accepted()
 {
    // qDebug() << ui->textEdit->toPlainText(); // how to get text
-
+    storage::setButtonData("Button1", m_Button1_status, ui->textEdit->toPlainText().toStdString());
+    storage::setButtonData("Button2", m_Button2_status, ui->textEdit_2->toPlainText().toStdString());
 }
 
 
@@ -31,6 +32,7 @@ void Dialog::on_pushButton_clicked()
     ui->textEdit->setVisible(false);
     ui->butt1_NOK_label->setVisible(false);
     ui->butt1_OK_label->setVisible(true);
+    m_Button1_status=true;
 }
 
 
@@ -42,6 +44,7 @@ void Dialog::on_pushButton_2_clicked()
     ui->butt1_OK_label->setVisible(false);
     ui->butt1_NOK_label->setVisible(true);
     ui->textEdit->setPlaceholderText("Describe the problem...");
+    m_Button1_status=false;
 
 }
 
@@ -53,6 +56,7 @@ void Dialog::on_pushButton_4_clicked()
     ui->textEdit_2->setVisible(false);
     ui->butt2_OK_label->setVisible(true);
     ui->butt2_NOK_label->setVisible(false);
+    m_Button2_status=true;
 
 }
 
@@ -65,7 +69,7 @@ void Dialog::on_pushButton_3_clicked()
     ui->butt2_NOK_label->setVisible(true);
     ui->butt2_OK_label->setVisible(false);
     ui->textEdit_2->setPlaceholderText("Describe the problem...");
-
+    m_Button2_status=false;
 
 
 }

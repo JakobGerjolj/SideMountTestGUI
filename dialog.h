@@ -2,6 +2,7 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include "storage.h"
 
 namespace Ui {
 class Dialog;
@@ -29,6 +30,8 @@ private slots:
     void on_pushButton_3_clicked();
 
 private:
+    bool m_Button1_status;
+    bool m_Button2_status;
     Ui::Dialog *ui;
 };
 

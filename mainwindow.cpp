@@ -99,13 +99,29 @@ void MainWindow::readData(){
         ui->verticalLayout_2->setStretch(8,1);
 
         ui->label_pin4V_SW->setText(listOfValues.at(1));
-        storage::setPinData("pin4V_SW", false, listOfValues.at(1).toFloat());
+
+        bool temp_bool;
+
+
+        if(listOfValues.at(7)=='0'){
+            temp_bool=false;
+        }else temp_bool=true;
+        storage::setPinData("pin4V_SW", temp_bool, listOfValues.at(1).toFloat());
         ui->label_pin3_3V_SW->setText(listOfValues.at(2));
-        storage::setPinData("pin3_3V_SW", false, listOfValues.at(2).toFloat());
+        if(listOfValues.at(8)=='0'){
+            temp_bool=false;
+        }else temp_bool=true;
+        storage::setPinData("pin3_3V_SW", temp_bool, listOfValues.at(2).toFloat());
         ui->label_pin5_SW->setText(listOfValues.at(3));
-        storage::setPinData("pin5V_SW", false, listOfValues.at(2).toFloat()); //need to add arduino
+        if(listOfValues.at(9)=='0'){
+            temp_bool=false;
+        }else temp_bool=true;
+        storage::setPinData("pin5V_SW", temp_bool, listOfValues.at(2).toFloat()); //need to add arduino
         ui->label_12V->setText(listOfValues.at(4));
-        storage::setPinData("pin12V", false, listOfValues.at(2).toFloat());
+        if(listOfValues.at(10)=='0'){
+            temp_bool=false;
+        }else temp_bool=true;
+        storage::setPinData("pin12V", temp_bool, listOfValues.at(2).toFloat());
 
         ui->button_frame->setStyleSheet("");
         ui->can_frame->setStyleSheet("");
@@ -117,19 +133,32 @@ void MainWindow::readData(){
 
 
         if(listOfValues.at(5)=="5.00"){
+            storage::setPinData("pin3_3V", true, 5.00);
         ui->label_pin3_3V->setText("HIGH");
-        }else  ui->label_pin3_3V->setText("LOW");
+        }else  {
+             storage::setPinData("pin3_3V", false, 0.00);
+            ui->label_pin3_3V->setText("LOW");
+        }
         if(listOfValues.at(6)=="5.00"){
+             storage::setPinData("pin4V", true, 5.00);
             ui->label_pin4V->setText("HIGH");
-        }else  ui->label_pin4V->setText("LOW");
+        }else {
+            storage::setPinData("pin4V", false, 0.00);
+            ui->label_pin4V->setText("LOW");
 
+        }
 
+        qDebug()<<storage::getPinData("pin4V");
         ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
 
     }else {
 
-
-        QLayout* existingLayout = ui->check_pins_frame->layout();
+        storage::setPinData("pin4V_SW",true,5.0);
+        storage::setPinData("pin3_3V_SW",true,5.0);
+        storage::setPinData("pin5V_SW",true,5.0);
+        storage::setPinData("pin12V",true,5.0);
+        storage::setPinData("pin3_3V",true,5.0);
+        storage::setPinData("pin4V",true,5.0);
 
         ui->check_pins_frame->setVisible(true);
         ui->check_pins_frame_2->setVisible(false);
@@ -236,6 +265,9 @@ void MainWindow::writeData(const QByteArray &data1)
 
 void MainWindow::on_Buttons_OK_clicked()
 {
+    storage::setButtonData("Button1", true, "");
+    storage::setButtonData("Button2", true, "");
+
 
     ui->buttons_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 }
