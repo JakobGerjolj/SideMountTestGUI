@@ -89,4 +89,41 @@ bool storage::getZEROStatus()
     return m_is_ZERO_OK;
 }
 
+void storage::setSERIAL(std::string s)
+{
+
+    m_Serial_number=s;
+}
+
+std::string storage::getSERIAL()
+{
+    return m_Serial_number;
+}
+
+void storage::setDateTime(QDateTime date)
+{
+    m_Date_Time=date;
+}
+
+QDateTime storage::getDateTime()
+{
+    return m_Date_Time;
+}
+
+void storage::setEmployee(std::string s)
+{
+    m_employee = s;
+}
+
+std::string storage::getEmployee()
+{
+    return m_employee;
+}
+
+LedDataMap storage::getLedMap()
+{
+    return m_LedDataMap;
+
+}
+
 

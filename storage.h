@@ -2,6 +2,7 @@
 #define STORAGE_H
 #include <map>
 #include <string>
+#include <QDateTime>
 
 using PinDataMap=std::map<std::string, std::pair<bool,float>>;
 using LedDataMap=std::map<std::string, std::pair<bool, std::string>>;
@@ -25,6 +26,14 @@ public:
     static bool getHALStatus();
     static void setZEROStatus(bool);
     static bool getZEROStatus();
+    static void setSERIAL(std::string);
+    static std::string getSERIAL();
+    static void setDateTime(QDateTime);
+    static QDateTime getDateTime();
+    static void setEmployee(std::string);
+    static std::string getEmployee();
+    static LedDataMap getLedMap();
+
 
 private:
     inline static PinDataMap m_PinDataMap;
@@ -35,6 +44,10 @@ private:
     inline static bool m_is_NFC_OK;
     inline static bool m_is_CAN_TX_OK;
     inline static bool m_is_CAN_RX_OK;
+    inline static std::string m_Serial_number;
+    inline static QDateTime m_Date_Time;
+    inline static std::string m_employee;
+
 
 
 

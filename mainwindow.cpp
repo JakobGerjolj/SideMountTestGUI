@@ -401,6 +401,15 @@ void MainWindow::on_pushButton_16_clicked()
 void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 {
     qDebug()<<"------------------------------------------------";
+    qDebug()<<"SERIAL";
+    storage::setSERIAL(ui->Serial_line->text().toStdString());
+    qDebug()<<storage::getSERIAL();
+    qDebug()<<"DATE TIME";
+    storage::setDateTime(ui->dateTimeEdit->dateTime());
+    qDebug()<<storage::getDateTime();
+    qDebug()<<"EMPLOYEE";
+    storage::setEmployee(ui->comboBox->currentText().toStdString());
+    qDebug()<<storage::getEmployee();
     qDebug()<<"PINS";
     qDebug()<<storage::getPinData("pin4V_SW");
     qDebug()<<storage::getPinData("pin3_3V_SW");
@@ -434,12 +443,89 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     qDebug() << storage::getLedData("LED9");
     qDebug() << "---------------------------------------";
 
+    QString Serial, DateTime, Employee, pin4V_SW_isOK, pin4V_SW_value, pin3_3V_SW_isOK, pin3_3V_SW_value, pin5V_SW_isOK, pin5_SW_value, pin12V_isOK,pin12V_value, pin3_3V_isOK, pin3_3V_value, pin4V_isOK, pin4V_value;
 
+    LedDataMap ledMapa=storage::getLedMap();
+
+Serial = QString::fromStdString(storage::getSERIAL());
+DateTime = storage::getDateTime().toString();
+Employee = QString::fromStdString(storage::getEmployee());
+if(storage::getPinData("pin4V_SW").first){
+    pin4V_SW_isOK= "OK";
+}else {
+    pin4V_SW_isOK= "NOT OK";
+}
+pin4V_SW_value= QString::number(storage::getPinData("pin4V_SW").second);
+if(storage::getPinData("pin3_3V_SW").first){
+    pin3_3V_SW_isOK= "OK";
+}else {
+    pin3_3V_SW_isOK= "NOT OK";
+}
+pin3_3V_SW_isOK= QString::number(storage::getPinData("pin3_3V_SW").second);
+if(storage::getPinData("pin5V_SW").first){
+    pin5V_SW_isOK= "OK";
+}else {
+    pin5V_SW_isOK= "NOT OK";
+}
+pin5_SW_value= QString::number(storage::getPinData("pin5V_SW").second);
+if(storage::getPinData("pin12V").first){
+    pin12V_isOK="OK";
+}else {
+    pin12V_isOK="NOT OK";
+}
+pin12V_value=QString::number(storage::getPinData("pin12V").second);
+if(storage::getPinData("pin3_3V").first){
+    pin3_3V_isOK="OK";
+}else {
+    pin3_3V_value="NOT OK";
+}
+pin3_3V_value=QString::number(storage::getPinData("pin3_3V").second);
+if(storage::getPinData("pin4V").first){
+    pin4V_isOK="OK";
+}else {
+    pin4V_isOK="NOT OK";
+}
+pin4V_value=QString::number(storage::getPinData("pin4V").second);
+pin4V_SW_value=QString::number(storage::getPinData("pin4V").second);
     QString filename = "/home/jakob/SideMountGUI/Data.txt";
     QFile file(filename);
     if(file.open(QIODevice::ReadWrite)){
         QTextStream stream(&file);
-        stream << "BABAVOSS";
+        stream<<Serial<<">";
+        stream<<DateTime<<">";
+        stream<<Employee;
+        stream<<"\n";
+        if(pin4V_SW_isOK=="NOT OK"){
+            stream<<"pin4V_SW>"<<pin4V_SW_isOK<<">"<<pin4V_SW_value<<"\n";}
+        else stream<<"pin4V_SW"<<pin4V_SW_isOK<<"\n";
+        if(pin3_3V_isOK=="NOT OK"){
+            stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<">"<<pin3_3V_SW_value<<"\n";}
+        else stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<"\n";
+        if(pin5V_SW_isOK=="NOT OK"){
+             stream<<"pin5V_SW>"<<pin5V_SW_isOK<<">"<<pin5_SW_value<<"\n";
+        }else  stream<<"pin5V_SW>"<<pin5V_SW_isOK<<"\n";
+        if(pin12V_isOK=="NOT OK"){
+            stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
+        }else  stream<<"pin12V>"<<pin12V_isOK<<"\n";
+        if(pin3_3V_isOK=="NOT OK"){
+            stream<<"pin3_3V>"<<pin3_3V_isOK<<">"<<pin3_3V_SW_value<<"\n";
+        }else  stream<<"pin3_3V>"<<pin3_3V_value<<"\n";
+        if(pin4V_isOK=="NOT OK"){
+            stream<<"pin4V>"<<pin4V_isOK<<">"<<pin4V_value<<"\n";
+        }else  stream<<"pin4V>"<<pin4V_value<<"\n";
+
+        for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
+
+            if(led->second.first){
+                stream<<QString::fromStdString(led->first)<<">OK\n";
+            }else {
+                stream<<QString::fromStdString(led->first)<<">NOT OK\n";
+
+            }
+
+        }
+
+
     }
 
     file.close();

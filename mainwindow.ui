@@ -53,7 +53,7 @@
      <string>S.N. PCB:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="Serial_line">
     <property name="geometry">
      <rect>
       <x>80</x>
