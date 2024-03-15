@@ -260,137 +260,137 @@ void DialogLED::on_buttonBox_accepted()
 
     QString temp;
     temp=ui->led1_NOK_text->toPlainText();
-    if(ui->led1_check_B){
+    if(ui->led1_check_B->isChecked()){
         temp.prepend("B ");
 
     }
 
-    if(ui->led1_check_G){
+    if(ui->led1_check_G->isChecked()){
         temp.prepend("G ");
 
     }
-    if(ui->led1_check_R){
+    if(ui->led1_check_R->isChecked()){
         temp.prepend("R ");
 
     }
 
     storage::setLedData("LED1", leds[0], temp.toStdString());
     temp=ui->led2_NOK_text->toPlainText();
-    if(ui->led2_check_B){
+    if(ui->led2_check_B->isChecked()){
         temp.prepend("B ");
 
     }
 
-    if(ui->led2_check_G){
+    if(ui->led2_check_G->isChecked()){
         temp.prepend("G ");
 
     }
-    if(ui->led2_check_R){
+    if(ui->led2_check_R->isChecked()){
         temp.prepend("R ");
 
     }
     storage::setLedData("LED2", leds[1], temp.toStdString());
     temp=ui->led3_NOK_text->toPlainText();
-    if(ui->led3_check_B){
+    if(ui->led3_check_B->isChecked()){
         temp.prepend("B ");
 
     }
 
-    if(ui->led3_check_G){
+    if(ui->led3_check_G->isChecked()){
         temp.prepend("G ");
 
     }
-    if(ui->led3_check_R){
+    if(ui->led3_check_R->isChecked()){
         temp.prepend("R ");
 
     }
     storage::setLedData("LED3", leds[2], temp.toStdString());
     temp=ui->led4_NOK_text->toPlainText();
-    if(ui->led4_check_B){
+    if(ui->led4_check_B->isChecked()){
         temp.prepend("B ");
 
     }
 
-    if(ui->led4_check_G){
+    if(ui->led4_check_G->isChecked()){
         temp.prepend("G ");
 
     }
-    if(ui->led4_check_R){
+    if(ui->led4_check_R->isChecked()){
         temp.prepend("R ");
 
     }
     storage::setLedData("LED4", leds[3], temp.toStdString());
     temp=ui->led5_NOK_text->toPlainText();
-    if(ui->led5_check_B){
+    if(ui->led5_check_B->isChecked()){
         temp.prepend("B ");
 
     }
 
-    if(ui->led5_check_G){
+    if(ui->led5_check_G->isChecked()){
         temp.prepend("G ");
 
     }
-    if(ui->led5_check_R){
+    if(ui->led5_check_R->isChecked()){
         temp.prepend("R ");
 
     }
     storage::setLedData("LED5", leds[4], temp.toStdString());
     temp=ui->led6_NOK_text->toPlainText();
-    if(ui->led6_check_B){
+    if(ui->led6_check_B->isChecked()){
         temp.prepend("B ");
 
     }
 
-    if(ui->led6_check_G){
+    if(ui->led6_check_G->isChecked()){
         temp.prepend("G ");
 
     }
-    if(ui->led6_check_R){
+    if(ui->led6_check_R->isChecked()){
         temp.prepend("R ");
 
     }
     storage::setLedData("LED6", leds[5], temp.toStdString());
     temp=ui->led7_NOK_text->toPlainText();
-    if(ui->led7_check_B){
+    if(ui->led7_check_B->isChecked()){
         temp.prepend("B ");
 
     }
 
-    if(ui->led7_check_G){
+    if(ui->led7_check_G->isChecked()){
         temp.prepend("G ");
 
     }
-    if(ui->led7_check_R){
+    if(ui->led7_check_R->isChecked()){
         temp.prepend("R ");
 
     }
     storage::setLedData("LED7", leds[6], temp.toStdString());
     temp=ui->led8_NOK_text->toPlainText();
-    if(ui->led8_check_B){
+    if(ui->led8_check_B->isChecked()){
         temp.prepend("B ");
 
     }
 
-    if(ui->led8_check_G){
+    if(ui->led8_check_G->isChecked()){
         temp.prepend("G ");
 
     }
-    if(ui->led8_check_R){
+    if(ui->led8_check_R->isChecked()){
         temp.prepend("R ");
 
     }
     storage::setLedData("LED8", leds[7], temp.toStdString());
     temp=ui->led9_NOK_text->toPlainText();
-    if(ui->led9_check_B){
+    if(ui->led9_check_B->isChecked()){
         temp.prepend("B ");
 
     }
 
-    if(ui->led9_check_G){
+    if(ui->led9_check_G->isChecked()){
         temp.prepend("G ");
 
     }
-    if(ui->led9_check_R){
+    if(ui->led9_check_R->isChecked()){
         temp.prepend("R ");
 
     }

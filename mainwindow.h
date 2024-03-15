@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QCoreApplication>
 #include <QTimer>
+#include <QFile>
+#include <QTextStream>
 #include "storage.h"
 #include "dialog.h"
 #include "dialogled.h"

@@ -401,13 +401,25 @@ void MainWindow::on_pushButton_16_clicked()
 void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 {
     qDebug()<<"------------------------------------------------";
+    qDebug()<<"PINS";
+    qDebug()<<storage::getPinData("pin4V_SW");
+    qDebug()<<storage::getPinData("pin3_3V_SW");
+    qDebug()<<storage::getPinData("pin5V_SW");
+    qDebug()<<storage::getPinData("pin12V");
+    qDebug()<<storage::getPinData("pin3_3V");
+    qDebug()<<storage::getPinData("pin4V");
+
+
     qDebug()<<"BUTTONS:";
     qDebug()<<storage::getButtonData("Button1");
     qDebug()<<storage::getButtonData("Button2");
+    qDebug()<<"NFC";
     storage::setNFCStatus(m_NFC_status);
     qDebug()<<storage::getNFCStatus();
+    qDebug()<<"HAL";
     storage::setHALStatus(m_HAL_status);
     qDebug()<<storage::getHALStatus();
+    qDebug()<<"ZERO";
     storage::setZEROStatus(m_ZERO_status);
     qDebug()<<storage::getZEROStatus();
     qDebug()<<"LEDS";
@@ -421,6 +433,17 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     qDebug() << storage::getLedData("LED8");
     qDebug() << storage::getLedData("LED9");
     qDebug() << "---------------------------------------";
+
+
+    QString filename = "/home/jakob/SideMountGUI/Data.txt";
+    QFile file(filename);
+    if(file.open(QIODevice::ReadWrite)){
+        QTextStream stream(&file);
+        stream << "BABAVOSS";
+    }
+
+    file.close();
+    qDebug()<<"Done good !";
 
 
 
