@@ -1,7 +1,16 @@
-SN>Fri Mar 15 10:49:23 2024>Jakob Gerjolj
+SNasdasdsadasds>Fri Mar 15 11:48:06 2024>Jakob Gerjolj
 pin4V_SW>NOT OK>0
 pin3_3V_SW>0
 pin5V_SW>NOT OK>0
 pin12V>NOT OK>0
 pin3_3V>0
 pin4V>NOT OK>0
+LED1>NOT OK: R G B No
+LED2>OK
+LED3>NOT OK: Pls
+LED4>OK
+LED5>NOT OK: R G B Dont
+LED6>OK
+LED7>NOT OK: eat
+LED8>OK
+LED9>NOT OK: me
