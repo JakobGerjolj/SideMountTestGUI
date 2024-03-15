@@ -1,17 +1,22 @@
-SN5672234>Fri Mar 15 13:33:56 2024>Jakob Gerjolj
-pin4V_SWOK
+SN232342>Fri Mar 15 13:39:46 2024>Anže Štravs
+pin4V_SW>OK
 pin3_3V_SW>5
 pin5V_SW>OK
 pin12V>OK
 pin3_3V>5
 pin4V>5
-LED1>NOT OK: B Light not work
-LED2>OK
-LED3>NOT OK: G Light not work
-LED4>OK
-LED5>NOT OK: B Light not work
-LED6>OK
-LED7>NOT OK: R G B Light not work
+LED1>NOT OK: 
+LED2>NOT OK: 
+LED3>NOT OK: 
+LED4>NOT OK: 
+LED5>NOT OK: 
+LED6>NOT OK: 
+LED7>NOT OK: 
+LED8>NOT OK: 
+LED9>NOT OK: 
+NFC>NOT OK
+HAL>OK
+ork
 LED8>OK
 LED9>NOT OK: Light not work
 NFC>NOT OK

@@ -494,7 +494,8 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
         stream<<"\n";
         if(pin4V_SW_isOK=="NOT OK"){
             stream<<"pin4V_SW>"<<pin4V_SW_isOK<<">"<<pin4V_SW_value<<"\n";}
-        else stream<<"pin4V_SW"<<pin4V_SW_isOK<<"\n";
+        else {
+            stream<<"pin4V_SW>"<<pin4V_SW_isOK<<"\n";}
         if(pin3_3V_isOK=="NOT OK"){
             stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<">"<<pin3_3V_SW_value<<"\n";}
         else stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<"\n";
