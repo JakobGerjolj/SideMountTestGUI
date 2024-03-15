@@ -19,7 +19,12 @@ public:
     static void addButtonData(const std::string& buttonName);
     static void setButtonData(const std::string& buttonName, bool isOK, std::string desc);
     static std::pair<bool,std::string> getButtonData(const std::string& buttonName);
-
+    static void setNFCStatus(bool);
+    static bool getNFCStatus();
+    static void setHALStatus(bool);
+    static bool getHALStatus();
+    static void setZEROStatus(bool);
+    static bool getZEROStatus();
 
 private:
     inline static PinDataMap m_PinDataMap;

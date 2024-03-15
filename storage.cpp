@@ -56,4 +56,37 @@ std::pair<bool, std::string> storage::getButtonData(const std::string &buttonNam
 
 }
 
+void storage::setNFCStatus(bool nfcStatus)
+{
+    m_is_NFC_OK=nfcStatus;
+
+}
+
+bool storage::getNFCStatus()
+{
+
+    return m_is_NFC_OK;
+}
+
+void storage::setHALStatus(bool halStatus)
+{
+    m_is_HAL_OK=halStatus;
+
+}
+
+bool storage::getHALStatus()
+{
+    return m_is_HAL_OK;
+}
+
+void storage::setZEROStatus(bool zeroStatus)
+{
+    m_is_ZERO_OK=zeroStatus;
+}
+
+bool storage::getZEROStatus()
+{
+    return m_is_ZERO_OK;
+}
+
 

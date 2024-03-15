@@ -2,7 +2,7 @@
 #define DIALOGLED_H
 
 #include <QDialog>
-
+#include "storage.h"
 namespace Ui {
 class DialogLED;
 }
@@ -57,7 +57,10 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_buttonBox_accepted();
+
 private:
+    bool leds[10];
     void triggerLED();
     Ui::DialogLED *ui;
 };

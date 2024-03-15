@@ -59,11 +59,16 @@ private slots:
 
     void on_pushButton_16_clicked();
 
+    void on_pushButton_14_clicked();
+
 private:
     Ui::MainWindow *ui;
     QSerialPort *m_serial = nullptr;
     QString buffer;
     bool isFullBuffer;
     int stateOfCan;
+    bool m_NFC_status;
+    bool m_HAL_status;
+    bool m_ZERO_status;
 };
 #endif // MAINWINDOW_H

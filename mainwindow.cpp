@@ -73,7 +73,7 @@ void MainWindow::readData(){
     }
     }
     if(isFullBuffer){
-    qDebug()<<buffer;
+   // qDebug()<<buffer;
     }
 
     //Parsing here myb move it later
@@ -148,7 +148,7 @@ void MainWindow::readData(){
 
         }
 
-        qDebug()<<storage::getPinData("pin4V");
+       // qDebug()<<storage::getPinData("pin4V");
         ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
 
     }else {
@@ -285,7 +285,7 @@ void MainWindow::on_Buttons_NOK_clicked()
 
 void MainWindow::on_NFC_OK_clicked()
 {
-
+    m_NFC_status=true;
     ui->nfc_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 
 }
@@ -293,7 +293,7 @@ void MainWindow::on_NFC_OK_clicked()
 
 void MainWindow::on_NFC_NOK_clicked()
 {
-
+    m_NFC_status=false;
     ui->nfc_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
 
 }
@@ -301,7 +301,7 @@ void MainWindow::on_NFC_NOK_clicked()
 
 void MainWindow::on_HAL_OK_clicked()
 {
-
+    m_HAL_status=true;
     ui->hal_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 
 }
@@ -309,6 +309,7 @@ void MainWindow::on_HAL_OK_clicked()
 
 void MainWindow::on_HAL_NOK_clicked()
 {
+    m_HAL_status=false;
     ui->hal_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
 
 }
@@ -316,12 +317,14 @@ void MainWindow::on_HAL_NOK_clicked()
 
 void MainWindow::on_ZERO_OK_clicked()
 {
+    m_ZERO_status=true;
     ui->zero_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 }
 
 
 void MainWindow::on_ZERO_NOK_clicked()
 {
+    m_ZERO_status=false;
     ui->zero_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
 }
 
@@ -391,6 +394,36 @@ void MainWindow::on_pushButton_16_clicked()
 {
     QString testS="<CANLED>";
     writeData(testS.toUtf8());
+
+}
+
+
+void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
+{
+    qDebug()<<"------------------------------------------------";
+    qDebug()<<"BUTTONS:";
+    qDebug()<<storage::getButtonData("Button1");
+    qDebug()<<storage::getButtonData("Button2");
+    storage::setNFCStatus(m_NFC_status);
+    qDebug()<<storage::getNFCStatus();
+    storage::setHALStatus(m_HAL_status);
+    qDebug()<<storage::getHALStatus();
+    storage::setZEROStatus(m_ZERO_status);
+    qDebug()<<storage::getZEROStatus();
+    qDebug()<<"LEDS";
+    qDebug() << storage::getLedData("LED1");
+    qDebug() << storage::getLedData("LED2");
+    qDebug() << storage::getLedData("LED3");
+    qDebug() << storage::getLedData("LED4");
+    qDebug() << storage::getLedData("LED5");
+    qDebug() << storage::getLedData("LED6");
+    qDebug() << storage::getLedData("LED7");
+    qDebug() << storage::getLedData("LED8");
+    qDebug() << storage::getLedData("LED9");
+    qDebug() << "---------------------------------------";
+
+
+
 
 }
 
