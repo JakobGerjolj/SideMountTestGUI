@@ -73,7 +73,7 @@ void MainWindow::readData(){
         }
     }
     if(isFullBuffer){
-         qDebug()<<buffer;
+        qDebug()<<buffer;
     }
 
     //Parsing here myb move it later
@@ -84,50 +84,57 @@ void MainWindow::readData(){
         QStringList listOfValues =temp.split(",");
 
         if(listOfValues.size()==20){
-        if(listOfValues.at(0)=="0"){
-            ui->check_pins_frame->setVisible(false);
-            ui->check_pins_frame_2->setVisible(true);
+            if(listOfValues.at(0)=="0"){
+                ui->check_pins_frame->setVisible(false);
+                ui->check_pins_frame_2->setVisible(true);
 
-            ui->verticalLayout_2->setStretch(0,2);
-            ui->verticalLayout_2->setStretch(1,2);
-            ui->verticalLayout_2->setStretch(2,1);
-            ui->verticalLayout_2->setStretch(3,1);
-            ui->verticalLayout_2->setStretch(4,1);
-            ui->verticalLayout_2->setStretch(5,1);
-            ui->verticalLayout_2->setStretch(6,1);
-            ui->verticalLayout_2->setStretch(7,1);
-            ui->verticalLayout_2->setStretch(8,1);
-        }else{
-            ui->check_pins_frame->setVisible(true);
-            ui->check_pins_frame_2->setVisible(false);
-            ui->label_3->setText("PINS OK");
-            ui->verticalLayout_2->setStretch(0,1);
-            ui->verticalLayout_2->setStretch(1,1);
-            ui->verticalLayout_2->setStretch(2,1);
-            ui->verticalLayout_2->setStretch(3,1);
-            ui->verticalLayout_2->setStretch(4,1);
-            ui->verticalLayout_2->setStretch(5,1);
-            ui->verticalLayout_2->setStretch(6,1);
-            ui->verticalLayout_2->setStretch(7,1);
-            ui->verticalLayout_2->setStretch(8,1);
-            ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
+                ui->verticalLayout_2->setStretch(0,2);
+                ui->verticalLayout_2->setStretch(1,2);
+                ui->verticalLayout_2->setStretch(2,1);
+                ui->verticalLayout_2->setStretch(3,1);
+                ui->verticalLayout_2->setStretch(4,1);
+                ui->verticalLayout_2->setStretch(5,1);
+                ui->verticalLayout_2->setStretch(6,1);
+                ui->verticalLayout_2->setStretch(7,1);
+                ui->verticalLayout_2->setStretch(8,1);
+            }else{
+                ui->check_pins_frame->setVisible(true);
+                ui->check_pins_frame_2->setVisible(false);
+                ui->label_3->setText("PINS OK");
+                ui->verticalLayout_2->setStretch(0,1);
+                ui->verticalLayout_2->setStretch(1,1);
+                ui->verticalLayout_2->setStretch(2,1);
+                ui->verticalLayout_2->setStretch(3,1);
+                ui->verticalLayout_2->setStretch(4,1);
+                ui->verticalLayout_2->setStretch(5,1);
+                ui->verticalLayout_2->setStretch(6,1);
+                ui->verticalLayout_2->setStretch(7,1);
+                ui->verticalLayout_2->setStretch(8,1);
+                ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
 
 
-        }
+            }
 
             ui->label_pin4V_SW->setText(listOfValues.at(1));//ADD MORE LABELS???
 
             bool temp_bool;
 
 
-            if(listOfValues.at(7)=='0'){
+            if(listOfValues.at(7)=="0"){
                 temp_bool=false;
-            }else temp_bool=true;
+            }else {
+                temp_bool=true;
+            }
             storage::setPinData("pin4V_SW", temp_bool, listOfValues.at(1).toFloat());
+            qDebug()<<"VARIABLE IN READATA";
+            qDebug()<<storage::getPinData("pin4V_SW");
+
             ui->label_pin3_3V_SW->setText(listOfValues.at(2));
-            if(listOfValues.at(8)=='0'){
+            if(listOfValues.at(8)=="0"){
                 temp_bool=false;
-            }else temp_bool=true;
+            }else {
+                temp_bool=true;
+            }
             storage::setPinData("pin3_3V_SW", temp_bool, listOfValues.at(2).toFloat());
             ui->label_pin5_SW->setText(listOfValues.at(3));
             if(listOfValues.at(9)=='0'){
@@ -170,12 +177,12 @@ void MainWindow::readData(){
 
 
 
-            storage::setPinData("pin4V_SW",true,5.0);
-            storage::setPinData("pin3_3V_SW",true,5.0);
-            storage::setPinData("pin5V_SW",true,5.0);
-            storage::setPinData("pin12V",true,5.0);
-            storage::setPinData("pin3_3V",true,5.0);
-            storage::setPinData("pin4V",true,5.0);
+            // storage::setPinData("pin4V_SW",true,5.0); ?????????????????????????
+            // storage::setPinData("pin3_3V_SW",true,5.0);
+            // storage::setPinData("pin5V_SW",true,5.0);
+            // storage::setPinData("pin12V",true,5.0);
+            // storage::setPinData("pin3_3V",true,5.0);
+            // storage::setPinData("pin4V",true,5.0);
 
 
 
@@ -456,6 +463,8 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     Serial = QString::fromStdString(storage::getSERIAL());
     DateTime = storage::getDateTime().toString();
     Employee = QString::fromStdString(storage::getEmployee());
+    qDebug()<<"PIN1";
+    qDebug()<<storage::getPinData("pin4V_SW");
     if(storage::getPinData("pin4V_SW").first){
         pin4V_SW_isOK= "OK";
     }else {
@@ -467,7 +476,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     }else {
         pin3_3V_SW_isOK= "NOT OK";
     }
-    pin3_3V_SW_isOK= QString::number(storage::getPinData("pin3_3V_SW").second);
+    pin3_3V_SW_value= QString::number(storage::getPinData("pin3_3V_SW").second);
     if(storage::getPinData("pin5V_SW").first){
         pin5V_SW_isOK= "OK";
     }else {
@@ -483,7 +492,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     if(storage::getPinData("pin3_3V").first){
         pin3_3V_isOK="OK";
     }else {
-        pin3_3V_value="NOT OK";
+        pin3_3V_isOK="NOT OK";
     }
     pin3_3V_value=QString::number(storage::getPinData("pin3_3V").second);
     if(storage::getPinData("pin4V").first){
@@ -492,7 +501,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
         pin4V_isOK="NOT OK";
     }
     pin4V_value=QString::number(storage::getPinData("pin4V").second);
-    pin4V_SW_value=QString::number(storage::getPinData("pin4V").second);
+   // pin4V_SW_value=QString::number(storage::getPinData("pin4V").second);
     QString filename = "/home/jakob/SideMountGUI/Data.txt";
     QFile file(filename);
     if(file.open(QIODevice::ReadWrite)){
@@ -505,12 +514,14 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
             stream<<"pin4V_SW>"<<pin4V_SW_isOK<<">"<<pin4V_SW_value<<"\n";}
         else {
             stream<<"pin4V_SW>"<<pin4V_SW_isOK<<"\n";}
-        if(pin3_3V_isOK=="NOT OK"){
+        if(pin3_3V_SW_isOK=="NOT OK"){
             stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<">"<<pin3_3V_SW_value<<"\n";}
-        else stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<"\n";
+        else {
+            stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<"\n";}
         if(pin5V_SW_isOK=="NOT OK"){
             stream<<"pin5V_SW>"<<pin5V_SW_isOK<<">"<<pin5_SW_value<<"\n";
-        }else  stream<<"pin5V_SW>"<<pin5V_SW_isOK<<"\n";
+        }else  {
+            stream<<"pin5V_SW>"<<pin5V_SW_isOK<<"\n";}
         if(pin12V_isOK=="NOT OK"){
             stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
         }else  stream<<"pin12V>"<<pin12V_isOK<<"\n";
@@ -545,6 +556,14 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
         }else {
             stream<<"NFC>NOT OK\n";
+
+        }
+
+        if(storage::getZEROStatus()){
+            stream<<"ZERO>OK\n";
+
+        }else {
+            stream<<"ZERO>NOT OK\n";
 
         }
 

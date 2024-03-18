@@ -1,10 +1,10 @@
->Mon Mar 18 07:43:49 2024>Jakob Gerjolj
-pin4V_SW>OK
-pin3_3V_SW>5
-pin5V_SW>OK
-pin12V>OK
-pin3_3V>5
-pin4V>5
+>Mon Mar 18 08:21:04 2024>Jakob Gerjolj
+pin4V_SW>NOT OK>0
+pin3_3V_SW>NOT OK>0
+pin5V_SW>NOT OK>0
+pin12V>NOT OK>0
+pin3_3V>NOT OK>0
+pin4V>NOT OK>0
 LED1>OK
 LED2>OK
 LED3>OK
@@ -14,5 +14,6 @@ LED6>OK
 LED7>OK
 LED8>OK
 LED9>OK
-NFC>OK
+NFC>NOT OK
 HAL>OK
+ZERO>NOT OK
