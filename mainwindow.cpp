@@ -709,7 +709,7 @@ void MainWindow::on_pushButton_2_clicked()
 
     QProcess process;
 
-    QString firmwarePath ="/home/jakob/Documents/BOOTLOADER/BootloaderCAN/Debug/BootloaderCAN.elf";
+    QString firmwarePath ="/home/jakob/Documents/BOOTLOADER/BootloaderCAN/Debug/BootloaderCAN.bin";
 
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
 
@@ -717,13 +717,13 @@ void MainWindow::on_pushButton_2_clicked()
     QStringList arguments;
 
     arguments << "-c" << "port=SWD";
-    arguments << "-d" << firmwarePath;
+    arguments << "-d" << firmwarePath << "0x08000000 "; // do the same for testFW
 
     process.setProgram(programmerPath);
     process.setArguments(arguments);
 
-    process.start();
-
+   // process.start();
+    QProcess::startDetached(programmerPath, arguments);
     //process.start(command, arguments);
 
     //process.waitForFinished();
