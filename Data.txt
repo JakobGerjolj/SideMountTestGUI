@@ -78,3 +78,63 @@ LED9>OK
 NFC>OK
 HAL>OK
 ZERO>OK
+--------------------------------------------------------
+>Mon Mar 18 09:53:43 2024>Jakob Gerjolj
+pin4V_SW>OK
+pin3_3V_SW>OK
+pin5V_SW>OK
+pin12V>OK
+pin3_3V>5
+pin4V>5
+LED1>NOT OK: 
+LED2>NOT OK: 
+LED3>NOT OK: 
+LED4>NOT OK: 
+LED5>OK
+LED6>NOT OK: 
+LED7>NOT OK: 
+LED8>NOT OK: 
+LED9>OK
+NFC>NOT OK
+NFC>NOT OK
+ZERO>NOT OK
+--------------------------------------------------------
+SNKON2345634>Mon Mar 18 09:57:15 2024>Anže Štravs
+pin4V_SW>OK
+pin3_3V_SW>OK
+pin5V_SW>OK
+pin12V>OK
+pin3_3V>OK
+pin4V>OK
+LED1>NOT OK: G Monalisa	
+LED2>NOT OK: G 
+LED3>NOT OK: G 
+LED4>NOT OK: G Kinroar
+LED5>NOT OK: G 
+LED6>NOT OK: G 
+LED7>NOT OK: B CompSci
+LED8>NOT OK: R 
+LED9>NOT OK: 
+NFC>NOT OK
+NFC>NOT OK
+ZERO>NOT OK
+--------------------------------------------------------
+>Mon Mar 18 09:58:34 2024>Jakob Gerjolj
+pin4V_SW>OK
+pin3_3V_SW>OK
+pin5V_SW>OK
+pin12V>OK
+pin3_3V>OK
+pin4V>OK
+LED1>OK
+LED2>OK
+LED3>OK
+LED4>OK
+LED5>OK
+LED6>OK
+LED7>OK
+LED8>OK
+LED9>OK
+NFC>OK
+HAL>OK
+ZERO>OK

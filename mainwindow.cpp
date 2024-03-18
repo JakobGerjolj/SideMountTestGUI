@@ -529,11 +529,11 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
             stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
         }else  stream<<"pin12V>"<<pin12V_isOK<<"\n";
         if(pin3_3V_isOK=="NOT OK"){
-            stream<<"pin3_3V>"<<pin3_3V_isOK<<">"<<pin3_3V_SW_value<<"\n";
-        }else  stream<<"pin3_3V>"<<pin3_3V_value<<"\n";
+            stream<<"pin3_3V>"<<pin3_3V_isOK<<">LOW"<<"\n";
+        }else  stream<<"pin3_3V>"<<pin3_3V_isOK<<"\n";
         if(pin4V_isOK=="NOT OK"){
-            stream<<"pin4V>"<<pin4V_isOK<<">"<<pin4V_value<<"\n";
-        }else  stream<<"pin4V>"<<pin4V_value<<"\n";
+            stream<<"pin4V>"<<pin4V_isOK<<"LOW"<<"\n";
+        }else  stream<<"pin4V>"<<pin4V_isOK<<"\n";
 
 
 
@@ -558,7 +558,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
             stream<<"HAL>OK\n";
 
         }else {
-            stream<<"NFC>NOT OK\n";
+            stream<<"HAL>NOT OK\n";
 
         }
 
