@@ -9,6 +9,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QProcess>
+#include <QFileInfo>
 #include "storage.h"
 #include "dialog.h"
 #include "dialogled.h"

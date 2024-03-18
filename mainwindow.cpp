@@ -503,10 +503,29 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
         pin4V_isOK="NOT OK";
     }
     pin4V_value=QString::number(storage::getPinData("pin4V").second);
-   // pin4V_SW_value=QString::number(storage::getPinData("pin4V").second);
-    QString filename = "/home/jakob/SideMountGUI/Data.txt";
+    // pin4V_SW_value=QString::number(storage::getPinData("pin4V").second);
+    //Side mount test-SN
+
+
+    //chekc if it already exists
+
+    QString filename = "/home/jakob/SideMountGUI/Side_Mount_test.";
+    filename.append(storage::getSERIAL());
+
+    int index=1;
+
+    QFileInfo fileInfo(filename);
+
+    while(fileInfo.exists()){
+        filename.append(" ("+ QString::number(index) + ")");
+        index++;
+    }
+    filename.append(".txt");
+
+
+
     QFile file(filename);
-    if(file.open(QIODevice::Append | QIODevice::Text)){
+    if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream stream(&file);
         stream<<"--------------------------------------------------------\n";
         stream<<Serial<<">";
@@ -591,7 +610,7 @@ void MainWindow::on_pushButton_clicked() // upload test FW
 
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
 
-   // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
+    // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
     QStringList arguments;
 
     arguments << "-c" << "port=SWD";
