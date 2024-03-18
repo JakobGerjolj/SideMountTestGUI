@@ -587,19 +587,110 @@ void MainWindow::on_pushButton_clicked() // upload test FW
 
     QProcess process;
 
-    QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
-    QStringList arguments = {"--list"};
+    QString firmwarePath ="/home/jakob/Documents/SIDEMOUNTJIG/Sidemount/Debug/Sidemount.elf";
 
-    process.start(command, arguments);
+    QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
 
-    process.waitForFinished();
+   // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
+    QStringList arguments;
 
-    QByteArray output = process.readAllStandardOutput();
+    arguments << "-c" << "port=SWD";
+    arguments << "-d" << firmwarePath;
 
-    QStringList lines= QString(output).split('\n', Qt::SkipEmptyParts);
-   // qDebug() << "Output:" << output;
-    for (const QString &line : lines) {
-        qDebug().noquote() << line;
+    process.setProgram(programmerPath);
+    process.setArguments(arguments);
+
+    process.start();
+
+    //process.start(command, arguments);
+
+    //process.waitForFinished();
+
+    if(!process.waitForFinished()){
+        qDebug() << "Failed to execute stm32Programmer";
+
+    }
+
+
+    //myb interact with UI a little bit
+    // QByteArray output = process.readAllStandardOutput();
+
+    // // Split the output into lines
+    // QStringList lines = QString(output).split('\n', Qt::SkipEmptyParts);
+
+    // // Print each line separately
+    // qDebug() << "Output:";
+    // for (const QString &line : lines) {
+    //     qDebug().noquote() << line;
+    // }
+
+
+
+    int exitCode = process.exitCode();
+    if(exitCode == 0){
+        qDebug() << "Firmware good";
+
+    }else {
+        qDebug() << "Programmer not good" << exitCode;
+
+    }
+
+
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+
+
+    QProcess process;
+
+    QString firmwarePath ="/home/jakob/Documents/BOOTLOADER/BootloaderCAN/Debug/BootloaderCAN.elf";
+
+    QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
+
+    // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
+    QStringList arguments;
+
+    arguments << "-c" << "port=SWD";
+    arguments << "-d" << firmwarePath;
+
+    process.setProgram(programmerPath);
+    process.setArguments(arguments);
+
+    process.start();
+
+    //process.start(command, arguments);
+
+    //process.waitForFinished();
+
+    if(!process.waitForFinished()){
+        qDebug() << "Failed to execute stm32Programmer";
+
+    }
+
+
+    //myb interact with UI a little bit
+    // QByteArray output = process.readAllStandardOutput();
+
+    // // Split the output into lines
+    // QStringList lines = QString(output).split('\n', Qt::SkipEmptyParts);
+
+    // // Print each line separately
+    // qDebug() << "Output:";
+    // for (const QString &line : lines) {
+    //     qDebug().noquote() << line;
+    // }
+
+
+
+    int exitCode = process.exitCode();
+    if(exitCode == 0){
+        qDebug() << "Firmware good";
+
+    }else {
+        qDebug() << "Programmer not good" << exitCode;
+
     }
 
 }

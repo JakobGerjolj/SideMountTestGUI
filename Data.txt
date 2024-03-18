@@ -138,3 +138,43 @@ LED9>OK
 NFC>OK
 HAL>OK
 ZERO>OK
+--------------------------------------------------------
+>Mon Mar 18 10:17:24 2024>Jakob Gerjolj
+pin4V_SW>OK
+pin3_3V_SW>OK
+pin5V_SW>OK
+pin12V>OK
+pin3_3V>OK
+pin4V>OK
+LED1>OK
+LED2>OK
+LED3>OK
+LED4>OK
+LED5>OK
+LED6>OK
+LED7>OK
+LED8>OK
+LED9>OK
+NFC>NOT OK
+HAL>OK
+ZERO>NOT OK
+--------------------------------------------------------
+>Mon Mar 18 11:45:22 2024>Jakob Gerjolj
+pin4V_SW>OK
+pin3_3V_SW>OK
+pin5V_SW>OK
+pin12V>OK
+pin3_3V>OK
+pin4V>OK
+LED1>OK
+LED2>OK
+LED3>OK
+LED4>OK
+LED5>OK
+LED6>OK
+LED7>OK
+LED8>OK
+LED9>OK
+NFC>NOT OK
+HAL>NOT OK
+ZERO>NOT OK
