@@ -328,6 +328,15 @@ void MainWindow::on_ZERO_NOK_clicked()
 
 void MainWindow::on_LED_OK_clicked()
 {
+    storage::setLedData("LED1", true, "");
+    storage::setLedData("LED2", true, "");
+    storage::setLedData("LED3", true, "");
+    storage::setLedData("LED4", true, "");
+    storage::setLedData("LED5", true, "");
+    storage::setLedData("LED6", true, "");
+    storage::setLedData("LED7", true, "");
+    storage::setLedData("LED8", true, "");
+    storage::setLedData("LED9", true, "");
     ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 }
 
@@ -511,6 +520,8 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
         if(pin4V_isOK=="NOT OK"){
             stream<<"pin4V>"<<pin4V_isOK<<">"<<pin4V_value<<"\n";
         }else  stream<<"pin4V>"<<pin4V_value<<"\n";
+
+
 
         for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
 
