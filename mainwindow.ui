@@ -972,10 +972,16 @@
    </property>
    <widget class="QMenu" name="menuHeloo">
     <property name="title">
-     <string>Heloo</string>
+     <string>Test</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
     </property>
    </widget>
    <addaction name="menuHeloo"/>
+   <addaction name="menuSettings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

@@ -644,15 +644,14 @@ void MainWindow::on_pushButton_clicked() // upload test FW
 
     QProcess process;
 
-    QString firmwarePath ="/home/jakob/Documents/SIDEMOUNTJIG/Sidemount/Debug/Sidemount.elf";
+    QString firmwarePath ="/home/jakob/Documents/SIDEMOUNTJIG/Sidemount/Debug/Sidemount.bin";
 
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
-
-    // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
+     // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
     QStringList arguments;
 
     arguments << "-c" << "port=SWD";
-    arguments << "-d" << firmwarePath;
+    arguments << "-d" << firmwarePath << "0x08000000 ";;
 
     process.setProgram(programmerPath);
     process.setArguments(arguments);
