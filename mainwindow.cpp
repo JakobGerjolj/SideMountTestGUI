@@ -56,7 +56,7 @@ void MainWindow::readData(){
     const QByteArray data = m_serial->readAll();
 
     QString str = QString::fromUtf8(data);
-    // qDebug()<<data;
+    qDebug()<<data;
     str.replace("\r\n","");
 
     if(!str.isEmpty()){

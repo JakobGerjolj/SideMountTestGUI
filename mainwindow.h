@@ -72,5 +72,6 @@ private:
     bool m_NFC_status;
     bool m_HAL_status;
     bool m_ZERO_status;
+
 };
 #endif // MAINWINDOW_H
