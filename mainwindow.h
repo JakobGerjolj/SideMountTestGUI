@@ -8,6 +8,7 @@
 #include <QTimer>
 #include <QFile>
 #include <QTextStream>
+#include <QProcess>
 #include "storage.h"
 #include "dialog.h"
 #include "dialogled.h"
@@ -62,6 +63,8 @@ private slots:
     void on_pushButton_16_clicked();
 
     void on_pushButton_14_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

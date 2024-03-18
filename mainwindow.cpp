@@ -581,3 +581,23 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
 }
 
+
+void MainWindow::on_pushButton_clicked() // upload test FW
+{
+
+    QProcess process;
+
+    QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
+    QStringList arguments = {"--list"};
+
+    process.start(command, arguments);
+
+    process.waitForFinished();
+
+    QByteArray output = process.readAllStandardOutput();
+
+    qDebug() << "Output:" << output;
+
+
+}
+
