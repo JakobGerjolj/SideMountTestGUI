@@ -504,8 +504,9 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
    // pin4V_SW_value=QString::number(storage::getPinData("pin4V").second);
     QString filename = "/home/jakob/SideMountGUI/Data.txt";
     QFile file(filename);
-    if(file.open(QIODevice::ReadWrite)){
+    if(file.open(QIODevice::Append | QIODevice::Text)){
         QTextStream stream(&file);
+        stream<<"--------------------------------------------------------\n";
         stream<<Serial<<">";
         stream<<DateTime<<">";
         stream<<Employee;
