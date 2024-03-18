@@ -413,6 +413,7 @@ void MainWindow::on_pushButton_16_clicked()
 
 void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 {
+
     qDebug()<<"------------------------------------------------";
     qDebug()<<"SERIAL";
     storage::setSERIAL(ui->Serial_line->text().toStdString());
@@ -455,6 +456,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     qDebug() << storage::getLedData("LED8");
     qDebug() << storage::getLedData("LED9");
     qDebug() << "---------------------------------------";
+
 
     QString Serial, DateTime, Employee, pin4V_SW_isOK, pin4V_SW_value, pin3_3V_SW_isOK, pin3_3V_SW_value, pin5V_SW_isOK, pin5_SW_value, pin12V_isOK,pin12V_value, pin3_3V_isOK, pin3_3V_value, pin4V_isOK, pin4V_value;
 
