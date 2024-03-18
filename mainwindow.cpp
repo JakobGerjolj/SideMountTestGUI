@@ -596,8 +596,11 @@ void MainWindow::on_pushButton_clicked() // upload test FW
 
     QByteArray output = process.readAllStandardOutput();
 
-    qDebug() << "Output:" << output;
-
+    QStringList lines= QString(output).split('\n', Qt::SkipEmptyParts);
+   // qDebug() << "Output:" << output;
+    for (const QString &line : lines) {
+        qDebug().noquote() << line;
+    }
 
 }
 
