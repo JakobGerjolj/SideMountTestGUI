@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    Report *report = new Report;
+    m_report=report;
     m_processBootLoader= new QProcess;
     m_processSideMount = new QProcess;
     openSerialPort();
@@ -324,9 +326,6 @@ void MainWindow::on_LED_NOK_clicked()
 
 }
 
-
-
-
 void MainWindow::on_dateTimeEdit_timeChanged(const QTime &time)
 {
 
@@ -380,6 +379,12 @@ void MainWindow::on_pushButton_16_clicked()
 
 void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 {
+    ui->buttons_check_frame->setStyleSheet("");
+    ui->nfc_check_frame->setStyleSheet("");
+    ui->hal_check_frame->setStyleSheet("");
+    ui->zero_check_frame->setStyleSheet("");
+    ui->led_check_frame->setStyleSheet("");
+    ui->can_frame->setStyleSheet("");
     QMessageBox msgBox;
     msgBox.setText("Report created");
     msgBox.exec();
@@ -389,167 +394,8 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     storage::setNFCStatus(m_NFC_status);
     storage::setHALStatus(m_HAL_status);
     storage::setZEROStatus(m_ZERO_status);
-
-    //need to save to report class
-    //Getting variables ready for report
-    QString Serial, DateTime, Employee, pin4V_SW_isOK, pin4V_SW_value, pin3_3V_SW_isOK, pin3_3V_SW_value, pin5V_SW_isOK, pin5_SW_value, pin12V_isOK,pin12V_value, pin3_3V_isOK, pin3_3V_value, pin4V_isOK, pin4V_value;
-    LedDataMap ledMapa=storage::getLedMap();
-    Serial = QString::fromStdString(storage::getSERIAL());
-    DateTime = storage::getDateTime().toString();
-    Employee = QString::fromStdString(storage::getEmployee());
-    if(storage::getPinData("pin4V_SW").first){
-        pin4V_SW_isOK= "OK";
-    }else {
-        pin4V_SW_isOK= "NOT OK";
-    }
-    pin4V_SW_value= QString::number(storage::getPinData("pin4V_SW").second);
-    if(storage::getPinData("pin3_3V_SW").first){
-        pin3_3V_SW_isOK= "OK";
-    }else {
-        pin3_3V_SW_isOK= "NOT OK";
-    }
-    pin3_3V_SW_value= QString::number(storage::getPinData("pin3_3V_SW").second);
-    if(storage::getPinData("pin5V_SW").first){
-        pin5V_SW_isOK= "OK";
-    }else {
-        pin5V_SW_isOK= "NOT OK";
-    }
-    pin5_SW_value= QString::number(storage::getPinData("pin5V_SW").second);
-    if(storage::getPinData("pin12V").first){
-        pin12V_isOK="OK";
-    }else {
-        pin12V_isOK="NOT OK";
-    }
-    pin12V_value=QString::number(storage::getPinData("pin12V").second);
-    if(storage::getPinData("pin3_3V").first){
-        pin3_3V_isOK="OK";
-    }else {
-        pin3_3V_isOK="NOT OK";
-    }
-    pin3_3V_value=QString::number(storage::getPinData("pin3_3V").second);
-    if(storage::getPinData("pin4V").first){
-        pin4V_isOK="OK";
-    }else {
-        pin4V_isOK="NOT OK";
-    }
-    pin4V_value=QString::number(storage::getPinData("pin4V").second);
-
-    //Writting to file
-    QString filepath = "/home/jakob/SideMountGUI/";
-    QString filename = "/home/jakob/SideMountGUI/Side_Mount_test.";
-    QString temps;
-    filename.append(storage::getSERIAL());
-
-    int index=1;
-
-    QFileInfo fileInfo(filename);
-    temps=filename;
-    while(fileInfo.exists(temps)){
-        qDebug()<<"FILE ALREADY EXISTS!!";
-        qDebug()<<"Appending";
-        temps.append(" (");
-        temps.append(QString::number(index));
-        temps.append(")");
-        index++;
-
-    }
-    temps.append(".txt");
-    filename=temps;
-    qDebug()<<"Filename: "<<filename;
-    qDebug()<<"Temps"<<filename;
-    int indok=1;
-    while(true){
-        if(fileInfo.exists(temps)){
-            qDebug()<<"it already exists dont overwrite it";
-            qDebug()<<"Adding number to not delete";
-            if(temps[temps.length() -7] != '('){
-                temps.insert(temps.length() - 4, " (" + QString::number(indok) + ")");
-            }else {
-                temps.replace(temps.length() -6,1, QString::number(indok));
-            }
-        }else {
-            break;
-
-        }
-        indok++;
-
-    }
-    filename=temps;
-
-
-    QFile file(filename);
-    if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        QTextStream stream(&file);
-        stream<<"--------------------------------------------------------\n";
-        stream<<Serial<<">";
-        stream<<DateTime<<">";
-        stream<<Employee;
-        stream<<"\n";
-        if(pin4V_SW_isOK=="NOT OK"){
-            stream<<"pin4V_SW>"<<pin4V_SW_isOK<<">"<<pin4V_SW_value<<"\n";}
-        else {
-            stream<<"pin4V_SW>"<<pin4V_SW_isOK<<"\n";}
-        if(pin3_3V_SW_isOK=="NOT OK"){
-            stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<">"<<pin3_3V_SW_value<<"\n";}
-        else {
-            stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<"\n";}
-        if(pin5V_SW_isOK=="NOT OK"){
-            stream<<"pin5V_SW>"<<pin5V_SW_isOK<<">"<<pin5_SW_value<<"\n";
-        }else  {
-            stream<<"pin5V_SW>"<<pin5V_SW_isOK<<"\n";}
-        if(pin12V_isOK=="NOT OK"){
-            stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
-        }else  stream<<"pin12V>"<<pin12V_isOK<<"\n";
-        if(pin3_3V_isOK=="NOT OK"){
-            stream<<"pin3_3V>"<<pin3_3V_isOK<<">LOW"<<"\n";
-        }else  stream<<"pin3_3V>"<<pin3_3V_isOK<<"\n";
-        if(pin4V_isOK=="NOT OK"){
-            stream<<"pin4V>"<<pin4V_isOK<<"LOW"<<"\n";
-        }else  stream<<"pin4V>"<<pin4V_isOK<<"\n";
-
-
-
-        for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
-
-            if(led->second.first){
-                stream<<QString::fromStdString(led->first)<<">OK\n";
-            }else {
-                stream<<QString::fromStdString(led->first)<<">NOT OK: "<<QString::fromStdString(led->second.second)<<"\n";
-
-            }
-
-        }
-
-        if(storage::getNFCStatus()){
-            stream<<"NFC>OK\n";
-        }else {
-            stream<<"NFC>NOT OK\n";
-        }
-
-        if(storage::getHALStatus()){
-            stream<<"HAL>OK\n";
-
-        }else {
-            stream<<"HAL>NOT OK\n";
-
-        }
-
-        if(storage::getZEROStatus()){
-            stream<<"ZERO>OK\n";
-
-        }else {
-            stream<<"ZERO>NOT OK\n";
-
-        }
-
-
-    }
-
-    file.close();
-    qDebug()<<"Done good !";
-
-//Stopped writting to file
-
+    qDebug()<<"Attempting cleaner report";
+    m_report->createReport();
 
 }
 
@@ -558,19 +404,13 @@ void MainWindow::on_pushButton_clicked() //upload test FW
 {
 
     QString firmwarePath ="/home/jakob/Documents/SIDEMOUNTJIG/Sidemount/Debug/Sidemount.bin";
-
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
     QStringList arguments;
-
     arguments << "-c" << "port=SWD";
     arguments << "-d" << firmwarePath << "0x08000000 ";;
-
-
     m_processSideMount->setProgram(programmerPath);
     m_processSideMount->setArguments(arguments);
-
     m_processSideMount->start();
-
     ui->pushButton->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
     ui->status_label->setText("Uploading sidemount firmware");
@@ -588,23 +428,14 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
 
 
     QProcess process;
-
-
     QString firmwarePath=m_BootloaderPath; //changed to variable
-
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
-
-
     QStringList arguments;
-
     arguments << "-c" << "port=SWD";
     arguments << "-d" << firmwarePath << "0x08000000 ";
-
     m_processBootLoader->setProgram(programmerPath);
     m_processBootLoader->setArguments(arguments);
-
     m_processBootLoader->start();
-
     ui->pushButton->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
     ui->status_label->setText("Uploading bootloader");

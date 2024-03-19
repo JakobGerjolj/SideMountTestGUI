@@ -34,6 +34,7 @@ public:
     static std::string getEmployee();
     static LedDataMap getLedMap();
 
+
 private:
     inline static PinDataMap m_PinDataMap;
     inline static LedDataMap m_LedDataMap;

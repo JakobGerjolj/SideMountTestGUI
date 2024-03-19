@@ -28,6 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         dialogled.h dialogled.cpp dialogled.ui
         storage.h storage.cpp
         settingsdialog.h settingsdialog.cpp settingsdialog.ui
+        report.h report.cpp
 
 
     )

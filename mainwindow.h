@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <QtWidgets>
 #include <QGraphicsEffect>
+#include "report.h"
 #include "settingsdialog.h"
 #include "storage.h"
 #include "dialog.h"
@@ -79,6 +80,8 @@ private:
     QProcess *m_processBootLoader{nullptr};
     QString m_ArduinoPort;
     QString m_BootloaderPath;
+    Report *m_report;
+
 
 };
 #endif // MAINWINDOW_H
