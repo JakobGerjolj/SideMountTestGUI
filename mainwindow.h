@@ -75,6 +75,8 @@ private slots:
 
     void on_settings_button_clicked();
 
+    void on_actionSettings_triggered();
+
 private:
     Ui::MainWindow *ui;
     QSerialPort *m_serial = nullptr;
@@ -84,6 +86,9 @@ private:
     bool m_NFC_status;
     bool m_HAL_status;
     bool m_ZERO_status;
+    QProcess *m_processSideMount{nullptr};
+    QProcess *m_processBootLoader{nullptr};
+
 
 };
 #endif // MAINWINDOW_H

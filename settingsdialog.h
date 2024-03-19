@@ -22,6 +22,13 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    // QString getBootPath();
+
+    // QString getFinishedFWPath();
+
+    // QString getArduinoPort();
+    void on_buttonBox_accepted();
+
 private:
     static QString bootFirmwarePath;
     static QString finishedFirmwarePath;

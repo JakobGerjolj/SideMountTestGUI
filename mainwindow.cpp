@@ -6,7 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
+    m_processBootLoader= new QProcess;
+    m_processSideMount = new QProcess;
     openSerialPort();
     ui->setupUi(this);
     QDateTime currentDateTime = QDateTime::currentDateTime();
@@ -406,7 +407,7 @@ void MainWindow::on_pushButton_15_clicked()
 void MainWindow::on_pushButton_16_clicked()
 {
     QString testS="<CANLED>";
-    writeData(testS.toUtf8());
+    writeData(testS.toUtf8());     // process.setArguments(arguments);
 
 }
 
@@ -653,82 +654,25 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 void MainWindow::on_pushButton_clicked() // upload test FW
 {
 
-    QProcess process;
-
     QString firmwarePath ="/home/jakob/Documents/SIDEMOUNTJIG/Sidemount/Debug/Sidemount.bin";
 
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
-        // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
     QStringList arguments;
 
     arguments << "-c" << "port=SWD";
     arguments << "-d" << firmwarePath << "0x08000000 ";;
 
-     process.setProgram(programmerPath);
-     process.setArguments(arguments);
 
-     process.startDetached(); // need to add popup hard
-     //qDebug()<<"My own output:";
-    // process.readAllStandardOutput();
-    // process.start();
-   // QProcess::startDetached(programmerPath, arguments);
+    m_processSideMount->setProgram(programmerPath);
+    m_processSideMount->setArguments(arguments);
 
-    // ui->pushButton->setEnabled(false);
+    m_processSideMount->start();
 
-    //process.start(command, arguments);
+    ui->pushButton->setEnabled(false);
 
-    //process.waitForFinished();
-
-    // connect(&process, &QProcess::finished, this, [&](){
-    //     ui->pushButton->setEnabled(true);
-    //     qDebug() << "Failed to execute stm32Programmer";
-    // });
-
-    if(!process.waitForFinished()){
-        qDebug() << "Failed to execute stm32Programmer";
-
-    }
-
-
-
-    // QFile outputFile("output.txt");
-    // if(outputFile.open(QIODevice::ReadOnly)){
-    //     QTextStream in(&outputFile);
-    //     QString output = in.readAll();
-    //     outputFile.close();
-
-
-    //     qDebug()<<"Output" << output;
-
-    // }else {
-    //     qDebug()<<"Failed file";
-
-    // }
-
-
-    //myb interact with UI a little bit
-    // QByteArray output = process.readAllStandardOutput();
-
-    // // Split the output into lines
-    // QStringList lines = QString(output).split('\n', Qt::SkipEmptyParts);
-
-    // // Print each line separately
-    // qDebug() << "Output:";
-    // for (const QString &line : lines) {
-    //     qDebug().noquote() << line;
-    // }
-
-
-
-    int exitCode = process.exitCode();
-    if(exitCode == 0){
-        qDebug() << "Firmware good";
-
-    }else {
-        qDebug() << "Programmer not good" << exitCode;
-
-    }
-
+    connect(m_processSideMount, &QProcess::finished, this, [&](){
+        ui->pushButton->setEnabled(true);
+    });
 
 }
 
@@ -743,49 +687,22 @@ void MainWindow::on_pushButton_2_clicked()
 
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
 
-    // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
+
     QStringList arguments;
 
     arguments << "-c" << "port=SWD";
     arguments << "-d" << firmwarePath << "0x08000000 "; // do the same for testFW
 
-    process.setProgram(programmerPath);
-    process.setArguments(arguments);
+    m_processBootLoader->setProgram(programmerPath);
+    m_processBootLoader->setArguments(arguments);
 
-    // process.start();
-    QProcess::startDetached(programmerPath, arguments);
-    //process.start(command, arguments);
+    m_processBootLoader->start();
 
-    //process.waitForFinished();
+    ui->pushButton->setEnabled(false);
 
-    if(!process.waitForFinished()){
-        qDebug() << "Failed to execute stm32Programmer";
-
-    }
-
-
-    //myb interact with UI a little bit
-    // QByteArray output = process.readAllStandardOutput();
-
-    // // Split the output into lines
-    // QStringList lines = QString(output).split('\n', Qt::SkipEmptyParts);
-
-    // // Print each line separately
-    // qDebug() << "Output:";
-    // for (const QString &line : lines) {
-    //     qDebug().noquote() << line;
-    // }
-
-
-
-    int exitCode = process.exitCode();
-    if(exitCode == 0){
-        qDebug() << "Firmware good";
-
-    }else {
-        qDebug() << "Programmer not good" << exitCode;
-
-    }
+    connect(m_processBootLoader, &QProcess::finished, this, [&](){
+        ui->pushButton->setEnabled(true);
+    });
 
 }
 
@@ -794,5 +711,11 @@ void MainWindow::on_settings_button_clicked()
 {
     settingsDialog* settDialog = new settingsDialog(this);
     settDialog->show();
+}
+
+
+void MainWindow::on_actionSettings_triggered()
+{
+    qDebug()<<"Pressed settings!";
 }
 
