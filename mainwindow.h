@@ -10,6 +10,10 @@
 #include <QTextStream>
 #include <QProcess>
 #include <QFileInfo>
+#include <QMessageBox>
+#include <QtWidgets>
+#include <QGraphicsEffect>
+#include "settingsdialog.h"
 #include "storage.h"
 #include "dialog.h"
 #include "dialogled.h"
@@ -68,6 +72,8 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_settings_button_clicked();
 
 private:
     Ui::MainWindow *ui;

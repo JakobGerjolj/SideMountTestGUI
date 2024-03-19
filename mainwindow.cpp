@@ -414,6 +414,17 @@ void MainWindow::on_pushButton_16_clicked()
 void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 {
 
+    // QMessageBox::information(this, tr("REPORT STATUS"), tr("Report finished successfuly"));
+    QMessageBox msgBox;
+    msgBox.setText("Report created");
+    // msgBox.move(100,200);
+    //  msgBox.move(point);
+    //msgBox.setGeometry(600,600, msgBox.width(), msgBox.height());
+
+    // msgBox.setWindowFlags(Qt::CustomizeWindowHint);
+
+    // msgBox.move(300,300);
+    msgBox.exec();
     // qDebug()<<"------------------------------------------------";
     // qDebug()<<"SERIAL";
     storage::setSERIAL(ui->Serial_line->text().toStdString());
@@ -647,18 +658,22 @@ void MainWindow::on_pushButton_clicked() // upload test FW
     QString firmwarePath ="/home/jakob/Documents/SIDEMOUNTJIG/Sidemount/Debug/Sidemount.bin";
 
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
-     // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
+        // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
     QStringList arguments;
 
     arguments << "-c" << "port=SWD";
     arguments << "-d" << firmwarePath << "0x08000000 ";;
 
-    process.setProgram(programmerPath);
-    process.setArguments(arguments);
+     process.setProgram(programmerPath);
+     process.setArguments(arguments);
 
-   // process.start();
-    QProcess::startDetached(programmerPath, arguments);
-   // ui->pushButton->setEnabled(false);
+     process.startDetached(); // need to add popup hard
+     //qDebug()<<"My own output:";
+    // process.readAllStandardOutput();
+    // process.start();
+   // QProcess::startDetached(programmerPath, arguments);
+
+    // ui->pushButton->setEnabled(false);
 
     //process.start(command, arguments);
 
@@ -673,6 +688,22 @@ void MainWindow::on_pushButton_clicked() // upload test FW
         qDebug() << "Failed to execute stm32Programmer";
 
     }
+
+
+
+    // QFile outputFile("output.txt");
+    // if(outputFile.open(QIODevice::ReadOnly)){
+    //     QTextStream in(&outputFile);
+    //     QString output = in.readAll();
+    //     outputFile.close();
+
+
+    //     qDebug()<<"Output" << output;
+
+    // }else {
+    //     qDebug()<<"Failed file";
+
+    // }
 
 
     //myb interact with UI a little bit
@@ -721,7 +752,7 @@ void MainWindow::on_pushButton_2_clicked()
     process.setProgram(programmerPath);
     process.setArguments(arguments);
 
-   // process.start();
+    // process.start();
     QProcess::startDetached(programmerPath, arguments);
     //process.start(command, arguments);
 
@@ -756,5 +787,12 @@ void MainWindow::on_pushButton_2_clicked()
 
     }
 
+}
+
+
+void MainWindow::on_settings_button_clicked()
+{
+    settingsDialog* settDialog = new settingsDialog(this);
+    settDialog->show();
 }
 
