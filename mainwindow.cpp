@@ -610,6 +610,7 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
     ui->status_label->setText("Uploading bootloader");
     connect(m_processBootLoader, &QProcess::finished, this, [&](){
         ui->pushButton->setEnabled(true);
+        ui->pushButton_2->setEnabled(true);
         ui->status_label->setText("Uploaded bootloader");
     });
 
