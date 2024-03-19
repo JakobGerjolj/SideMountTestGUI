@@ -15,6 +15,12 @@ class settingsDialog : public QDialog
 
 public:
     explicit settingsDialog(QWidget *parent = nullptr);
+
+    QString getBotPath();
+
+    QString getFinishedFWPath();
+
+    QString getArduinoPort();
     ~settingsDialog();
 
 private slots:
@@ -22,17 +28,12 @@ private slots:
 
     void on_pushButton_2_clicked();
 
-    // QString getBootPath();
-
-    // QString getFinishedFWPath();
-
-    // QString getArduinoPort();
     void on_buttonBox_accepted();
 
 private:
-    static QString bootFirmwarePath;
-    static QString finishedFirmwarePath;
-    static QString arduinoPort;
+    QString bootFirmwarePath;
+    QString finishedFirmwarePath;
+    QString arduinoPort;
     Ui::settingsDialog *ui;
 };
 

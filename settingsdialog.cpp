@@ -60,7 +60,7 @@ void settingsDialog::on_pushButton_clicked()
     if (!selectedFile.isEmpty()) {
         qDebug() << "Selected file:" << selectedFile;
         ui->file_selected->setText(selectedFile);
-        // bootFirmwarePath=selectedFile;
+        bootFirmwarePath=selectedFile;
 
     } else {
         qDebug() << "No file selected.";
@@ -76,7 +76,7 @@ void settingsDialog::on_pushButton_2_clicked()
     if (!selectedFile.isEmpty()) {
         qDebug() << "Selected file:" << selectedFile;
         ui->file_selected_2->setText(selectedFile);
-        // finishedFirmwarePath=selectedFile;
+        finishedFirmwarePath=selectedFile;
 
     } else {
         qDebug() << "No file selected.";
@@ -86,10 +86,27 @@ void settingsDialog::on_pushButton_2_clicked()
 
 }
 
+QString settingsDialog::getBotPath()
+{
+    return bootFirmwarePath;
+
+}
+
+QString settingsDialog::getFinishedFWPath()
+{
+
+    return finishedFirmwarePath;
+}
+
+QString settingsDialog::getArduinoPort()
+{
+    return arduinoPort;
+}
+
 
 void settingsDialog::on_buttonBox_accepted()
 {
-
+    arduinoPort=ui->portBox->currentText();
 
 }
 

@@ -40,7 +40,6 @@ public slots:
     void onTriggerLED();
 
 private slots:
-
     void readData();
     void openSerialPort();
     void closeSerialPort();
@@ -56,25 +55,15 @@ private slots:
     void on_LED_NOK_clicked();
     void on_dateTimeEdit_timeChanged(const QTime &time);
     void on_pushButton_3_clicked();
-
     void on_LED_OK_2_clicked();
-
     void on_LED_NOK_2_clicked();
-
     void on_pushButton_13_clicked();
-
     void on_pushButton_15_clicked();
-
     void on_pushButton_16_clicked();
-
     void on_pushButton_14_clicked();
-
     void on_pushButton_clicked();
-
     void on_pushButton_2_clicked();
-
     void on_settings_button_clicked();
-
     void on_actionSettings_triggered();
 
 private:
@@ -88,7 +77,8 @@ private:
     bool m_ZERO_status;
     QProcess *m_processSideMount{nullptr};
     QProcess *m_processBootLoader{nullptr};
-
+    QString m_ArduinoPort;
+    QString m_BootloaderPath;
 
 };
 #endif // MAINWINDOW_H

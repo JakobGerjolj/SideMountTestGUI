@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::openSerialPort(){
 
     m_serial = new QSerialPort;
-    m_serial->setPortName("/dev/ttyACM0");
+    m_serial->setPortName("/dev/ttyACM0"); //add variable from settings
     m_serial->setBaudRate(115200);
     m_serial->setDataBits(QSerialPort::Data8);
     m_serial->setParity(QSerialPort::NoParity);
@@ -88,9 +88,8 @@ void MainWindow::readData(){
             if(listOfValues.at(0)=="0"){
                 ui->check_pins_frame->setVisible(false);
                 ui->check_pins_frame_2->setVisible(true);
-
-                ui->verticalLayout_2->setStretch(0,2);
-                ui->verticalLayout_2->setStretch(1,2);
+                ui->verticalLayout_2->setStretch(0,3);
+                ui->verticalLayout_2->setStretch(1,3);
                 ui->verticalLayout_2->setStretch(2,1);
                 ui->verticalLayout_2->setStretch(3,1);
                 ui->verticalLayout_2->setStretch(4,1);
@@ -651,7 +650,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 }
 
 
-void MainWindow::on_pushButton_clicked() // upload test FW
+void MainWindow::on_pushButton_clicked() //upload test FW
 {
 
     QString firmwarePath ="/home/jakob/Documents/SIDEMOUNTJIG/Sidemount/Debug/Sidemount.bin";
@@ -669,21 +668,25 @@ void MainWindow::on_pushButton_clicked() // upload test FW
     m_processSideMount->start();
 
     ui->pushButton->setEnabled(false);
-
+    ui->pushButton_2->setEnabled(false);
+    ui->status_label->setText("Uploading sidemount firmware");
     connect(m_processSideMount, &QProcess::finished, this, [&](){
         ui->pushButton->setEnabled(true);
+        ui->pushButton_2->setEnabled(true);
+        ui->status_label->setText("Uploaded sidemount firmware");
     });
 
 }
 
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_pushButton_2_clicked() //upload bootloader
 {
 
 
     QProcess process;
 
-    QString firmwarePath ="/home/jakob/Documents/BOOTLOADER/BootloaderCAN/Debug/BootloaderCAN.bin";
+
+    QString firmwarePath="/home/jakob/Documents/BOOTLOADER/BootloaderCAN/Debug/BootloaderCAN.bin";
 
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
 
@@ -691,7 +694,7 @@ void MainWindow::on_pushButton_2_clicked()
     QStringList arguments;
 
     arguments << "-c" << "port=SWD";
-    arguments << "-d" << firmwarePath << "0x08000000 "; // do the same for testFW
+    arguments << "-d" << firmwarePath << "0x08000000 ";
 
     m_processBootLoader->setProgram(programmerPath);
     m_processBootLoader->setArguments(arguments);
@@ -699,9 +702,11 @@ void MainWindow::on_pushButton_2_clicked()
     m_processBootLoader->start();
 
     ui->pushButton->setEnabled(false);
-
+    ui->pushButton_2->setEnabled(false);
+    ui->status_label->setText("Uploading bootloader");
     connect(m_processBootLoader, &QProcess::finished, this, [&](){
         ui->pushButton->setEnabled(true);
+        ui->status_label->setText("Uploaded bootloader");
     });
 
 }
@@ -710,7 +715,16 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_settings_button_clicked()
 {
     settingsDialog* settDialog = new settingsDialog(this);
-    settDialog->show();
+    if(settDialog->exec() == QDialog::Accepted){
+        qDebug()<<"Accepted";
+        qDebug()<<settDialog->getBotPath();
+        qDebug()<<"Arduino port:"; // Getting settings
+        qDebug()<<settDialog->getArduinoPort();
+        m_ArduinoPort = settDialog->getArduinoPort();
+        m_BootloaderPath = settDialog->getBotPath();
+
+    }
+
 }
 
 
