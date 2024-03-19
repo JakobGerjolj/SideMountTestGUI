@@ -107,5 +107,6 @@ QString settingsDialog::getArduinoPort()
 void settingsDialog::on_buttonBox_accepted()
 {
     arduinoPort=ui->portBox->currentText();
+
 }
 

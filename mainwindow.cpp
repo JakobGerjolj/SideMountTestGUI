@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::openSerialPort(){
 
     m_serial = new QSerialPort;
-    m_serial->setPortName("/dev/ttyACM0"); //add variable from settings
+    m_serial->setPortName(m_ArduinoPort); //added variable from settings
     m_serial->setBaudRate(115200);
     m_serial->setDataBits(QSerialPort::Data8);
     m_serial->setParity(QSerialPort::NoParity);
@@ -390,7 +390,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     storage::setHALStatus(m_HAL_status);
     storage::setZEROStatus(m_ZERO_status);
 
-
+    //need to save to report class
     //Getting variables ready for report
     QString Serial, DateTime, Employee, pin4V_SW_isOK, pin4V_SW_value, pin3_3V_SW_isOK, pin3_3V_SW_value, pin5V_SW_isOK, pin5_SW_value, pin12V_isOK,pin12V_value, pin3_3V_isOK, pin3_3V_value, pin4V_isOK, pin4V_value;
     LedDataMap ledMapa=storage::getLedMap();
@@ -590,7 +590,7 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
     QProcess process;
 
 
-    QString firmwarePath="/home/jakob/Documents/BOOTLOADER/BootloaderCAN/Debug/BootloaderCAN.bin";
+    QString firmwarePath=m_BootloaderPath; //changed to variable
 
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
 
@@ -620,6 +620,7 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
 void MainWindow::on_settings_button_clicked()
 {
     settingsDialog* settDialog = new settingsDialog(this);
+    closeSerialPort();
     if(settDialog->exec() == QDialog::Accepted){
         qDebug()<<"Accepted";
         qDebug()<<settDialog->getBotPath();
@@ -627,7 +628,8 @@ void MainWindow::on_settings_button_clicked()
         qDebug()<<settDialog->getArduinoPort();
         m_ArduinoPort = settDialog->getArduinoPort();
         m_BootloaderPath = settDialog->getBotPath();
-
+        openSerialPort();
+        connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
     }
 
 }
