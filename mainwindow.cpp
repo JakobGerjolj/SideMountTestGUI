@@ -403,6 +403,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 void MainWindow::on_pushButton_clicked() //upload test FW
 {
 
+    QString outp;
     QString firmwarePath ="/home/jakob/Documents/SIDEMOUNTJIG/Sidemount/Debug/Sidemount.bin";
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
     QStringList arguments;
@@ -414,10 +415,33 @@ void MainWindow::on_pushButton_clicked() //upload test FW
     ui->pushButton->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
     ui->status_label->setText("Uploading sidemount firmware");
+
+    QObject::connect(m_processSideMount, &QProcess::readyReadStandardOutput, [&]() {
+        QByteArray output = m_processSideMount->readAllStandardOutput();
+        QStringList lines = QString(output).split("\n", Qt::SkipEmptyParts);
+       // qDebug() << "Process output:" << QString(output); //output, also gives success state
+        m_processOutput.append(output);
+      //  outp=QString::fromUtf8(output);
+    });
+
+
     connect(m_processSideMount, &QProcess::finished, this, [&](){
         ui->pushButton->setEnabled(true);
         ui->pushButton_2->setEnabled(true);
         ui->status_label->setText("Uploaded sidemount firmware");
+       // m_processOutput = m_processSideMount->readAllStandardOutput();
+        qDebug()<<"______START_OF_STRING___________";
+        qDebug()<<m_processOutput;
+
+        if(m_processOutput.contains("Error:")){
+            qDebug()<<"Error detected this is the error:";
+            QString error;
+            error= m_processOutput.mid(m_processOutput.indexOf("Error:")+6,35); // sending error, try up to \n
+            ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
+        }
+       // outp=QString::fromUtf8(output);
+        //qDebug()<<outp;
+
     });
 
 }

@@ -80,6 +80,7 @@ private:
     QProcess *m_processBootLoader{nullptr};
     QString m_ArduinoPort;
     QString m_BootloaderPath;
+    QString m_processOutput;
     Report *m_report;
 
 
