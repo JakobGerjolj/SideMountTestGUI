@@ -34,7 +34,6 @@ public:
     static std::string getEmployee();
     static LedDataMap getLedMap();
 
-
 private:
     inline static PinDataMap m_PinDataMap;
     inline static LedDataMap m_LedDataMap;
@@ -47,9 +46,6 @@ private:
     inline static std::string m_Serial_number;
     inline static QDateTime m_Date_Time;
     inline static std::string m_employee;
-
-
-
 
 };
 

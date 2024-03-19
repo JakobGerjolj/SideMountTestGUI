@@ -15,11 +15,8 @@ class settingsDialog : public QDialog
 
 public:
     explicit settingsDialog(QWidget *parent = nullptr);
-
     QString getBotPath();
-
     QString getFinishedFWPath();
-
     QString getArduinoPort();
     ~settingsDialog();
 

@@ -57,7 +57,7 @@ void MainWindow::readData(){
     const QByteArray data = m_serial->readAll();
 
     QString str = QString::fromUtf8(data);
-    // qDebug()<<data;
+
     str.replace("\r\n","");
 
     if(!str.isEmpty()){
@@ -74,10 +74,10 @@ void MainWindow::readData(){
         }
     }
     if(isFullBuffer){
-        // qDebug()<<buffer;
+
     }
 
-    //Parsing here myb move it later
+
     if(isFullBuffer){
         QString temp=buffer;
         temp.replace("<","");
@@ -112,10 +112,9 @@ void MainWindow::readData(){
                 ui->verticalLayout_2->setStretch(8,1);
                 ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
 
-
             }
 
-            ui->label_pin4V_SW->setText(listOfValues.at(1));//ADD MORE LABELS???
+            ui->label_pin4V_SW->setText(listOfValues.at(1));
 
             bool temp_bool;
 
@@ -126,8 +125,6 @@ void MainWindow::readData(){
                 temp_bool=true;
             }
             storage::setPinData("pin4V_SW", temp_bool, listOfValues.at(1).toFloat());
-            // qDebug()<<"VARIABLE IN READATA";
-            // qDebug()<<storage::getPinData("pin4V_SW");
 
             ui->label_pin3_3V_SW->setText(listOfValues.at(2));
             if(listOfValues.at(8)=="0"){
@@ -171,31 +168,8 @@ void MainWindow::readData(){
                 ui->label_pin4V->setText("LOW");
 
             }
-
-            // qDebug()<<storage::getPinData("pin4V");
             ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
-
-
-
-            // storage::setPinData("pin4V_SW",true,5.0); ?????????????????????????
-            // storage::setPinData("pin3_3V_SW",true,5.0);
-            // storage::setPinData("pin5V_SW",true,5.0);
-            // storage::setPinData("pin12V",true,5.0);
-            // storage::setPinData("pin3_3V",true,5.0);
-            // storage::setPinData("pin4V",true,5.0);
-
-
-
-
-            ui->button_frame->setStyleSheet("background-color: rgb(0,0,200)"); // skos
-            // if(listOfValues.at(1)=='X'){
-            //     ui->last_button_value->setText("X");
-            // }else if(listOfValues.at(1)=='3'){
-            //     ui->last_button_value->setText("3");//?? do it in one line
-            // }else if(listOfValues.at(1)=='4'){
-            //     ui->last_button_value->setText("4");
-            // }
-
+            ui->button_frame->setStyleSheet("background-color: rgb(0,0,200)");
             ui->last_button_value->setText(listOfValues.at(13));
             ui->button_counter_value->setText(listOfValues.at(14));
 
@@ -204,15 +178,8 @@ void MainWindow::readData(){
                 QTimer::singleShot(1500, this, [this](){
                     ui->NFC_status->setText("DETECTED");
                     ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
-
                 });
-
-
-
             }
-
-
-
             ui->hal_frame->setStyleSheet("background-color: rgb(0,0,200)");
             ui->hal_value->setText(listOfValues.at(16)); //HAL
 
@@ -413,71 +380,23 @@ void MainWindow::on_pushButton_16_clicked()
 
 void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 {
-
-    // QMessageBox::information(this, tr("REPORT STATUS"), tr("Report finished successfuly"));
     QMessageBox msgBox;
     msgBox.setText("Report created");
-    // msgBox.move(100,200);
-    //  msgBox.move(point);
-    //msgBox.setGeometry(600,600, msgBox.width(), msgBox.height());
-
-    // msgBox.setWindowFlags(Qt::CustomizeWindowHint);
-
-    // msgBox.move(300,300);
     msgBox.exec();
-    // qDebug()<<"------------------------------------------------";
-    // qDebug()<<"SERIAL";
     storage::setSERIAL(ui->Serial_line->text().toStdString());
-    // qDebug()<<storage::getSERIAL();
-    // qDebug()<<"DATE TIME";
     storage::setDateTime(ui->dateTimeEdit->dateTime());
-    // qDebug()<<storage::getDateTime();
-    // qDebug()<<"EMPLOYEE";
     storage::setEmployee(ui->comboBox->currentText().toStdString());
-    // qDebug()<<storage::getEmployee();
-    // qDebug()<<"PINS";
-    // qDebug()<<storage::getPinData("pin4V_SW");
-    // qDebug()<<storage::getPinData("pin3_3V_SW");
-    // qDebug()<<storage::getPinData("pin5V_SW");
-    // qDebug()<<storage::getPinData("pin12V");
-    // qDebug()<<storage::getPinData("pin3_3V");
-    // qDebug()<<storage::getPinData("pin4V");
-
-
-    // qDebug()<<"BUTTONS:";
-    // qDebug()<<storage::getButtonData("Button1");
-    // qDebug()<<storage::getButtonData("Button2");
-    // qDebug()<<"NFC";
     storage::setNFCStatus(m_NFC_status);
-    // qDebug()<<storage::getNFCStatus();
-    // qDebug()<<"HAL";
     storage::setHALStatus(m_HAL_status);
-    // qDebug()<<storage::getHALStatus();
-    // qDebug()<<"ZERO";
     storage::setZEROStatus(m_ZERO_status);
-    // qDebug()<<storage::getZEROStatus();
-    // qDebug()<<"LEDS";
-    // qDebug() << storage::getLedData("LED1");
-    // qDebug() << storage::getLedData("LED2");
-    // qDebug() << storage::getLedData("LED3");
-    // qDebug() << storage::getLedData("LED4");
-    // qDebug() << storage::getLedData("LED5");
-    // qDebug() << storage::getLedData("LED6");
-    // qDebug() << storage::getLedData("LED7");
-    // qDebug() << storage::getLedData("LED8");
-    // qDebug() << storage::getLedData("LED9");
-    // qDebug() << "---------------------------------------";
 
 
+    //Getting variables ready for report
     QString Serial, DateTime, Employee, pin4V_SW_isOK, pin4V_SW_value, pin3_3V_SW_isOK, pin3_3V_SW_value, pin5V_SW_isOK, pin5_SW_value, pin12V_isOK,pin12V_value, pin3_3V_isOK, pin3_3V_value, pin4V_isOK, pin4V_value;
-
     LedDataMap ledMapa=storage::getLedMap();
-
     Serial = QString::fromStdString(storage::getSERIAL());
     DateTime = storage::getDateTime().toString();
     Employee = QString::fromStdString(storage::getEmployee());
-    // qDebug()<<"PIN1";
-    // qDebug()<<storage::getPinData("pin4V_SW");
     if(storage::getPinData("pin4V_SW").first){
         pin4V_SW_isOK= "OK";
     }else {
@@ -514,12 +433,8 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
         pin4V_isOK="NOT OK";
     }
     pin4V_value=QString::number(storage::getPinData("pin4V").second);
-    // pin4V_SW_value=QString::number(storage::getPinData("pin4V").second);
-    //Side mount test-SN
 
-
-    //chekc if it already exists
-
+    //Writting to file
     QString filepath = "/home/jakob/SideMountGUI/";
     QString filename = "/home/jakob/SideMountGUI/Side_Mount_test.";
     QString temps;
@@ -529,13 +444,6 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
     QFileInfo fileInfo(filename);
     temps=filename;
-    // temps.append(".txt");
-
-    // while(fileInfo.exists()){
-    //     filename.append(" ("+ QString::number(index) + ")");
-    //     index++;
-    // }
-
     while(fileInfo.exists(temps)){
         qDebug()<<"FILE ALREADY EXISTS!!";
         qDebug()<<"Appending";
@@ -547,8 +455,6 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     }
     temps.append(".txt");
     filename=temps;
-
-    //filename.append(".txt");
     qDebug()<<"Filename: "<<filename;
     qDebug()<<"Temps"<<filename;
     int indok=1;
@@ -557,10 +463,8 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
             qDebug()<<"it already exists dont overwrite it";
             qDebug()<<"Adding number to not delete";
             if(temps[temps.length() -7] != '('){
-                qDebug()<<"ADDING WRONG";
                 temps.insert(temps.length() - 4, " (" + QString::number(indok) + ")");
             }else {
-                qDebug()<<"ADDING RIGHT";
                 temps.replace(temps.length() -6,1, QString::number(indok));
             }
         }else {
@@ -644,7 +548,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     file.close();
     qDebug()<<"Done good !";
 
-
+//Stopped writting to file
 
 
 }
@@ -727,9 +631,7 @@ void MainWindow::on_settings_button_clicked()
 
 }
 
-
 void MainWindow::on_actionSettings_triggered()
 {
     qDebug()<<"Pressed settings!";
 }
-
