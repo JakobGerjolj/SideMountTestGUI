@@ -126,5 +126,34 @@ LedDataMap storage::getLedMap()
 
 }
 
+bool storage::areAllLEDsOK()
+{
+    bool temp=true;
+    for(auto it = m_LedDataMap.begin(); it!=m_LedDataMap.end();++it){
+        if(it->second.first==false){
+            temp=false;
+
+        }
+
+    }
+    return temp;
+
+}
+
+bool storage::areAllButtonsOK()
+{
+
+    bool temp=true;
+    for(auto it = m_ButtonDataMap.begin(); it!=m_ButtonDataMap.end();++it){
+        if(it->second.first==false){
+            temp=false;
+
+        }
+
+    }
+
+    return temp;
+}
+
 
 

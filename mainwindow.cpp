@@ -267,6 +267,16 @@ void MainWindow::on_Buttons_NOK_clicked()
     Dialog* myDialog = new Dialog(this,"What is wrong with buttons: ");
     myDialog->show();
     ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    qDebug()<<"Are they OK";
+
+    if(myDialog->exec() == QDialog::Accepted){ // not work yet
+        if(storage::areAllButtonsOK()){
+            qDebug()<<storage::areAllButtonsOK();
+            ui->buttons_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+        }
+
+    }
+
 
 }
 
@@ -338,6 +348,13 @@ void MainWindow::on_LED_NOK_clicked()
     myDialog->show();
     ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     connect(myDialog, &DialogLED::triggerLEDs, this, &MainWindow::onTriggerLED);
+
+    if(myDialog->exec() == QDialog::Accepted){
+        if(storage::areAllLEDsOK()){
+            ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+        }
+
+    }
 
 }
 

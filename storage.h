@@ -33,6 +33,8 @@ public:
     static void setEmployee(std::string);
     static std::string getEmployee();
     static LedDataMap getLedMap();
+    static bool areAllLEDsOK();
+    static bool areAllButtonsOK();
 
 
 private:
