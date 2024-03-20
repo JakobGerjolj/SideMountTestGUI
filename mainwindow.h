@@ -79,7 +79,7 @@ private:
     QProcess *m_processSideMount{nullptr};
     QProcess *m_processBootLoader{nullptr};
     QString m_ArduinoPort{"/dev/ttyACM0"};
-    QString m_BootloaderPath;
+    QString m_BootloaderPath{"/home/jakob/Documents/BOOTLOADER/BootloaderCAN/Debug/BootloaderCAN.bin"};
     QString m_processOutput;
     Report *m_report;
 

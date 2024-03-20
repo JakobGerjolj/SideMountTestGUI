@@ -123,31 +123,36 @@ void MainWindow::readData(){
 
             if(listOfValues.at(7)=="0"){
                 temp_bool=false;
+                ui->isOK_label_4VSW->setStyleSheet("");
             }else {
                 temp_bool=true;
+                 ui->isOK_label_4VSW->setStyleSheet("background-color: rgb(0,150,0)");
             }
             storage::setPinData("pin4V_SW", temp_bool, listOfValues.at(1).toFloat());
 
             ui->label_pin3_3V_SW->setText(listOfValues.at(2));
             if(listOfValues.at(8)=="0"){
                 temp_bool=false;
+                ui->isOK_label_33VSW->setStyleSheet("");
             }else {
-                ui->isOK_label_33VSW->setStyleSheet("background-color: rgb(0,200,0)");
+                ui->isOK_label_33VSW->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;
             }
             storage::setPinData("pin3_3V_SW", temp_bool, listOfValues.at(2).toFloat());
             ui->label_pin5_SW->setText(listOfValues.at(3));
             if(listOfValues.at(9)=='0'){
                 temp_bool=false;
+                ui->isOK_label_5VSW->setStyleSheet("");
             }else {
-                ui->isOK_label_5VSW->setStyleSheet("background-color: rgb(0,200,0)");
+                ui->isOK_label_5VSW->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;}
             storage::setPinData("pin5V_SW", temp_bool, listOfValues.at(2).toFloat()); //need to add arduino
             ui->label_12V->setText(listOfValues.at(4));
             if(listOfValues.at(10)=='0'){
                 temp_bool=false;
+                ui->isOK_label12V->setStyleSheet("");
             }else {
-                ui->isOK_label12V->setStyleSheet("background-color: rgb(0,200,0)");
+                ui->isOK_label12V->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;}
             storage::setPinData("pin12V", temp_bool, listOfValues.at(2).toFloat());
 
@@ -163,19 +168,21 @@ void MainWindow::readData(){
             if(listOfValues.at(5)=="5.00"){
                 storage::setPinData("pin3_3V", true, 5.00);
                 ui->label_pin3_3V->setText("HIGH");
-                ui->isOK_labelpin33V->setStyleSheet("background-color: rgb(0,200,0)");
+                ui->isOK_labelpin33V->setStyleSheet("background-color: rgb(0,150,0)");
             }else  {
                 storage::setPinData("pin3_3V", false, 0.00);
                 ui->label_pin3_3V->setText("LOW");
+                ui->isOK_labelpin33V->setStyleSheet("");
 
             }
             if(listOfValues.at(6)=="5.00"){
                 storage::setPinData("pin4V", true, 5.00);
                 ui->label_pin4V->setText("HIGH");
-                ui->isOK_label_4V->setStyleSheet("background-color: rgb(0,200,0)");
+                ui->isOK_label_4V->setStyleSheet("background-color: rgb(0,150,0)");
             }else {
                 storage::setPinData("pin4V", false, 0.00);
                 ui->label_pin4V->setText("LOW");
+                ui->isOK_label_4V->setStyleSheet("");
 
             }
             ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
@@ -185,7 +192,7 @@ void MainWindow::readData(){
 
             ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
             if(listOfValues.at(15)=="1"){ //NFC
-                QTimer::singleShot(1500, this, [this](){
+                QTimer::singleShot(5000, this, [this](){
                     ui->NFC_status->setText("DETECTED");
                     ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
                 });
@@ -410,7 +417,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
 void MainWindow::on_pushButton_clicked() //upload test FW
 {
-
+    m_processOutput="";
     QString outp;
     QString firmwarePath ="/home/jakob/Documents/SIDEMOUNTJIG/Sidemount/Debug/Sidemount.bin";
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
@@ -447,7 +454,7 @@ void MainWindow::on_pushButton_clicked() //upload test FW
             error= m_processOutput.mid(m_processOutput.indexOf("Error:")+6,35); // sending error, try up to \n
             ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
         }
-        // outp=QString::fromUtf8(output);
+        //outp=QString::fromUtf8(output);
         //qDebug()<<outp;
 
     });
@@ -457,8 +464,7 @@ void MainWindow::on_pushButton_clicked() //upload test FW
 
 void MainWindow::on_pushButton_2_clicked() //upload bootloader
 {
-
-
+    m_processOutput="";
     QProcess process;
     QString firmwarePath=m_BootloaderPath; //changed to variable
     QString programmerPath="/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
@@ -471,10 +477,31 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
     ui->pushButton->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
     ui->status_label->setText("Uploading bootloader");
+
+
+    QObject::connect(m_processBootLoader, &QProcess::readyReadStandardOutput, [&]() {
+        QByteArray output = m_processSideMount->readAllStandardOutput();
+        QStringList lines = QString(output).split("\n", Qt::SkipEmptyParts);
+        // qDebug() << "Process output:" << QString(output); //output, also gives success state
+        m_processOutput.append(output);
+        //  outp=QString::fromUtf8(output);
+    });
+
+
     connect(m_processBootLoader, &QProcess::finished, this, [&](){
         ui->pushButton->setEnabled(true);
         ui->pushButton_2->setEnabled(true);
         ui->status_label->setText("Uploaded bootloader");
+        if(m_processOutput.contains("Error:")){
+            qDebug()<<"Error detected this is the error:";
+            QString error;
+            error= m_processOutput.mid(m_processOutput.indexOf("Error:")+6,35); // sending error, try up to \n
+            ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
+        }else {
+
+
+        }
+
     });
 
 }
