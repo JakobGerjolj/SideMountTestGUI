@@ -67,6 +67,8 @@ private slots:
     void on_settings_button_clicked();
     void on_actionSettings_triggered();
 
+    void on_actionSettings_changed();
+
 private:
     Ui::MainWindow *ui;
     QSerialPort *m_serial = nullptr;

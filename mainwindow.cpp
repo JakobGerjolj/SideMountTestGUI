@@ -528,3 +528,9 @@ void MainWindow::on_actionSettings_triggered()
 {
     qDebug()<<"Pressed settings!";
 }
+
+void MainWindow::on_actionSettings_changed()
+{
+    qDebug()<<"Pressed settings!";
+}
+
