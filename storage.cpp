@@ -89,7 +89,7 @@ bool storage::getZEROStatus()
     return m_is_ZERO_OK;
 }
 
-void storage::setSERIAL(std::string s)
+void storage::setSERIAL(const std::string& s)
 {
 
     m_Serial_number=s;
@@ -110,7 +110,7 @@ QDateTime storage::getDateTime()
     return m_Date_Time;
 }
 
-void storage::setEmployee(std::string s)
+void storage::setEmployee(const std::string& s)
 {
     m_employee = s;
 }
@@ -153,6 +153,39 @@ bool storage::areAllButtonsOK()
     }
 
     return temp;
+}
+
+void storage::setHALDesc(const std::string& s)
+{
+    m_HAL_desc=s;
+
+}
+
+std::string storage::getHALDesc()
+{
+    return m_HAL_desc;
+}
+
+void storage::setNFCDesc(const std::string& s)
+{
+    m_NFC_desc = s;
+
+}
+
+std::string storage::getNFCDesc()
+{
+    return m_NFC_desc;
+
+}
+
+void storage::setZERODesc(const std::string& s)
+{
+    m_ZERO_desc = s;
+}
+
+std::string storage::getZERODesc()
+{
+    return m_NFC_desc;
 }
 
 

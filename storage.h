@@ -26,15 +26,23 @@ public:
     static bool getHALStatus();
     static void setZEROStatus(bool);
     static bool getZEROStatus();
-    static void setSERIAL(std::string);
+    static void setSERIAL(const std::string&);
     static std::string getSERIAL();
     static void setDateTime(QDateTime);
     static QDateTime getDateTime();
-    static void setEmployee(std::string);
+    static void setEmployee(const std::string&);
     static std::string getEmployee();
     static LedDataMap getLedMap();
     static bool areAllLEDsOK();
     static bool areAllButtonsOK();
+    static void setHALDesc(const std::string&);
+    static std::string getHALDesc();
+    static void setNFCDesc(const std::string&);
+    static std::string getNFCDesc();
+    static void setZERODesc(const std::string&);
+    static std::string getZERODesc();
+
+
 
 
 private:
@@ -49,6 +57,9 @@ private:
     inline static std::string m_Serial_number;
     inline static QDateTime m_Date_Time;
     inline static std::string m_employee;
+    inline static std::string m_HAL_desc;
+    inline static std::string m_NFC_desc;
+    inline static std::string m_ZERO_desc;
 
 };
 

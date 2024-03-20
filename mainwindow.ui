@@ -119,9 +119,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="Buttons_OK">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>40</y>
-       <width>89</width>
+       <x>10</x>
+       <y>50</y>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -132,9 +132,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="Buttons_NOK">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>40</y>
-       <width>89</width>
+       <x>90</x>
+       <y>50</y>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -174,9 +174,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="NFC_OK">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>10</x>
        <y>40</y>
-       <width>89</width>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -187,14 +187,24 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="NFC_NOK">
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>90</x>
        <y>40</y>
-       <width>89</width>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
       <string>NOT OK</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="nfc_textEdit">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>0</y>
+       <width>351</width>
+       <height>81</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -229,9 +239,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="HAL_OK">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>40</y>
-       <width>89</width>
+       <x>10</x>
+       <y>50</y>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -242,14 +252,24 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="HAL_NOK">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>40</y>
-       <width>89</width>
+       <x>90</x>
+       <y>50</y>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
       <string>NOT OK</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="hal_textEdit">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>0</y>
+       <width>351</width>
+       <height>81</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -259,7 +279,7 @@ BOOTLOADER</string>
       <x>720</x>
       <y>330</y>
       <width>521</width>
-      <height>81</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -284,9 +304,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="ZERO_OK">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>10</x>
        <y>40</y>
-       <width>89</width>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -297,9 +317,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="ZERO_NOK">
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>90</x>
        <y>40</y>
-       <width>89</width>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -307,12 +327,22 @@ BOOTLOADER</string>
       <string>NOT OK</string>
      </property>
     </widget>
+    <widget class="QTextEdit" name="zero_textEdit">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>0</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QFrame" name="led_check_frame">
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>420</y>
+      <y>410</y>
       <width>521</width>
       <height>81</height>
      </rect>
@@ -339,9 +369,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="LED_OK">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>40</y>
-       <width>89</width>
+       <x>10</x>
+       <y>50</y>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -352,9 +382,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="LED_NOK">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>40</y>
-       <width>89</width>
+       <x>90</x>
+       <y>50</y>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -885,9 +915,9 @@ BOOTLOADER</string>
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>510</y>
+      <y>500</y>
       <width>521</width>
-      <height>61</height>
+      <height>71</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -912,9 +942,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="LED_OK_2">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>10</x>
        <y>30</y>
-       <width>89</width>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>
@@ -925,9 +955,9 @@ BOOTLOADER</string>
     <widget class="QPushButton" name="LED_NOK_2">
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>90</x>
        <y>30</y>
-       <width>89</width>
+       <width>71</width>
        <height>25</height>
       </rect>
      </property>

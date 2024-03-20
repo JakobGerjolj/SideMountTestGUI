@@ -102,28 +102,28 @@ void Report::createReport()
         if(pin4V_SW_isOK=="NOT OK"){
             stream<<"pin4V_SW>"<<pin4V_SW_isOK<<">"<<pin4V_SW_value<<"\n";}
         else {
-            stream<<"pin4V_SW>"<<pin4V_SW_isOK<<"\n";}
+            stream<<"pin4V_SW>"<<pin4V_SW_isOK<<">"<<pin4V_SW_value<<"\n";}
         if(pin3_3V_SW_isOK=="NOT OK"){
             stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<">"<<pin3_3V_SW_value<<"\n";}
         else {
-            stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<"\n";}
+            stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<">"<<pin3_3V_SW_value<<"\n";}
         if(pin5V_SW_isOK=="NOT OK"){
             stream<<"pin5V_SW>"<<pin5V_SW_isOK<<">"<<pin5_SW_value<<"\n";
         }else  {
-            stream<<"pin5V_SW>"<<pin5V_SW_isOK<<"\n";
+            stream<<"pin5V_SW>"<<pin5V_SW_isOK<<">"<<pin5_SW_value<<"\n";
         }
         if(pin12V_isOK=="NOT OK"){
             stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
-        }else  stream<<"pin12V>"<<pin12V_isOK<<"\n";
+        }else  stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
         if(pin3_3V_isOK=="NOT OK"){
             stream<<"pin3_3V>"<<pin3_3V_isOK<<">LOW"<<"\n";
         }else  {
-            stream<<"pin3_3V>"<<pin3_3V_isOK<<"\n";
+            stream<<"pin3_3V>"<<pin3_3V_isOK<<">HIGH"<<"\n";
         }
         if(pin4V_isOK=="NOT OK"){
             stream<<"pin4V>"<<pin4V_isOK<<">LOW"<<"\n";
         }else  {
-            stream<<"pin4V>"<<pin4V_isOK<<"\n";
+            stream<<"pin4V>"<<pin4V_isOK<<">HIGH"<<"\n";
         }
 
         for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
@@ -140,14 +140,14 @@ void Report::createReport()
         if(storage::getNFCStatus()){
             stream<<"NFC>OK\n";
         }else {
-            stream<<"NFC>NOT OK\n";
+            stream<<"NFC>NOT OK>"<<QString::fromStdString(storage::getNFCDesc())<<"\n";
         }
 
         if(storage::getHALStatus()){
             stream<<"HAL>OK\n";
 
         }else {
-            stream<<"HAL>NOT OK\n";
+            stream<<"HAL>NOT OK>"<<QString::fromStdString(storage::getHALDesc())<<"\n";;
 
         }
 
@@ -155,7 +155,7 @@ void Report::createReport()
             stream<<"ZERO>OK\n";
 
         }else {
-            stream<<"ZERO>NOT OK\n";
+            stream<<"ZERO>NOT OK>"<<QString::fromStdString(storage::getZERODesc())<<"\n";
 
         }
 

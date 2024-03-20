@@ -35,6 +35,12 @@ MainWindow::MainWindow(QWidget *parent)
     storage::addLedData("LED9");
     storage::addButtonData("BUTTON1");
     storage::addButtonData("BUTTON2");
+    storage::setHALDesc("");
+    storage::setZERODesc("");
+    storage::setNFCDesc("");
+    ui->nfc_textEdit->setVisible(false);
+    ui->hal_textEdit->setVisible(false);
+    ui->zero_textEdit->setVisible(false);
     m_timer=new QTimer;
     connect(m_timer, &QTimer::timeout, this, &MainWindow::emitConstantSignal);
     m_timer->start(1000);
@@ -76,13 +82,14 @@ void MainWindow::readData(){
             buffer=str;
             isFullBuffer=false;
 
-        }else if(str[0]!='<' && str[str.size()-1] == '>'){
+        }else if(str[0]!='<' && str[str.size() - 1] == '>'){
             buffer.append(str);
             isFullBuffer=true;
         }
     }
     if(isFullBuffer){
 
+        //Debug purpose
     }
 
 
@@ -122,19 +129,27 @@ void MainWindow::readData(){
 
             }
 
+
             ui->label_pin4V_SW->setText(listOfValues.at(1));
 
             bool temp_bool;
+            qDebug()<<"REAL VALUE FROM ARDUINO:";
+            qDebug()<<listOfValues.at(1);
 
-
+            //Need to format so 5.00V goes into 5.00 float
             if(listOfValues.at(7)=="0"){
                 temp_bool=false;
                 ui->isOK_label_4VSW->setStyleSheet("");
             }else {
                 temp_bool=true;
-                 ui->isOK_label_4VSW->setStyleSheet("background-color: rgb(0,150,0)");
+                ui->isOK_label_4VSW->setStyleSheet("background-color: rgb(0,150,0)");
             }
-            storage::setPinData("pin4V_SW", temp_bool, listOfValues.at(1).toFloat());
+            float temp=(listOfValues.at(1).left(4)).toFloat();
+            qDebug()<<"LEFT STRING";
+            qDebug()<<temp;
+            storage::setPinData("pin4V_SW", temp_bool, (listOfValues.at(1).left(4)).toFloat()); // MYB WORK
+
+            //process value so that 12V value * 11 5V value * 2
 
             ui->label_pin3_3V_SW->setText(listOfValues.at(2));
             if(listOfValues.at(8)=="0"){
@@ -144,7 +159,11 @@ void MainWindow::readData(){
                 ui->isOK_label_33VSW->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;
             }
+
             storage::setPinData("pin3_3V_SW", temp_bool, listOfValues.at(2).toFloat());
+
+
+
             ui->label_pin5_SW->setText(listOfValues.at(3));
             if(listOfValues.at(9)=='0'){
                 temp_bool=false;
@@ -304,6 +323,7 @@ void MainWindow::on_NFC_OK_clicked()
 {
     m_NFC_status=true;
     ui->nfc_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+    ui->nfc_textEdit->setVisible(false);
 
 }
 
@@ -312,6 +332,8 @@ void MainWindow::on_NFC_NOK_clicked()
 {
     m_NFC_status=false;
     ui->nfc_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    ui->nfc_textEdit->setVisible(true);
+    ui->nfc_textEdit->setPlaceholderText("Describe the NFC problem...");
 
 }
 
@@ -320,6 +342,7 @@ void MainWindow::on_HAL_OK_clicked()
 {
     m_HAL_status=true;
     ui->hal_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+    ui->hal_textEdit->setVisible(false);
 
 }
 
@@ -328,6 +351,8 @@ void MainWindow::on_HAL_NOK_clicked()
 {
     m_HAL_status=false;
     ui->hal_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    ui->hal_textEdit->setVisible(true);
+    ui->hal_textEdit->setPlaceholderText("Describe the HAL problem...");
 
 }
 
@@ -336,6 +361,7 @@ void MainWindow::on_ZERO_OK_clicked()
 {
     m_ZERO_status=true;
     ui->zero_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+    ui->zero_textEdit->setVisible(false);
 }
 
 
@@ -343,6 +369,8 @@ void MainWindow::on_ZERO_NOK_clicked()
 {
     m_ZERO_status=false;
     ui->zero_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    ui->zero_textEdit->setVisible(true);
+    ui->zero_textEdit->setPlaceholderText("Describe the ZERO problem...");
 }
 
 
@@ -424,6 +452,7 @@ void MainWindow::on_pushButton_16_clicked()
 
 void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 {
+
     ui->NFC_status->setText("X");
     ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
     ui->buttons_check_frame->setStyleSheet("");
@@ -435,6 +464,9 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     QMessageBox msgBox;
     msgBox.setText("Report created");
     msgBox.exec();
+    storage::setNFCDesc(ui->nfc_textEdit->toPlainText().toStdString());
+    storage::setHALDesc(ui->hal_textEdit->toPlainText().toStdString());
+    storage::setZERODesc(ui->zero_textEdit->toPlainText().toStdString());
     storage::setSERIAL(ui->Serial_line->text().toStdString());
     // storage::setDateTime(ui->dateTimeEdit->dateTime());
     storage::setEmployee(ui->comboBox->currentText().toStdString());
