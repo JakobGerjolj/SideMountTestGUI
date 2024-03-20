@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <QtWidgets>
 #include <QGraphicsEffect>
+#include <QTimer>
 #include "report.h"
 #include "settingsdialog.h"
 #include "storage.h"
@@ -36,11 +37,15 @@ public:
 
 signals:
     void appOpenSignal();
+    void constantSignal();
 
 public slots:
     void onTriggerLED();
+    void handleConstantSignal();
+    void emitConstantSignal();
 
 private slots:
+
     void readData();
     void openSerialPort();
     void closeSerialPort();
@@ -54,7 +59,6 @@ private slots:
     void on_ZERO_NOK_clicked();
     void on_LED_OK_clicked();
     void on_LED_NOK_clicked();
-    void on_dateTimeEdit_timeChanged(const QTime &time);
     void on_pushButton_3_clicked();
     void on_LED_OK_2_clicked();
     void on_LED_NOK_2_clicked();
@@ -84,6 +88,7 @@ private:
     QString m_BootloaderPath{"/home/jakob/Documents/BOOTLOADER/BootloaderCAN/Debug/BootloaderCAN.bin"};
     QString m_processOutput;
     Report *m_report;
+    QTimer *m_timer;
 
 
 };

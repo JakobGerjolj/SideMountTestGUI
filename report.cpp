@@ -9,7 +9,7 @@ void Report::createReport()
 
     LedDataMap ledMapa=storage::getLedMap();
     Serial = QString::fromStdString(storage::getSERIAL());
-    DateTime = storage::getDateTime().toString();
+    DateTime = storage::getDateTime().toString("dd.MM.yyyy hh:mm");
     Employee = QString::fromStdString(storage::getEmployee());
     if(storage::getPinData("pin4V_SW").first){
         pin4V_SW_isOK= "OK";
@@ -94,10 +94,11 @@ void Report::createReport()
     if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream stream(&file);
         stream<<"--------------------------------------------------------\n";
-        stream<<Serial<<">";
+        stream<<"SN:"<<Serial<<">";
         stream<<DateTime<<">";
         stream<<Employee;
         stream<<"\n";
+        stream<<"Device>"<<"Status>"<<"Description\n";
         if(pin4V_SW_isOK=="NOT OK"){
             stream<<"pin4V_SW>"<<pin4V_SW_isOK<<">"<<pin4V_SW_value<<"\n";}
         else {
@@ -109,25 +110,28 @@ void Report::createReport()
         if(pin5V_SW_isOK=="NOT OK"){
             stream<<"pin5V_SW>"<<pin5V_SW_isOK<<">"<<pin5_SW_value<<"\n";
         }else  {
-            stream<<"pin5V_SW>"<<pin5V_SW_isOK<<"\n";}
+            stream<<"pin5V_SW>"<<pin5V_SW_isOK<<"\n";
+        }
         if(pin12V_isOK=="NOT OK"){
             stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
         }else  stream<<"pin12V>"<<pin12V_isOK<<"\n";
         if(pin3_3V_isOK=="NOT OK"){
             stream<<"pin3_3V>"<<pin3_3V_isOK<<">LOW"<<"\n";
-        }else  stream<<"pin3_3V>"<<pin3_3V_isOK<<"\n";
+        }else  {
+            stream<<"pin3_3V>"<<pin3_3V_isOK<<"\n";
+        }
         if(pin4V_isOK=="NOT OK"){
             stream<<"pin4V>"<<pin4V_isOK<<">LOW"<<"\n";
-        }else  stream<<"pin4V>"<<pin4V_isOK<<"\n";
-
-
+        }else  {
+            stream<<"pin4V>"<<pin4V_isOK<<"\n";
+        }
 
         for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
 
             if(led->second.first){
                 stream<<QString::fromStdString(led->first)<<">OK\n";
             }else {
-                stream<<QString::fromStdString(led->first)<<">NOT OK: "<<QString::fromStdString(led->second.second)<<"\n";
+                stream<<QString::fromStdString(led->first)<<">NOT OK>"<<QString::fromStdString(led->second.second)<<"\n";
 
             }
 
@@ -160,7 +164,4 @@ void Report::createReport()
 
     file.close();
     qDebug()<<"Done good !";
-
-
-
 }

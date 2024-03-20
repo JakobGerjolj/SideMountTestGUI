@@ -6,14 +6,15 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     Report *report = new Report;
     m_report=report;
     m_processBootLoader= new QProcess;
     m_processSideMount = new QProcess;
     openSerialPort();
     ui->setupUi(this);
-    QDateTime currentDateTime = QDateTime::currentDateTime();
-    ui->dateTimeEdit->setDateTime(currentDateTime);
+    QDateTime temp=QDateTime::currentDateTime();
+    ui->dateTime->setText(temp.toString("dd.MM.yyyy hh:mm"));
     QStringList boys ={"Jakob Gerjolj","Anže Štravs","Jaka Dejak", "Nejc Česen"};
     ui->comboBox->addItems(boys);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
@@ -34,6 +35,11 @@ MainWindow::MainWindow(QWidget *parent)
     storage::addLedData("LED9");
     storage::addButtonData("BUTTON1");
     storage::addButtonData("BUTTON2");
+    m_timer=new QTimer;
+    connect(m_timer, &QTimer::timeout, this, &MainWindow::emitConstantSignal);
+    m_timer->start(1000);
+    connect(this, &MainWindow::constantSignal, this, &MainWindow::handleConstantSignal);
+
 
 }
 
@@ -155,17 +161,7 @@ void MainWindow::readData(){
                 ui->isOK_label12V->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;}
             storage::setPinData("pin12V", temp_bool, listOfValues.at(2).toFloat());
-
-            // ui->button_frame->setStyleSheet("");
-            // ui->can_frame->setStyleSheet("");
-            // ui->hal_frame->setStyleSheet("");
-            // ui->nfc_frame->setStyleSheet("");
-            // ui->t1_frame->setStyleSheet("");
-            // ui->t2_frame->setStyleSheet("");
-            // ui->zero_frame->setStyleSheet("");
-
-
-            if(listOfValues.at(5)=="5.00"){
+            if(listOfValues.at(5)=="5.00V"){
                 storage::setPinData("pin3_3V", true, 5.00);
                 ui->label_pin3_3V->setText("HIGH");
                 ui->isOK_labelpin33V->setStyleSheet("background-color: rgb(0,150,0)");
@@ -175,7 +171,7 @@ void MainWindow::readData(){
                 ui->isOK_labelpin33V->setStyleSheet("");
 
             }
-            if(listOfValues.at(6)=="5.00"){
+            if(listOfValues.at(6)=="5.00V"){
                 storage::setPinData("pin4V", true, 5.00);
                 ui->label_pin4V->setText("HIGH");
                 ui->isOK_label_4V->setStyleSheet("background-color: rgb(0,150,0)");
@@ -197,10 +193,19 @@ void MainWindow::readData(){
                     ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
                 });
             }
+            if(ui->NFC_status->text()=="DETECTED"){
+                ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
+            }
             ui->hal_frame->setStyleSheet("background-color: rgb(0,0,200)");
             ui->hal_value->setText(listOfValues.at(16)); //HAL
 
-            ui->zero_frame->setStyleSheet("background-color: rgb(0,0,200)");
+
+            if(listOfValues.at(17)=="1"){
+                ui->zero_frame->setStyleSheet("background-color: rgb(0,200,0)");
+            }else {
+                ui->zero_frame->setStyleSheet("background-color: rgb(0,0,200)");
+
+            }
             ui->zero_value->setText(listOfValues.at(17));//ZERO
 
             ui->t1_frame->setStyleSheet("background-color: rgb(0,0,200)");
@@ -233,6 +238,20 @@ void MainWindow::onTriggerLED()
 {
     qDebug()<<"Signal reached Main!";
     writeData("<LED>");
+
+}
+
+void MainWindow::handleConstantSignal()
+{
+    QDateTime temp=QDateTime::currentDateTime();
+    storage::setDateTime(temp);
+    ui->dateTime->setText(temp.toString("dd.MM.yyyy hh:mm"));
+
+}
+
+void MainWindow::emitConstantSignal()
+{
+    emit constantSignal();
 
 }
 
@@ -358,19 +377,13 @@ void MainWindow::on_LED_NOK_clicked()
 
 }
 
-void MainWindow::on_dateTimeEdit_timeChanged(const QTime &time)
-{
-
-    QDateTime currentDateTime = QDateTime::currentDateTime();
-    ui->dateTimeEdit->setDateTime(currentDateTime);
-}
 
 
 void MainWindow::on_pushButton_3_clicked()
 {
 
     QDateTime currentDateTime = QDateTime::currentDateTime();
-    ui->dateTimeEdit->setDateTime(currentDateTime);
+    // ui->dateTimeEdit->setDateTime(currentDateTime);
 
 }
 
@@ -411,6 +424,8 @@ void MainWindow::on_pushButton_16_clicked()
 
 void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 {
+    ui->NFC_status->setText("X");
+    ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
     ui->buttons_check_frame->setStyleSheet("");
     ui->nfc_check_frame->setStyleSheet("");
     ui->hal_check_frame->setStyleSheet("");
@@ -421,7 +436,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     msgBox.setText("Report created");
     msgBox.exec();
     storage::setSERIAL(ui->Serial_line->text().toStdString());
-    storage::setDateTime(ui->dateTimeEdit->dateTime());
+    // storage::setDateTime(ui->dateTimeEdit->dateTime());
     storage::setEmployee(ui->comboBox->currentText().toStdString());
     storage::setNFCStatus(m_NFC_status);
     storage::setHALStatus(m_HAL_status);
