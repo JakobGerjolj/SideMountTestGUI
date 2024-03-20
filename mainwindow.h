@@ -78,7 +78,7 @@ private:
     bool m_ZERO_status;
     QProcess *m_processSideMount{nullptr};
     QProcess *m_processBootLoader{nullptr};
-    QString m_ArduinoPort;
+    QString m_ArduinoPort{"/dev/ttyACM0"};
     QString m_BootloaderPath;
     QString m_processOutput;
     Report *m_report;

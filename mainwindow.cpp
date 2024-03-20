@@ -132,18 +132,23 @@ void MainWindow::readData(){
             if(listOfValues.at(8)=="0"){
                 temp_bool=false;
             }else {
+                ui->isOK_label_33VSW->setStyleSheet("background-color: rgb(0,200,0)");
                 temp_bool=true;
             }
             storage::setPinData("pin3_3V_SW", temp_bool, listOfValues.at(2).toFloat());
             ui->label_pin5_SW->setText(listOfValues.at(3));
             if(listOfValues.at(9)=='0'){
                 temp_bool=false;
-            }else temp_bool=true;
+            }else {
+                ui->isOK_label_5VSW->setStyleSheet("background-color: rgb(0,200,0)");
+                temp_bool=true;}
             storage::setPinData("pin5V_SW", temp_bool, listOfValues.at(2).toFloat()); //need to add arduino
             ui->label_12V->setText(listOfValues.at(4));
             if(listOfValues.at(10)=='0'){
                 temp_bool=false;
-            }else temp_bool=true;
+            }else {
+                ui->isOK_label12V->setStyleSheet("background-color: rgb(0,200,0)");
+                temp_bool=true;}
             storage::setPinData("pin12V", temp_bool, listOfValues.at(2).toFloat());
 
             // ui->button_frame->setStyleSheet("");
@@ -158,13 +163,16 @@ void MainWindow::readData(){
             if(listOfValues.at(5)=="5.00"){
                 storage::setPinData("pin3_3V", true, 5.00);
                 ui->label_pin3_3V->setText("HIGH");
+                ui->isOK_labelpin33V->setStyleSheet("background-color: rgb(0,200,0)");
             }else  {
                 storage::setPinData("pin3_3V", false, 0.00);
                 ui->label_pin3_3V->setText("LOW");
+
             }
             if(listOfValues.at(6)=="5.00"){
                 storage::setPinData("pin4V", true, 5.00);
                 ui->label_pin4V->setText("HIGH");
+                ui->isOK_label_4V->setStyleSheet("background-color: rgb(0,200,0)");
             }else {
                 storage::setPinData("pin4V", false, 0.00);
                 ui->label_pin4V->setText("LOW");
@@ -419,9 +427,9 @@ void MainWindow::on_pushButton_clicked() //upload test FW
     QObject::connect(m_processSideMount, &QProcess::readyReadStandardOutput, [&]() {
         QByteArray output = m_processSideMount->readAllStandardOutput();
         QStringList lines = QString(output).split("\n", Qt::SkipEmptyParts);
-       // qDebug() << "Process output:" << QString(output); //output, also gives success state
+        // qDebug() << "Process output:" << QString(output); //output, also gives success state
         m_processOutput.append(output);
-      //  outp=QString::fromUtf8(output);
+        //  outp=QString::fromUtf8(output);
     });
 
 
@@ -429,7 +437,7 @@ void MainWindow::on_pushButton_clicked() //upload test FW
         ui->pushButton->setEnabled(true);
         ui->pushButton_2->setEnabled(true);
         ui->status_label->setText("Uploaded sidemount firmware");
-       // m_processOutput = m_processSideMount->readAllStandardOutput();
+        // m_processOutput = m_processSideMount->readAllStandardOutput();
         qDebug()<<"______START_OF_STRING___________";
         qDebug()<<m_processOutput;
 
@@ -439,7 +447,7 @@ void MainWindow::on_pushButton_clicked() //upload test FW
             error= m_processOutput.mid(m_processOutput.indexOf("Error:")+6,35); // sending error, try up to \n
             ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
         }
-       // outp=QString::fromUtf8(output);
+        // outp=QString::fromUtf8(output);
         //qDebug()<<outp;
 
     });
