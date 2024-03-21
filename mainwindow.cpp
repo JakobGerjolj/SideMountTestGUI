@@ -72,6 +72,7 @@ void MainWindow::readData(){
 
     QString str = QString::fromUtf8(data);
 
+   // qDebug()<<str;
     str.replace("\r\n","");
 
     if(!str.isEmpty()){
@@ -90,16 +91,18 @@ void MainWindow::readData(){
     if(isFullBuffer){
 
         //Debug purpose
+
     }
 
 
     if(isFullBuffer){
         QString temp=buffer;
+       // qDebug()<<buffer;
         temp.replace("<","");
         temp.replace(">","");
         QStringList listOfValues =temp.split(",");
 
-        if(listOfValues.size()==20){
+        if(listOfValues.size()==21){
             if(listOfValues.at(0)=="0"){
                 ui->check_pins_frame->setVisible(false);
                 ui->check_pins_frame_2->setVisible(true);
@@ -133,8 +136,8 @@ void MainWindow::readData(){
             ui->label_pin4V_SW->setText(listOfValues.at(1));
 
             bool temp_bool;
-            qDebug()<<"REAL VALUE FROM ARDUINO:";
-            qDebug()<<listOfValues.at(1);
+            // qDebug()<<"REAL VALUE FROM ARDUINO:";
+            // qDebug()<<listOfValues.at(1);
 
             //Need to format so 5.00V goes into 5.00 float
             if(listOfValues.at(7)=="0"){
@@ -145,8 +148,8 @@ void MainWindow::readData(){
                 ui->isOK_label_4VSW->setStyleSheet("background-color: rgb(0,150,0)");
             }
             float temp=(listOfValues.at(1).left(4)).toFloat();
-            qDebug()<<"LEFT STRING";
-            qDebug()<<temp;
+            // qDebug()<<"LEFT STRING";
+            // qDebug()<<temp;
             storage::setPinData("pin4V_SW", temp_bool, (listOfValues.at(1).left(4)).toFloat()); // MYB WORK
 
             //process value so that 12V value * 11 5V value * 2
@@ -183,14 +186,14 @@ void MainWindow::readData(){
             storage::setPinData("pin5V_SW", temp_bool, listOfValues.at(2).left(4).toFloat()); //need to add arduino
 
             float temp12V;
-            qDebug()<<"RAW FROM LIST:"<<listOfValues.at(4);
+            // qDebug()<<"RAW FROM LIST:"<<listOfValues.at(4);
             temp12V = listOfValues.at(4).left(4).toFloat();
             temp12V = temp12V * 11;
-            qDebug()<<"Float value of 12V: "<<temp12V;
+            // qDebug()<<"Float value of 12V: "<<temp12V;
             QString temp12VString;
             temp12VString = QString::number(temp12V);
             temp12VString += "V";
-            qDebug()<<"String Value of 12V: "<<temp12VString;
+            // qDebug()<<"String Value of 12V: "<<temp12VString;
             ui->label_12V->setText(temp12VString);
             if(listOfValues.at(10)=='0'){
                 temp_bool=false;
@@ -253,6 +256,10 @@ void MainWindow::readData(){
             ui->t2_frame->setStyleSheet("background-color: rgb(0,0,200)");
             ui->t2_value->setText(listOfValues.at(19)); //T2
 
+            if(listOfValues.at(20) == "1"){
+                ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");
+
+            }
 
         }
     }

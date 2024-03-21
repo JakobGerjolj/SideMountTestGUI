@@ -632,42 +632,6 @@ BOOTLOADER</string>
       </widget>
      </item>
      <item>
-      <widget class="QFrame" name="can_frame_2">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <widget class="QLabel" name="label_21">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>20</y>
-          <width>101</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>CAN</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_16">
-        <property name="geometry">
-         <rect>
-          <x>270</x>
-          <y>10</y>
-          <width>141</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>TEST CAN/LED</string>
-        </property>
-       </widget>
-      </widget>
-     </item>
-     <item>
       <widget class="QFrame" name="t1_frame">
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
@@ -939,30 +903,17 @@ BOOTLOADER</string>
       <string>CAN</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="LED_OK_2">
+    <widget class="QPushButton" name="pushButton_16">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>20</x>
        <y>30</y>
-       <width>71</width>
+       <width>91</width>
        <height>25</height>
       </rect>
      </property>
      <property name="text">
-      <string>OK</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="LED_NOK_2">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>30</y>
-       <width>71</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>NOT OK</string>
+      <string>TEST CAN</string>
      </property>
     </widget>
    </widget>
