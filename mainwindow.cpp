@@ -526,9 +526,19 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     ui->zero_check_frame->setEnabled(false);
     ui->led_check_frame->setEnabled(false);
     ui->can_frame->setEnabled(false);
+
+
     QMessageBox msgBox;
-    msgBox.setText("Report created");
+    msgBox.setText("Report created"); //not on center of app
+    msgBox.setGeometry(1000,1000,msgBox.width(), msgBox.height());
+    msgBox.setModal(false);
     msgBox.exec();
+
+   // QMessageBox * msgBox = new QMessageBox(QMessageBox::information,"Report status","Report created",this);
+
+
+    //QMessageBox::information(this, "Report status", "Report created!");
+
     storage::setNFCDesc(ui->nfc_textEdit->toPlainText().toStdString());
     storage::setHALDesc(ui->hal_textEdit->toPlainText().toStdString());
     storage::setZERODesc(ui->zero_textEdit->toPlainText().toStdString());
