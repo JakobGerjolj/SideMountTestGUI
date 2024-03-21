@@ -151,7 +151,8 @@ void MainWindow::readData(){
 
             //process value so that 12V value * 11 5V value * 2
 
-            ui->label_pin3_3V_SW->setText(listOfValues.at(2));
+
+            ui->label_pin3_3V_SW->setText(listOfValues.at(2)); //pin3V_SW
             if(listOfValues.at(8)=="0"){
                 temp_bool=false;
                 ui->isOK_label_33VSW->setStyleSheet("");
@@ -160,26 +161,41 @@ void MainWindow::readData(){
                 temp_bool=true;
             }
 
-            storage::setPinData("pin3_3V_SW", temp_bool, listOfValues.at(2).toFloat());
 
+            storage::setPinData("pin3_3V_SW", temp_bool, listOfValues.at(2).left(4).toFloat());
 
+            float temp5V;
+            temp5V = listOfValues.at(3).left(4).toFloat();
+            temp5V = temp5V*2;
 
-            ui->label_pin5_SW->setText(listOfValues.at(3));
+            QString temp5VString;
+            temp5VString = QString::number(temp5V);
+            temp5VString += "V";
+
+            ui->label_pin5_SW->setText(temp5VString);
             if(listOfValues.at(9)=='0'){
                 temp_bool=false;
                 ui->isOK_label_5VSW->setStyleSheet("");
             }else {
                 ui->isOK_label_5VSW->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;}
-            storage::setPinData("pin5V_SW", temp_bool, listOfValues.at(2).toFloat()); //need to add arduino
-            ui->label_12V->setText(listOfValues.at(4));
+
+            storage::setPinData("pin5V_SW", temp_bool, listOfValues.at(2).left(4).toFloat()); //need to add arduino
+
+            float temp12V;
+            temp12V = listOfValues.at(4).toFloat();
+            temp12V = temp12V * 11;
+            QString temp12VString;
+            temp12VString = QString::number(temp12V);
+            temp12VString += "V";
+            ui->label_12V->setText(temp12VString);
             if(listOfValues.at(10)=='0'){
                 temp_bool=false;
                 ui->isOK_label12V->setStyleSheet("");
             }else {
                 ui->isOK_label12V->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;}
-            storage::setPinData("pin12V", temp_bool, listOfValues.at(2).toFloat());
+            storage::setPinData("pin12V", temp_bool, temp12V);
             if(listOfValues.at(5)=="5.00V"){
                 storage::setPinData("pin3_3V", true, 5.00);
                 ui->label_pin3_3V->setText("HIGH");
@@ -207,7 +223,7 @@ void MainWindow::readData(){
 
             ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
             if(listOfValues.at(15)=="1"){ //NFC
-                QTimer::singleShot(5000, this, [this](){
+                QTimer::singleShot(1, this, [this](){
                     ui->NFC_status->setText("DETECTED");
                     ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
                 });
