@@ -183,11 +183,14 @@ void MainWindow::readData(){
             storage::setPinData("pin5V_SW", temp_bool, listOfValues.at(2).left(4).toFloat()); //need to add arduino
 
             float temp12V;
-            temp12V = listOfValues.at(4).toFloat();
+            qDebug()<<"RAW FROM LIST:"<<listOfValues.at(4);
+            temp12V = listOfValues.at(4).left(4).toFloat();
             temp12V = temp12V * 11;
+            qDebug()<<"Float value of 12V: "<<temp12V;
             QString temp12VString;
             temp12VString = QString::number(temp12V);
             temp12VString += "V";
+            qDebug()<<"String Value of 12V: "<<temp12VString;
             ui->label_12V->setText(temp12VString);
             if(listOfValues.at(10)=='0'){
                 temp_bool=false;
@@ -195,6 +198,7 @@ void MainWindow::readData(){
             }else {
                 ui->isOK_label12V->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;}
+
             storage::setPinData("pin12V", temp_bool, temp12V);
             if(listOfValues.at(5)=="5.00V"){
                 storage::setPinData("pin3_3V", true, 5.00);
