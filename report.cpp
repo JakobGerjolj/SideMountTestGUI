@@ -159,6 +159,22 @@ void Report::createReport()
 
         }
 
+        if(storage::getCANRX_OK()){
+            stream<<"CANRX>OK\n";
+
+        }else{
+            stream<<"CANRX>NOT OK\n";
+
+        }
+
+        if(storage::getCANTX_OK()){
+            stream<<"CANTX>OK\n";
+
+        }else{
+            stream<<"CANTX>NOT OK\n";
+        }
+
+
 
     }
 

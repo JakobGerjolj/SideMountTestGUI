@@ -41,7 +41,10 @@ public:
     static std::string getNFCDesc();
     static void setZERODesc(const std::string&);
     static std::string getZERODesc();
-
+    static void setCANTX_OK(bool);
+    static bool getCANTX_OK();
+    static void setCANRX_OK(bool);
+    static bool getCANRX_OK();
 
 
 

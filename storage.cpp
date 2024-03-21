@@ -188,5 +188,25 @@ std::string storage::getZERODesc()
     return m_NFC_desc;
 }
 
+void storage::setCANTX_OK(bool b)
+{
+    m_is_CAN_TX_OK=b;
+}
+
+bool storage::getCANTX_OK()
+{
+    return m_is_CAN_TX_OK;
+}
+
+void storage::setCANRX_OK(bool b)
+{
+    m_is_CAN_RX_OK=b;
+}
+
+bool storage::getCANRX_OK()
+{
+    return m_is_CAN_RX_OK;
+}
+
 
 

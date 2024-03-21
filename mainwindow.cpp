@@ -38,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent)
     storage::setHALDesc("");
     storage::setZERODesc("");
     storage::setNFCDesc("");
+    storage::setCANRX_OK(false);
+    storage::setCANTX_OK(false);
     ui->nfc_textEdit->setVisible(false);
     ui->hal_textEdit->setVisible(false);
     ui->zero_textEdit->setVisible(false);
@@ -233,10 +235,14 @@ void MainWindow::readData(){
             ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
             ui->button_frame->setStyleSheet("background-color: rgb(0,0,200)");
             ui->last_button_value->setText(listOfValues.at(13));
+            if(listOfValues.at(13)!= "X"){
+                storage::setCANTX_OK(true);
+            }
             ui->button_counter_value->setText(listOfValues.at(14));
 
             ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
-            if(listOfValues.at(15)=="1"){ //NFC
+            if(listOfValues.at(15)=="1"){//NFC
+                storage::setCANTX_OK(true);
                 QTimer::singleShot(1, this, [this](){
                     ui->NFC_status->setText("DETECTED");
                     ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
@@ -265,7 +271,9 @@ void MainWindow::readData(){
 
             if(listOfValues.at(20) == "1"){
                 ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");
-
+                storage::setCANRX_OK(true);
+                storage::setCANTX_OK(true);
+                //How do we seperate tx and rx
             }
 
         }
@@ -437,6 +445,8 @@ void MainWindow::on_LED_NOK_clicked()
 {
     DialogLED* myDialog = new DialogLED(this);
     myDialog->show();
+    ui->can_frame->setEnabled(true);
+    ui->pushButton_14->setEnabled(true);
   //  ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     connect(myDialog, &DialogLED::triggerLEDs, this, &MainWindow::onTriggerLED);
 
@@ -445,6 +455,9 @@ void MainWindow::on_LED_NOK_clicked()
             ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
             ui->can_frame->setEnabled(true);
             ui->pushButton_14->setEnabled(true);
+        }else {
+            ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+
         }
 
     }
