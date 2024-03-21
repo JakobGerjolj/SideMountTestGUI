@@ -115,28 +115,29 @@ void MainWindow::readData(){
             if(listOfValues.at(0)=="0"){
                 ui->check_pins_frame->setVisible(false);
                 ui->check_pins_frame_2->setVisible(true);
-                ui->verticalLayout_2->setStretch(0,3);
-                ui->verticalLayout_2->setStretch(1,3);
-                ui->verticalLayout_2->setStretch(2,1);
-                ui->verticalLayout_2->setStretch(3,1);
-                ui->verticalLayout_2->setStretch(4,1);
-                ui->verticalLayout_2->setStretch(5,1);
-                ui->verticalLayout_2->setStretch(6,1);
-                ui->verticalLayout_2->setStretch(7,1);
-                ui->verticalLayout_2->setStretch(8,1);
+
+                // ui->verticalLayout_2->setStretch(0,3);
+                // ui->verticalLayout_2->setStretch(1,3);
+                // ui->verticalLayout_2->setStretch(2,1);
+                // ui->verticalLayout_2->setStretch(3,1);
+                // ui->verticalLayout_2->setStretch(4,1);
+                // ui->verticalLayout_2->setStretch(5,1);
+                // ui->verticalLayout_2->setStretch(6,1);
+                // ui->verticalLayout_2->setStretch(7,1);
+                // ui->verticalLayout_2->setStretch(8,1);
             }else{
                 ui->check_pins_frame->setVisible(true);
                 ui->check_pins_frame_2->setVisible(false);
                 ui->label_3->setText("PINS OK");
-                ui->verticalLayout_2->setStretch(0,1);
-                ui->verticalLayout_2->setStretch(1,1);
-                ui->verticalLayout_2->setStretch(2,1);
-                ui->verticalLayout_2->setStretch(3,1);
-                ui->verticalLayout_2->setStretch(4,1);
-                ui->verticalLayout_2->setStretch(5,1);
-                ui->verticalLayout_2->setStretch(6,1);
-                ui->verticalLayout_2->setStretch(7,1);
-                ui->verticalLayout_2->setStretch(8,1);
+                // ui->verticalLayout_2->setStretch(0,1);
+                // ui->verticalLayout_2->setStretch(1,1);
+                // ui->verticalLayout_2->setStretch(2,1);
+                // ui->verticalLayout_2->setStretch(3,1);
+                // ui->verticalLayout_2->setStretch(4,1);
+                // ui->verticalLayout_2->setStretch(5,1);
+                // ui->verticalLayout_2->setStretch(6,1);
+                // ui->verticalLayout_2->setStretch(7,1);
+                // ui->verticalLayout_2->setStretch(8,1);
                 ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
 
             }
