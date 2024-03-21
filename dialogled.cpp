@@ -9,23 +9,33 @@ DialogLED::DialogLED(QWidget *parent)
     ui->setupUi(this);
     this->setWindowTitle("What is wrong with LEDs");
     ui->led1_NOK_text->setPlaceholderText("Describe the problem...");
+    ui->led1_NOK_frame->setStyleSheet("background-color: rgb(219,114,114)");
     ui->led1_NOK_frame->setVisible(false);
     ui->led2_NOK_text->setPlaceholderText("Describe the problem...");
+    ui->led2_NOK_frame->setStyleSheet("background-color: rgb(219,114,114)");
     ui->led2_NOK_frame->setVisible(false);
     ui->led3_NOK_text->setPlaceholderText("Describe the problem...");
+    ui->led3_NOK_frame->setStyleSheet("background-color: rgb(219,114,114)");
     ui->led3_NOK_frame->setVisible(false);
     ui->led4_NOK_text->setPlaceholderText("Describe the problem...");
     ui->led4_NOK_frame->setVisible(false);
+    ui->led4_NOK_frame->setStyleSheet("background-color: rgb(219,114,114)");
     ui->led5_NOK_text->setPlaceholderText("Describe the problem...");
     ui->led5_NOK_frame->setVisible(false);
+    ui->led5_NOK_frame->setStyleSheet("background-color: rgb(219,114,114)");
     ui->led6_NOK_text->setPlaceholderText("Describe the problem...");
     ui->led6_NOK_frame->setVisible(false);
+    ui->led6_NOK_frame->setStyleSheet("background-color: rgb(219,114,114)");
     ui->led7_NOK_text->setPlaceholderText("Describe the problem...");
     ui->led7_NOK_frame->setVisible(false);
+    ui->led7_NOK_frame->setStyleSheet("background-color: rgb(219,114,114)");
     ui->led8_NOK_text->setPlaceholderText("Describe the problem...");
     ui->led8_NOK_frame->setVisible(false);
+    ui->led8_NOK_frame->setStyleSheet("background-color: rgb(219,114,114)");
     ui->led9_NOK_text->setPlaceholderText("Describe the problem...");
     ui->led9_NOK_frame->setVisible(false);
+    ui->led9_NOK_frame->setStyleSheet("background-color: rgb(219,114,114)");
+
 }
 
 DialogLED::~DialogLED()

@@ -457,14 +457,14 @@ void MainWindow::on_pushButton_13_clicked()
 
 void MainWindow::on_pushButton_15_clicked()
 {
-    QString testS="<CAN>";
+    QString testS="<LED>";
     writeData(testS.toUtf8());
 }
 
 
 void MainWindow::on_pushButton_16_clicked()
 {
-    QString testS="<CANLED>";
+    QString testS="<LED>";
     writeData(testS.toUtf8());     // process.setArguments(arguments);
 
 }

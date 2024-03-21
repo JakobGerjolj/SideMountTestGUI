@@ -7,7 +7,9 @@ Dialog::Dialog(QWidget *parent, QString message)
 {
     ui->setupUi(this);
     ui->textEdit->setVisible(false);
+    ui->textEdit->setStyleSheet("background-color: rgb(219,114,114)");
     ui->textEdit_2->setVisible(false);
+    ui->textEdit_2->setStyleSheet("background-color: rgb(219,114,114)");
     this->setWindowTitle("What is wrong with the buttons");
 
 }
