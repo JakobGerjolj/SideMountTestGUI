@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->led_check_frame->setEnabled(false);
     ui->can_frame->setEnabled(false);
     ui->pushButton_14->setEnabled(false);
-
+    ui->Serial_line->setStyleSheet("background-color: rgb(219,114,114)");
     m_timer=new QTimer;
     connect(m_timer, &QTimer::timeout, this, &MainWindow::emitConstantSignal);
     m_timer->start(1000);
