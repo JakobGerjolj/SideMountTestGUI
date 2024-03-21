@@ -41,6 +41,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->nfc_textEdit->setVisible(false);
     ui->hal_textEdit->setVisible(false);
     ui->zero_textEdit->setVisible(false);
+    ui->nfc_check_frame->setEnabled(false);
+    ui->hal_check_frame->setEnabled(false);
+    ui->zero_check_frame->setEnabled(false);
+    ui->led_check_frame->setEnabled(false);
+    ui->can_frame->setEnabled(false);
+    ui->pushButton_14->setEnabled(false);
+
     m_timer=new QTimer;
     connect(m_timer, &QTimer::timeout, this, &MainWindow::emitConstantSignal);
     m_timer->start(1000);
@@ -320,7 +327,7 @@ void MainWindow::on_Buttons_OK_clicked()
 {
     storage::setButtonData("Button1", true, "");
     storage::setButtonData("Button2", true, "");
-
+    ui->nfc_check_frame->setEnabled(true);
 
     ui->buttons_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 }
@@ -331,13 +338,15 @@ void MainWindow::on_Buttons_NOK_clicked()
 
     Dialog* myDialog = new Dialog(this,"What is wrong with buttons: ");
     myDialog->show();
-    ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+   // ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     qDebug()<<"Are they OK";
+
 
     if(myDialog->exec() == QDialog::Accepted){ // not work yet
         if(storage::areAllButtonsOK()){
             qDebug()<<storage::areAllButtonsOK();
             ui->buttons_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+            ui->nfc_check_frame->setEnabled(true);
         }
 
     }
@@ -349,6 +358,7 @@ void MainWindow::on_Buttons_NOK_clicked()
 void MainWindow::on_NFC_OK_clicked()
 {
     m_NFC_status=true;
+    ui->hal_check_frame->setEnabled(true);
     ui->nfc_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
     ui->nfc_textEdit->setVisible(false);
 
@@ -361,6 +371,7 @@ void MainWindow::on_NFC_NOK_clicked()
     ui->nfc_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     ui->nfc_textEdit->setVisible(true);
     ui->nfc_textEdit->setPlaceholderText("Describe the NFC problem...");
+    ui->hal_check_frame->setEnabled(true);
 
 }
 
@@ -370,6 +381,7 @@ void MainWindow::on_HAL_OK_clicked()
     m_HAL_status=true;
     ui->hal_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
     ui->hal_textEdit->setVisible(false);
+    ui->zero_check_frame->setEnabled(true);
 
 }
 
@@ -380,6 +392,7 @@ void MainWindow::on_HAL_NOK_clicked()
     ui->hal_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     ui->hal_textEdit->setVisible(true);
     ui->hal_textEdit->setPlaceholderText("Describe the HAL problem...");
+    ui->zero_check_frame->setEnabled(true);
 
 }
 
@@ -389,6 +402,7 @@ void MainWindow::on_ZERO_OK_clicked()
     m_ZERO_status=true;
     ui->zero_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
     ui->zero_textEdit->setVisible(false);
+    ui->led_check_frame->setEnabled(true);
 }
 
 
@@ -398,6 +412,7 @@ void MainWindow::on_ZERO_NOK_clicked()
     ui->zero_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     ui->zero_textEdit->setVisible(true);
     ui->zero_textEdit->setPlaceholderText("Describe the ZERO problem...");
+    ui->led_check_frame->setEnabled(true);
 }
 
 
@@ -412,6 +427,8 @@ void MainWindow::on_LED_OK_clicked()
     storage::setLedData("LED7", true, "");
     storage::setLedData("LED8", true, "");
     storage::setLedData("LED9", true, "");
+    ui->can_frame->setEnabled(true);
+    ui->pushButton_14->setEnabled(true);
     ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 }
 
@@ -420,12 +437,14 @@ void MainWindow::on_LED_NOK_clicked()
 {
     DialogLED* myDialog = new DialogLED(this);
     myDialog->show();
-    ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+  //  ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     connect(myDialog, &DialogLED::triggerLEDs, this, &MainWindow::onTriggerLED);
 
     if(myDialog->exec() == QDialog::Accepted){
         if(storage::areAllLEDsOK()){
             ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+            ui->can_frame->setEnabled(true);
+            ui->pushButton_14->setEnabled(true);
         }
 
     }
@@ -488,6 +507,11 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     ui->zero_check_frame->setStyleSheet("");
     ui->led_check_frame->setStyleSheet("");
     ui->can_frame->setStyleSheet("");
+    ui->nfc_check_frame->setEnabled(false);
+    ui->hal_check_frame->setEnabled(false);
+    ui->zero_check_frame->setEnabled(false);
+    ui->led_check_frame->setEnabled(false);
+    ui->can_frame->setEnabled(false);
     QMessageBox msgBox;
     msgBox.setText("Report created");
     msgBox.exec();
