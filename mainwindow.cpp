@@ -61,7 +61,12 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::openSerialPort(){
 
     m_serial = new QSerialPort;
+#if defined(Q_OS_LINUX)
     m_serial->setPortName(m_ArduinoPort); //added variable from settings
+#endif
+#if defined(Q_OS_WIN)
+    m_serial->setPortName("COM8");
+#endif
     m_serial->setBaudRate(115200);
     m_serial->setDataBits(QSerialPort::Data8);
     m_serial->setParity(QSerialPort::NoParity);
@@ -98,7 +103,7 @@ void MainWindow::readData(){
         }
     }
     if(isFullBuffer){
-
+       // qDebug()<<"Full buffer: "<<str;
         //Debug purpose
 
     }
@@ -115,7 +120,7 @@ void MainWindow::readData(){
             if(listOfValues.at(0)=="0"){
                 ui->check_pins_frame->setVisible(false);
                 ui->check_pins_frame_2->setVisible(true);
-
+                ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
                 // ui->verticalLayout_2->setStretch(0,3);
                 // ui->verticalLayout_2->setStretch(1,3);
                 // ui->verticalLayout_2->setStretch(2,1);
@@ -126,8 +131,9 @@ void MainWindow::readData(){
                 // ui->verticalLayout_2->setStretch(7,1);
                 // ui->verticalLayout_2->setStretch(8,1);
             }else{
-                ui->check_pins_frame->setVisible(true);
-                ui->check_pins_frame_2->setVisible(false);
+                ui->check_pins_frame->setVisible(false);
+                ui->check_pins_frame_2->setVisible(true);
+                ui->check_pins_frame_2->setStyleSheet("background-color: rgb(0,200,0)");
                 ui->label_3->setText("PINS OK");
                 // ui->verticalLayout_2->setStretch(0,1);
                 // ui->verticalLayout_2->setStretch(1,1);
@@ -213,35 +219,66 @@ void MainWindow::readData(){
                 temp_bool=true;}
 
             storage::setPinData("pin12V", temp_bool, temp12V);
-            if(listOfValues.at(5)=="5.00V"){
+            if(listOfValues.at(11) == '1'){
                 storage::setPinData("pin3_3V", true, 5.00);
-                ui->label_pin3_3V->setText("HIGH");
+                ui->label_pin3_3V->setText(listOfValues.at(5));
                 ui->isOK_labelpin33V->setStyleSheet("background-color: rgb(0,150,0)");
-            }else  {
+            }else{
+
                 storage::setPinData("pin3_3V", false, 0.00);
                 ui->label_pin3_3V->setText("LOW");
                 ui->isOK_labelpin33V->setStyleSheet("");
-
             }
-            if(listOfValues.at(6)=="5.00V"){
+
+            if(listOfValues.at(12)=='1'){
                 storage::setPinData("pin4V", true, 5.00);
-                ui->label_pin4V->setText("HIGH");
+                ui->label_pin4V->setText(listOfValues.at(6));
                 ui->isOK_label_4V->setStyleSheet("background-color: rgb(0,150,0)");
             }else {
                 storage::setPinData("pin4V", false, 0.00);
-                ui->label_pin4V->setText("LOW");
+                ui->label_pin4V->setText(listOfValues.at(6));
                 ui->isOK_label_4V->setStyleSheet("");
 
             }
-            ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
+//            ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
+
+#if defined(Q_OS_LINUX)
             ui->button_frame->setStyleSheet("background-color: rgb(0,0,200)");
-            ui->last_button_value->setText(listOfValues.at(13));
+#endif
+#if defined(Q_OS_WIN)
+            ui->button_frame->setStyleSheet("background-color: rgb(163,188,227)");
+#endif
+
+            //JUST A TX CHECK
             if(listOfValues.at(13)!= "X"){
                 storage::setCANTX_OK(true);
             }
-            ui->button_counter_value->setText(listOfValues.at(14));
 
+            ui->button_counter_value_2 -> setStyleSheet("");
+            ui->button_counter_value_3 -> setStyleSheet("");
+            ui->button_counter_value_4 -> setStyleSheet("");
+            //ui->last_button_value->setText(listOfValues.at(13)); //BUTTON
+            if(listOfValues.at(13) == "1"){
+                ui->button_counter_value->setText(listOfValues.at(14));
+            }
+            if(listOfValues.at(13) == "2"){
+                ui->button_counter_value_2->setText(listOfValues.at(14));
+            }
+            if(listOfValues.at(13) == "3"){
+                ui->button_counter_value_3->setText(listOfValues.at(14));
+            }
+            if(listOfValues.at(13) == "4"){
+                ui->button_counter_value_4 -> setText(listOfValues.at(14));
+            }
+
+
+#if defined(Q_OS_LINUX)
             ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
+#endif
+#if defined(Q_OS_WIN)
+            ui->nfc_frame->setStyleSheet("background-color: rgb(163,188,227)");
+#endif
+
             if(listOfValues.at(15)=="1"){//NFC
                 storage::setCANTX_OK(true);
                 QTimer::singleShot(1, this, [this](){
@@ -252,22 +289,47 @@ void MainWindow::readData(){
             if(ui->NFC_status->text()=="DETECTED"){
                 ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
             }
+#if defined(Q_OS_LINUX)
             ui->hal_frame->setStyleSheet("background-color: rgb(0,0,200)");
-            ui->hal_value->setText(listOfValues.at(16)); //HAL
+#endif
+#if defined(Q_OS_WIN)
+            ui->hal_frame->setStyleSheet("background-color: rgb(163,188,227)");
+#endif
+
+            int inDegrees = (int)(((float)(listOfValues.at(16).toInt()) / 4095.0)*360);
+
+            QString joined = QString::number(inDegrees) + "° (" + listOfValues.at(16) + ")";
+
+            ui->hal_value->setText(joined); //HAL
 
 
             if(listOfValues.at(17)=="1"){
                 ui->zero_frame->setStyleSheet("background-color: rgb(0,200,0)");
             }else {
+#if defined(Q_OS_LINUX)
                 ui->zero_frame->setStyleSheet("background-color: rgb(0,0,200)");
+#endif
+#if defined(Q_OS_WIN)
+                ui->zero_frame->setStyleSheet("background-color: rgb(163,188,227)");
+#endif
 
             }
             ui->zero_value->setText(listOfValues.at(17));//ZERO
 
+#if defined(Q_OS_LINUX)
             ui->t1_frame->setStyleSheet("background-color: rgb(0,0,200)");
+#endif
+#if defined(Q_OS_WIN)
+            ui->t1_frame->setStyleSheet("background-color: rgb(163,188,227)");
+#endif
             ui->t1_value->setText(listOfValues.at(18)); //T1
 
+#if defined(Q_OS_LINUX)
             ui->t2_frame->setStyleSheet("background-color: rgb(0,0,200)");
+#endif
+#if defined(Q_OS_WIN)
+            //ui->t2_frame->setStyleSheet("background-color: rgb(163,188,227)");
+#endif
             ui->t2_value->setText(listOfValues.at(19)); //T2
 
             if(listOfValues.at(20) == "1"){
@@ -603,6 +665,19 @@ void MainWindow::on_pushButton_clicked() //upload test FW
 
 void MainWindow::on_pushButton_2_clicked() //upload bootloader
 {
+
+#if defined(Q_OS_WIN)
+
+    qDebug()<<"Hello, this is windows!";
+
+#endif
+
+#if defined(Q_OS_LINUX)
+
+    qDebug()<<"Hello, this is Linux";
+
+#endif
+
     m_processOutput="";
     QProcess process;
     QString firmwarePath=m_BootloaderPath; //changed to variable
