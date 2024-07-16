@@ -84,15 +84,22 @@ void MainWindow::readData(){
 
     const QByteArray data = m_serial->readAll();
 
+
+
     QString str = QString::fromUtf8(data);
+
+
 
    // qDebug()<<str;
     str.replace("\r\n","");
+
+    //qDebug()<<str;
 
     if(!str.isEmpty()){
         if(str[0]=='<' && str[str.size() - 1] == '>'){
             buffer=str;
             isFullBuffer=true;
+
         }else if(str[0]=='<' &&  str[str.size() - 1] != '>'){
             buffer=str;
             isFullBuffer=false;
@@ -100,16 +107,22 @@ void MainWindow::readData(){
         }else if(str[0]!='<' && str[str.size() - 1] == '>'){
             buffer.append(str);
             isFullBuffer=true;
+        }else if(!str.contains("<") && !str.contains(">")){
+            buffer.append(str);
+            isFullBuffer=false;
+
         }
     }
     if(isFullBuffer){
        // qDebug()<<"Full buffer: "<<str;
-        //Debug purpose
+       // //Debug purpose
 
     }
 
 
     if(isFullBuffer){
+
+       // qDebug()<<"--------------------BUFFER IS FULL!!!!!!!!!!!-----------";
         QString temp=buffer;
        // qDebug()<<buffer;
         temp.replace("<","");
