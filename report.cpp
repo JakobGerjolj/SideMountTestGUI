@@ -48,9 +48,17 @@ void Report::createReport()
     }
     pin4V_value=QString::number(storage::getPinData("pin4V").second);
 
-    //Writting to file
+//Writting to file
+#if defined(Q_OS_LINUX)
     QString filepath = "/home/jakob/SideMountGUI/";
     QString filename = "/home/jakob/SideMountGUI/Side_Mount_test.";
+#endif
+
+#if defined(Q_OS_WIN)
+    QString filepath = "C:\\Users\\Uporabnik\\Documents\\Reports";
+    QString filename = "C:\\Users\\Uporabnik\\Documents\\Reports\\Side_Mount_test.";
+#endif
+
     QString temps;
     filename.append(storage::getSERIAL());
 
@@ -116,15 +124,34 @@ void Report::createReport()
             stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
         }else  stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
         if(pin3_3V_isOK=="NOT OK"){
-            stream<<"pin3_3V>"<<pin3_3V_isOK<<">LOW"<<"\n";
+            stream<<"pin3_3V>"<<pin3_3V_isOK<<">"<<pin3_3V_value<<"\n";
         }else  {
-            stream<<"pin3_3V>"<<pin3_3V_isOK<<">HIGH"<<"\n";
+            stream<<"pin3_3V>"<<pin3_3V_isOK<<">"<<pin3_3V_value<<"\n";
         }
         if(pin4V_isOK=="NOT OK"){
-            stream<<"pin4V>"<<pin4V_isOK<<">LOW"<<"\n";
+            stream<<"pin4V>"<<pin4V_isOK<<">"<<pin4V_value<<"\n";
         }else  {
-            stream<<"pin4V>"<<pin4V_isOK<<">HIGH"<<"\n";
+            stream<<"pin4V>"<<pin4V_isOK<<">"<<pin4V_value<<"\n";
         }
+
+
+
+
+
+        if(storage::getButtonData("Button1").first){
+            stream<<"BUTTON1,2"<<">OK\n";
+        }else {
+            stream<<"BUTTON1,2"<<">NOT OK>"<<QString::fromStdString(storage::getButtonData("Button1").second)<<"\n";
+
+        }
+
+        if(storage::getButtonData("Button2").first){
+            stream<<"BUTTON3,4"<<">OK\n";
+        }else {
+            stream<<"BUTTON3,4"<<">NOT OK>"<<QString::fromStdString(storage::getButtonData("Button2").second)<<"\n";
+        }
+
+
 
         for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
 
@@ -157,6 +184,14 @@ void Report::createReport()
         }else {
             stream<<"ZERO>NOT OK>"<<QString::fromStdString(storage::getZERODesc())<<"\n";
 
+        }
+
+        if(storage::getTEMPStatus()){
+            stream<<"TEMP>OK\n";
+
+        }else {
+
+            stream<<"TEMP>NOT OK>"<<QString::fromStdString(storage::getTEMPDesc())<<"\n";
         }
 
         if(storage::getCANRX_OK()){

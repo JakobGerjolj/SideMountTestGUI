@@ -22,6 +22,8 @@ public:
     static std::pair<bool,std::string> getButtonData(const std::string& buttonName);
     static void setNFCStatus(bool);
     static bool getNFCStatus();
+    static void setTEMPStatus(bool);
+    static bool getTEMPStatus();
     static void setHALStatus(bool);
     static bool getHALStatus();
     static void setZEROStatus(bool);
@@ -41,6 +43,8 @@ public:
     static std::string getNFCDesc();
     static void setZERODesc(const std::string&);
     static std::string getZERODesc();
+    static void setTEMPDesc(const std::string&);
+    static std::string getTEMPDesc();
     static void setCANTX_OK(bool);
     static bool getCANTX_OK();
     static void setCANRX_OK(bool);
@@ -53,6 +57,7 @@ private:
     inline static LedDataMap m_LedDataMap;
     inline static bool m_is_HAL_OK;
     inline static bool m_is_ZERO_OK;
+    inline static bool m_is_TEMP_OK;
     inline static ButtonDataMap m_ButtonDataMap;
     inline static bool m_is_NFC_OK;
     inline static bool m_is_CAN_TX_OK;
@@ -63,6 +68,7 @@ private:
     inline static std::string m_HAL_desc;
     inline static std::string m_NFC_desc;
     inline static std::string m_ZERO_desc;
+    inline static std::string m_TEMP_desc;
 
 };
 

@@ -68,6 +68,18 @@ bool storage::getNFCStatus()
     return m_is_NFC_OK;
 }
 
+void storage::setTEMPStatus(bool tempStatus)
+{
+    m_is_TEMP_OK = tempStatus;
+}
+
+bool storage::getTEMPStatus()
+{
+
+    return m_is_TEMP_OK;
+
+}
+
 void storage::setHALStatus(bool halStatus)
 {
     m_is_HAL_OK=halStatus;
@@ -186,6 +198,16 @@ void storage::setZERODesc(const std::string& s)
 std::string storage::getZERODesc()
 {
     return m_NFC_desc;
+}
+
+void storage::setTEMPDesc(const std::string & s)
+{
+    m_TEMP_desc = s;
+}
+
+std::string storage::getTEMPDesc()
+{
+    return m_TEMP_desc;
 }
 
 void storage::setCANTX_OK(bool b)

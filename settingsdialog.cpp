@@ -7,6 +7,8 @@ settingsDialog::settingsDialog(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Settings");
+
+#if defined(Q_OS_LINUX)
     QProcess process;
     QString programmerPath="ls";
         // QString command = "/mnt/98BC1F34BC1F0BFE/STMprogrammer/Installation/bin/STM32_Programmer.sh";
@@ -43,9 +45,13 @@ settingsDialog::settingsDialog(QWidget *parent)
     //ui->portBox->addItem("NO");
     process.waitForFinished();
     qDebug()<<result;
+#endif
+#if defined(Q_OS_WIN)
+    Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()) {
+        ui -> portBox -> addItem(port.portName());
+    }
 
-
-
+#endif
 }
 
 settingsDialog::~settingsDialog()

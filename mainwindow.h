@@ -14,6 +14,7 @@
 #include <QtWidgets>
 #include <QGraphicsEffect>
 #include <QTimer>
+#include <QDir>
 #include "report.h"
 #include "settingsdialog.h"
 #include "storage.h"
@@ -73,7 +74,15 @@ private slots:
 
     void on_actionSettings_changed();
 
+    void on_ZERO_OK_2_clicked();
+
+    void on_ZERO_NOK_2_clicked();
+
+
+
 private:
+    int findClosestTemp(double target);
+    QMap<int, double> lookupTable;
     Ui::MainWindow *ui;
     QSerialPort *m_serial = nullptr;
     QString buffer;
@@ -82,9 +91,15 @@ private:
     bool m_NFC_status;
     bool m_HAL_status;
     bool m_ZERO_status;
+    bool m_TEMP_status;
     QProcess *m_processSideMount{nullptr};
     QProcess *m_processBootLoader{nullptr};
+#if defined(Q_OS_LINUX)
     QString m_ArduinoPort{"/dev/ttyACM0"};
+#endif
+#if defined(Q_OS_WIN)
+    QString m_ArduinoPort{"COM8"};
+#endif
     QString m_BootloaderPath{"/home/jakob/Documents/BOOTLOADER/BootloaderCAN/Debug/BootloaderCAN.bin"};
     QString m_processOutput;
     Report *m_report;

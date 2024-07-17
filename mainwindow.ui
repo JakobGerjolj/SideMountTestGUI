@@ -423,9 +423,9 @@ BOOTLOADER</string>
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>580</y>
-      <width>521</width>
-      <height>71</height>
+      <y>660</y>
+      <width>301</width>
+      <height>61</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -560,7 +560,7 @@ BOOTLOADER</string>
        <widget class="QLabel" name="isOK_label_4VSW">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>180</x>
           <y>40</y>
           <width>101</width>
           <height>17</height>
@@ -573,7 +573,7 @@ BOOTLOADER</string>
        <widget class="QLabel" name="isOK_label_33VSW">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>180</x>
           <y>70</y>
           <width>101</width>
           <height>17</height>
@@ -599,7 +599,7 @@ BOOTLOADER</string>
        <widget class="QLabel" name="label_pin4V_SW">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>250</x>
           <y>40</y>
           <width>67</width>
           <height>17</height>
@@ -612,7 +612,7 @@ BOOTLOADER</string>
        <widget class="QLabel" name="label_pin3_3V_SW">
         <property name="geometry">
          <rect>
-          <x>130</x>
+          <x>260</x>
           <y>70</y>
           <width>67</width>
           <height>17</height>
@@ -639,7 +639,7 @@ BOOTLOADER</string>
         <property name="geometry">
          <rect>
           <x>180</x>
-          <y>40</y>
+          <y>100</y>
           <width>101</width>
           <height>17</height>
          </rect>
@@ -651,7 +651,7 @@ BOOTLOADER</string>
        <widget class="QLabel" name="isOK_labelpin33V">
         <property name="geometry">
          <rect>
-          <x>180</x>
+          <x>30</x>
           <y>70</y>
           <width>101</width>
           <height>17</height>
@@ -664,8 +664,8 @@ BOOTLOADER</string>
        <widget class="QLabel" name="isOK_label_4V">
         <property name="geometry">
          <rect>
-          <x>180</x>
-          <y>100</y>
+          <x>30</x>
+          <y>40</y>
           <width>101</width>
           <height>17</height>
          </rect>
@@ -678,7 +678,7 @@ BOOTLOADER</string>
         <property name="geometry">
          <rect>
           <x>240</x>
-          <y>40</y>
+          <y>100</y>
           <width>67</width>
           <height>17</height>
          </rect>
@@ -690,7 +690,7 @@ BOOTLOADER</string>
        <widget class="QLabel" name="label_pin3_3V">
         <property name="geometry">
          <rect>
-          <x>250</x>
+          <x>90</x>
           <y>70</y>
           <width>67</width>
           <height>17</height>
@@ -703,37 +703,14 @@ BOOTLOADER</string>
        <widget class="QLabel" name="label_pin4V">
         <property name="geometry">
          <rect>
-          <x>230</x>
-          <y>100</y>
+          <x>80</x>
+          <y>40</y>
           <width>67</width>
           <height>17</height>
          </rect>
         </property>
         <property name="text">
          <string>X</string>
-        </property>
-       </widget>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFrame" name="check_pins_frame">
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <widget class="QLabel" name="label_3">
-        <property name="geometry">
-         <rect>
-          <x>210</x>
-          <y>40</y>
-          <width>101</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>CHECK PINS</string>
         </property>
        </widget>
       </widget>
@@ -841,8 +818,8 @@ BOOTLOADER</string>
      <rect>
       <x>280</x>
       <y>490</y>
-      <width>429</width>
-      <height>71</height>
+      <width>431</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -854,22 +831,22 @@ BOOTLOADER</string>
     <widget class="QLabel" name="label_10">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>0</y>
+       <x>40</x>
+       <y>40</y>
        <width>67</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>T1:</string>
+      <string>PA2 - MCU:</string>
      </property>
     </widget>
     <widget class="QLabel" name="t1_value">
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>0</y>
-       <width>67</width>
+       <x>140</x>
+       <y>40</y>
+       <width>221</width>
        <height>21</height>
       </rect>
      </property>
@@ -886,22 +863,22 @@ BOOTLOADER</string>
     <widget class="QLabel" name="label_11">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>30</y>
+       <x>40</x>
+       <y>100</y>
        <width>67</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>T2:</string>
+      <string>PA3 - LED:</string>
      </property>
     </widget>
     <widget class="QLabel" name="t2_value">
      <property name="geometry">
       <rect>
-       <x>210</x>
-       <y>30</y>
-       <width>67</width>
+       <x>140</x>
+       <y>100</y>
+       <width>211</width>
        <height>21</height>
       </rect>
      </property>
@@ -1272,6 +1249,87 @@ BOOTLOADER</string>
      </property>
      <property name="text">
       <string>X</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>330</y>
+      <width>151</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>UPLOAD
+BOOTLOADER
+AND
+FIRMWARE</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="zero_check_frame_2">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>580</y>
+      <width>521</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_26">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>10</y>
+       <width>101</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEMPERATURE</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ZERO_OK_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>71</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>OK</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ZERO_NOK_2">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>40</y>
+       <width>71</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>NOT OK</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="zero_textEdit_2">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>0</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
      </property>
     </widget>
    </widget>

@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QProcess>
 #include <QFileDialog>
-
+#include <QSerialPortInfo>
 namespace Ui {
 class settingsDialog;
 }
