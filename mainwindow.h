@@ -80,6 +80,8 @@ private slots:
 
 
 
+    void on_Serial_line_editingFinished();
+
 private:
     int findClosestTemp(double target);
     QMap<int, double> lookupTable;

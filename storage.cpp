@@ -230,5 +230,25 @@ bool storage::getCANRX_OK()
     return m_is_CAN_RX_OK;
 }
 
+std::string storage::getPA2Value()
+{
+    return m_PA2;
+}
+
+std::string storage::getPA3Value()
+{
+    return m_PA3;
+}
+
+void storage::setPA2Value(const std::string & s)
+{
+    m_PA2 = s;
+}
+
+void storage::setPA3Value(const std::string & s)
+{
+    m_PA3 = s;
+}
+
 
 

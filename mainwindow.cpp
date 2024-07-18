@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QDateTime temp=QDateTime::currentDateTime();
     ui->dateTime->setText(temp.toString("dd.MM.yyyy hh:mm"));
-    QStringList boys ={"Jakob Gerjolj","Anže Štravs","Jaka Dejak", "Nejc Česen"};
+    QStringList boys ={ "Matej Koranter","Nejc Česen","Jaka Dejak","Jakob Gerjolj","Anže Štravs"};
     ui->comboBox->addItems(boys);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
     //Filling lookup table
@@ -568,6 +568,7 @@ void MainWindow::readData(){
             qDebug()<<"This is the supposed Temp: "<< TempForT1;
 
             QString toDisplayT1 = QString::number(TempForT1) + "°C (" + listOfValues.at(18) + ")";
+            storage::setPA2Value(toDisplayT1.toStdString());
             ui->t1_value->setText(toDisplayT1); //T1
 
 #if defined(Q_OS_LINUX)
@@ -578,13 +579,13 @@ void MainWindow::readData(){
 #endif
 
             double result2 = ((10000*Voltage)/(3.3 - Voltage)) /1000.0;
-            qDebug() << "This is the supposed resistance: " << result;
+           // qDebug() << "This is the supposed resistance: " << result;
 
             int TempForT2 = findClosestTemp(result);
-            qDebug()<<"This is the supposed Temp: "<< TempForT1;
+          //  qDebug()<<"This is the supposed Temp: "<< TempForT1;
 
             QString toDisplayT2 = QString::number(TempForT2) + "°C (" + listOfValues.at(19) + ")";
-
+            storage::setPA3Value(toDisplayT2.toStdString());
             ui->t2_value->setText(toDisplayT2); //T2
 
             if(listOfValues.at(20) == "1"){
@@ -592,6 +593,9 @@ void MainWindow::readData(){
                 storage::setCANRX_OK(true);
                 storage::setCANTX_OK(true);
                 //How do we seperate tx and rx
+            }else {
+                ui->can_frame->setStyleSheet("");
+
             }
 
         }
@@ -850,6 +854,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     ui->zero_check_frame->setEnabled(false);
     ui->led_check_frame->setEnabled(false);
     ui->can_frame->setEnabled(false);
+    ui->can_frame->setStyleSheet("");
     ui->zero_check_frame_2->setEnabled(false);
 
     ui->zero_textEdit_2->setVisible(false);
@@ -1060,4 +1065,10 @@ int MainWindow::findClosestTemp(double target)
 
 }
 
+
+
+void MainWindow::on_Serial_line_editingFinished()
+{
+    qDebug()<<"Editing finished";
+}
 

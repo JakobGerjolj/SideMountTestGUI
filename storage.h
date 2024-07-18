@@ -49,8 +49,10 @@ public:
     static bool getCANTX_OK();
     static void setCANRX_OK(bool);
     static bool getCANRX_OK();
-
-
+    static std::string getPA2Value();
+    static std::string getPA3Value();
+    static void setPA2Value(const std::string&);
+    static void setPA3Value(const std::string&);
 
 private:
     inline static PinDataMap m_PinDataMap;
@@ -69,6 +71,8 @@ private:
     inline static std::string m_NFC_desc;
     inline static std::string m_ZERO_desc;
     inline static std::string m_TEMP_desc;
+    inline static std::string m_PA2;
+    inline static std::string m_PA3;
 
 };
 

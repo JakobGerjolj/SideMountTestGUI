@@ -101,54 +101,54 @@ void Report::createReport()
     QFile file(filename);
     if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream stream(&file);
-        stream<<"--------------------------------------------------------\n";
-        stream<<"SN:"<<Serial<<">";
-        stream<<DateTime<<">";
+        //stream<<"--------------------------------------------------------\n";
+        stream<<"SN:"<<Serial<<";";
+        stream<<DateTime<<";";
         stream<<Employee;
         stream<<"\n";
-        stream<<"Device>"<<"Status>"<<"Description\n";
+        stream<<"Device;"<<"Status;"<<"Description\n";
         if(pin4V_SW_isOK=="NOT OK"){
-            stream<<"pin4V_SW>"<<pin4V_SW_isOK<<">"<<pin4V_SW_value<<"\n";}
+            stream<<"pin4V_SW;"<<pin4V_SW_isOK<<";"<<pin4V_SW_value<<"\n";}
         else {
-            stream<<"pin4V_SW>"<<pin4V_SW_isOK<<">"<<pin4V_SW_value<<"\n";}
+            stream<<"pin4V_SW;"<<pin4V_SW_isOK<<";"<<pin4V_SW_value<<"\n";}
         if(pin3_3V_SW_isOK=="NOT OK"){
-            stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<">"<<pin3_3V_SW_value<<"\n";}
+            stream<<"pin3_3V_SW;"<<pin3_3V_SW_isOK<<";"<<pin3_3V_SW_value<<"\n";}
         else {
-            stream<<"pin3_3V_SW>"<<pin3_3V_SW_isOK<<">"<<pin3_3V_SW_value<<"\n";}
+            stream<<"pin3_3V_SW;"<<pin3_3V_SW_isOK<<";"<<pin3_3V_SW_value<<"\n";}
         if(pin5V_SW_isOK=="NOT OK"){
-            stream<<"pin5V_SW>"<<pin5V_SW_isOK<<">"<<pin5_SW_value<<"\n";
+            stream<<"pin5V_SW;"<<pin5V_SW_isOK<<";"<<pin5_SW_value<<"\n";
         }else  {
-            stream<<"pin5V_SW>"<<pin5V_SW_isOK<<">"<<pin5_SW_value<<"\n";
+            stream<<"pin5V_SW;"<<pin5V_SW_isOK<<";"<<pin5_SW_value<<"\n";
         }
         if(pin12V_isOK=="NOT OK"){
-            stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
-        }else  stream<<"pin12V>"<<pin12V_isOK<<">"<<pin12V_value<<"\n";
+            stream<<"pin12V;"<<pin12V_isOK<<";"<<pin12V_value<<"\n";
+        }else  stream<<"pin12V;"<<pin12V_isOK<<";"<<pin12V_value<<"\n";
         if(pin3_3V_isOK=="NOT OK"){
-            stream<<"pin3_3V>"<<pin3_3V_isOK<<">"<<pin3_3V_value<<"\n";
+            stream<<"pin3_3V;"<<pin3_3V_isOK<<";"<<pin3_3V_value<<"\n";
         }else  {
-            stream<<"pin3_3V>"<<pin3_3V_isOK<<">"<<pin3_3V_value<<"\n";
+            stream<<"pin3_3V;"<<pin3_3V_isOK<<";"<<pin3_3V_value<<"\n";
         }
         if(pin4V_isOK=="NOT OK"){
-            stream<<"pin4V>"<<pin4V_isOK<<">"<<pin4V_value<<"\n";
+            stream<<"pin4V;"<<pin4V_isOK<<";"<<pin4V_value<<"\n";
         }else  {
-            stream<<"pin4V>"<<pin4V_isOK<<">"<<pin4V_value<<"\n";
+            stream<<"pin4V;"<<pin4V_isOK<<";"<<pin4V_value<<"\n";
         }
 
 
-
-
+        stream<<"PA2temp;"<<QString::fromStdString(storage::getPA2Value())<<"\n";
+        stream<<"PA3temp;"<<QString::fromStdString(storage::getPA3Value())<<"\n";
 
         if(storage::getButtonData("Button1").first){
-            stream<<"BUTTON1,2"<<">OK\n";
+            stream<<"BUTTON1,2"<<";OK\n";
         }else {
-            stream<<"BUTTON1,2"<<">NOT OK>"<<QString::fromStdString(storage::getButtonData("Button1").second)<<"\n";
+            stream<<"BUTTON1,2"<<";NOT OK;"<<QString::fromStdString(storage::getButtonData("Button1").second)<<"\n";
 
         }
 
         if(storage::getButtonData("Button2").first){
-            stream<<"BUTTON3,4"<<">OK\n";
+            stream<<"BUTTON3,4"<<";OK\n";
         }else {
-            stream<<"BUTTON3,4"<<">NOT OK>"<<QString::fromStdString(storage::getButtonData("Button2").second)<<"\n";
+            stream<<"BUTTON3,4"<<";NOT OK;>"<<QString::fromStdString(storage::getButtonData("Button2").second)<<"\n";
         }
 
 
@@ -156,57 +156,57 @@ void Report::createReport()
         for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
 
             if(led->second.first){
-                stream<<QString::fromStdString(led->first)<<">OK\n";
+                stream<<QString::fromStdString(led->first)<<";OK\n";
             }else {
-                stream<<QString::fromStdString(led->first)<<">NOT OK>"<<QString::fromStdString(led->second.second)<<"\n";
+                stream<<QString::fromStdString(led->first)<<";NOT OK;"<<QString::fromStdString(led->second.second)<<"\n";
 
             }
 
         }
 
         if(storage::getNFCStatus()){
-            stream<<"NFC>OK\n";
+            stream<<"NFC;OK\n";
         }else {
-            stream<<"NFC>NOT OK>"<<QString::fromStdString(storage::getNFCDesc())<<"\n";
+            stream<<"NFC;NOT OK;"<<QString::fromStdString(storage::getNFCDesc())<<"\n";
         }
 
         if(storage::getHALStatus()){
-            stream<<"HAL>OK\n";
+            stream<<"HAL;OK\n";
 
         }else {
-            stream<<"HAL>NOT OK>"<<QString::fromStdString(storage::getHALDesc())<<"\n";;
+            stream<<"HAL;NOT OK;"<<QString::fromStdString(storage::getHALDesc())<<"\n";;
 
         }
 
         if(storage::getZEROStatus()){
-            stream<<"ZERO>OK\n";
+            stream<<"ZERO;OK\n";
 
         }else {
-            stream<<"ZERO>NOT OK>"<<QString::fromStdString(storage::getZERODesc())<<"\n";
+            stream<<"ZERO;NOT OK;"<<QString::fromStdString(storage::getZERODesc())<<"\n";
 
         }
 
         if(storage::getTEMPStatus()){
-            stream<<"TEMP>OK\n";
+            stream<<"TEMP;OK\n";
 
         }else {
 
-            stream<<"TEMP>NOT OK>"<<QString::fromStdString(storage::getTEMPDesc())<<"\n";
+            stream<<"TEMP;NOT OK;"<<QString::fromStdString(storage::getTEMPDesc())<<"\n";
         }
 
         if(storage::getCANRX_OK()){
-            stream<<"CANRX>OK\n";
+            stream<<"CANRX;OK\n";
 
         }else{
-            stream<<"CANRX>NOT OK\n";
+            stream<<"CANRX;NOT OK\n";
 
         }
 
         if(storage::getCANTX_OK()){
-            stream<<"CANTX>OK\n";
+            stream<<"CANTX;OK\n";
 
         }else{
-            stream<<"CANTX>NOT OK\n";
+            stream<<"CANTX;NOT OK\n";
         }
 
 
