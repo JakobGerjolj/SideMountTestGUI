@@ -3,6 +3,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include "storage.h"
+#include "multiplefilesdialog.h"
+
 
 class Report
 {
@@ -10,6 +12,7 @@ class Report
 public:
     Report();
     void createReport();
+private:
 
 };
 

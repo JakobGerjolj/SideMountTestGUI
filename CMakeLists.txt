@@ -29,6 +29,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         storage.h storage.cpp
         settingsdialog.h settingsdialog.cpp settingsdialog.ui
         report.h report.cpp
+        multiplefilesdialog.h multiplefilesdialog.cpp multiplefilesdialog.ui
+
 
 
     )

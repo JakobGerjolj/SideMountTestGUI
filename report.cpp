@@ -1,5 +1,6 @@
 #include "report.h"
 
+
 Report::Report() {}
 
 void Report::createReport()
@@ -67,7 +68,11 @@ void Report::createReport()
     QFileInfo fileInfo(filename);
     temps=filename;
     while(fileInfo.exists(temps)){
-        qDebug()<<"FILE ALREADY EXISTS!!";
+        qDebug()<<"FILE ALREADY EXISTS!!"; //first Check is here
+        //Here we popup and decide Do we overrite file, add another copy, or change serial name
+
+        //Here we open the dialog and then
+
         qDebug()<<"Appending";
         temps.append(" (");
         temps.append(QString::number(index));
@@ -81,7 +86,15 @@ void Report::createReport()
     int indok=1;
     while(true){
         if(fileInfo.exists(temps)){
-            qDebug()<<"it already exists dont overwrite it";
+            qDebug()<<"it already exists dont overwrite it"; //File already exists, send an alert that says
+            //File already exists, change serial number?, overwrite it?, make a copy with a number at the end?
+            //we can still make file just not save it
+
+            multipleFilesDialog* myDialog = new multipleFilesDialog();
+            myDialog->show();
+
+            qDebug()<<"This is the storage variable: "<< storage::getMultipleFileDialogStatus();
+
             qDebug()<<"Adding number to not delete";
             if(temps[temps.length() -7] != '('){
                 temps.insert(temps.length() - 4, " (" + QString::number(indok) + ")");
@@ -213,6 +226,6 @@ void Report::createReport()
 
     }
 
-    file.close();
+    file.close(); // we dont even the anything if the option is change SN
     qDebug()<<"Done good !";
 }

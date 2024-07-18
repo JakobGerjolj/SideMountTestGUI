@@ -590,9 +590,10 @@ void MainWindow::readData(){
             ui->t2_value->setText(toDisplayT2); //T2
 
             if(listOfValues.at(20) == "1"){
-                ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");
+                ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");//Set it to green until we press the report button
                 storage::setCANRX_OK(true);
-                storage::setCANTX_OK(true);
+                storage::setCANTX_OK(true);//Restart porgram after changing board
+                //or we make a button refresh board oziroma next board
                 //How do we seperate tx and rx
             }else {
                 //ui->can_frame->setStyleSheet("");
@@ -617,6 +618,7 @@ MainWindow::~MainWindow()
     closeSerialPort();
     delete ui;
 }
+
 
 void MainWindow::onTriggerLED()
 {
@@ -872,11 +874,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     ui->zero_textEdit_2->setVisible(false);
 
 
-    QMessageBox msgBox;
-    msgBox.setText("Report created"); //not on center of app
-    //msgBox.setGeometry(500,500,msgBox.width(), msgBox.height());
-    msgBox.setModal(false);
-    msgBox.exec();
+
 
    // QMessageBox * msgBox = new QMessageBox(QMessageBox::information,"Report status","Report created",this);
 
@@ -895,8 +893,263 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     storage::setZEROStatus(m_ZERO_status);
     storage::setTEMPStatus(m_TEMP_status);
     qDebug()<<"Attempting cleaner report";
-    m_report->createReport();
+    //m_report->createReport();
 
+    QString Serial, DateTime, Employee, pin4V_SW_isOK, pin4V_SW_value, pin3_3V_SW_isOK, pin3_3V_SW_value, pin5V_SW_isOK, pin5_SW_value, pin12V_isOK,pin12V_value, pin3_3V_isOK, pin3_3V_value, pin4V_isOK, pin4V_value;
+
+    LedDataMap ledMapa=storage::getLedMap();
+    Serial = QString::fromStdString(storage::getSERIAL());
+    DateTime = storage::getDateTime().toString("dd.MM.yyyy hh:mm");
+    Employee = QString::fromStdString(storage::getEmployee());
+    if(storage::getPinData("pin4V_SW").first){
+        pin4V_SW_isOK= "OK";
+    }else {
+        pin4V_SW_isOK= "NOT OK";
+    }
+    pin4V_SW_value= QString::number(storage::getPinData("pin4V_SW").second);
+    if(storage::getPinData("pin3_3V_SW").first){
+        pin3_3V_SW_isOK= "OK";
+    }else {
+        pin3_3V_SW_isOK= "NOT OK";
+    }
+    pin3_3V_SW_value= QString::number(storage::getPinData("pin3_3V_SW").second);
+    if(storage::getPinData("pin5V_SW").first){
+        pin5V_SW_isOK= "OK";
+    }else {
+        pin5V_SW_isOK= "NOT OK";
+    }
+    pin5_SW_value= QString::number(storage::getPinData("pin5V_SW").second);
+    if(storage::getPinData("pin12V").first){
+        pin12V_isOK="OK";
+    }else {
+        pin12V_isOK="NOT OK";
+    }
+    pin12V_value=QString::number(storage::getPinData("pin12V").second);
+    if(storage::getPinData("pin3_3V").first){
+        pin3_3V_isOK="OK";
+    }else {
+        pin3_3V_isOK="NOT OK";
+    }
+    pin3_3V_value=QString::number(storage::getPinData("pin3_3V").second);
+    if(storage::getPinData("pin4V").first){
+        pin4V_isOK="OK";
+    }else {
+        pin4V_isOK="NOT OK";
+    }
+    pin4V_value=QString::number(storage::getPinData("pin4V").second);
+
+//Writting to file
+#if defined(Q_OS_LINUX)
+    QString filepath = "/home/jakob/SideMountGUI/";
+    QString filename = "/home/jakob/SideMountGUI/Side_Mount_test.";
+#endif
+
+#if defined(Q_OS_WIN)
+    QString filepath = "C:\\Users\\Uporabnik\\Documents\\Reports";
+    QString filename = "C:\\Users\\Uporabnik\\Documents\\Reports\\Side_Mount_test.";
+#endif
+
+    QString temps;
+    filename.append(storage::getSERIAL());
+    QString nameToOverwrite;
+    int index=1;
+
+    QFileInfo fileInfo(filename);
+    temps=filename;
+    // while(fileInfo.exists(temps)){
+    //     //FIRST CHECK IS NOT HERE THIS IS NOT EVEN USED
+    //     qDebug()<<"FILE ALREADY EXISTS!!"; //first Check is here
+    //     //Here we popup and decide Do we overrite file, add another copy, or change serial name
+
+
+
+    //     qDebug()<<"Dialog closed";
+
+    //     qDebug()<<"This is the storage variable: "<< storage::getMultipleFileDialogStatus();
+    //     //Here we open the dialog and then
+
+    //     qDebug()<<"Appending";
+    //     temps.append(" (");
+    //     temps.append(QString::number(index));
+    //     temps.append(")");
+    //     index++;
+    // }
+
+    temps.append(".txt");
+    filename=temps;
+    nameToOverwrite = temps;
+    qDebug()<<"Filename: "<<filename;
+    qDebug()<<"Temps: "<<filename;
+    int indok=1;
+    while(true){
+        if(fileInfo.exists(temps) && storage::getMultipleFileDialogStatus() != 1 && storage::getMultipleFileDialogStatus() != 2){
+            qDebug()<<"it already exists dont overwrite it"; //File already exists, send an alert that says
+            //File already exists, change serial number?, overwrite it?, make a copy with a number at the end?
+            //we can still make file just not save it
+            if(indok == 1){
+                multipleFilesDialog* myDialog = new multipleFilesDialog(this);
+                //myDialog->show();
+                myDialog->exec();
+
+                qDebug()<<"This is the number of status multipleFiles: "<<storage::getMultipleFileDialogStatus();
+
+                qDebug()<<"Actual temps: "<<temps;
+            }
+            //so if the variable is 1, we should just close the dialog and let them change the SN
+
+
+            if(storage::getMultipleFileDialogStatus() == 3){
+            qDebug()<<"Adding number to not delete";
+            if(temps[temps.length() -7] != '('){
+                temps.insert(temps.length() - 4, " (" + QString::number(indok) + ")");
+            }else {
+                temps.replace(temps.length() -6,1, QString::number(indok));
+            }
+            }
+        }else {
+            break;
+
+        }
+        indok++;
+
+    }
+    filename=temps;
+
+    if(storage::getMultipleFileDialogStatus() == 3 || storage::getMultipleFileDialogStatus() == 2 || storage::getMultipleFileDialogStatus() == 0){
+        QString filenameChosen;
+        if(storage::getMultipleFileDialogStatus() == 3 || storage::getMultipleFileDialogStatus() == 0){
+            filenameChosen = filename;
+        }else if (storage::getMultipleFileDialogStatus() == 2){
+           filenameChosen = nameToOverwrite;
+        }
+
+        QFile file(filenameChosen);
+        qDebug()<<"This is the filenameChosen: " << filenameChosen;
+    if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
+        QTextStream stream(&file);
+        //stream<<"--------------------------------------------------------\n";
+        stream<<"SN:"<<Serial<<";";
+        stream<<DateTime<<";";
+        stream<<Employee;
+        stream<<"\n";
+        stream<<"Device;"<<"Status;"<<"Description\n";
+        if(pin4V_SW_isOK=="NOT OK"){
+            stream<<"pin4V_SW;"<<pin4V_SW_isOK<<";"<<pin4V_SW_value<<"\n";}
+        else {
+            stream<<"pin4V_SW;"<<pin4V_SW_isOK<<";"<<pin4V_SW_value<<"\n";}
+        if(pin3_3V_SW_isOK=="NOT OK"){
+            stream<<"pin3_3V_SW;"<<pin3_3V_SW_isOK<<";"<<pin3_3V_SW_value<<"\n";}
+        else {
+            stream<<"pin3_3V_SW;"<<pin3_3V_SW_isOK<<";"<<pin3_3V_SW_value<<"\n";}
+        if(pin5V_SW_isOK=="NOT OK"){
+            stream<<"pin5V_SW;"<<pin5V_SW_isOK<<";"<<pin5_SW_value<<"\n";
+        }else  {
+            stream<<"pin5V_SW;"<<pin5V_SW_isOK<<";"<<pin5_SW_value<<"\n";
+        }
+        if(pin12V_isOK=="NOT OK"){
+            stream<<"pin12V;"<<pin12V_isOK<<";"<<pin12V_value<<"\n";
+        }else  stream<<"pin12V;"<<pin12V_isOK<<";"<<pin12V_value<<"\n";
+        if(pin3_3V_isOK=="NOT OK"){
+            stream<<"pin3_3V;"<<pin3_3V_isOK<<";"<<pin3_3V_value<<"\n";
+        }else  {
+            stream<<"pin3_3V;"<<pin3_3V_isOK<<";"<<pin3_3V_value<<"\n";
+        }
+        if(pin4V_isOK=="NOT OK"){
+            stream<<"pin4V;"<<pin4V_isOK<<";"<<pin4V_value<<"\n";
+        }else  {
+            stream<<"pin4V;"<<pin4V_isOK<<";"<<pin4V_value<<"\n";
+        }
+
+
+        stream<<"PA2temp;"<<QString::fromStdString(storage::getPA2Value())<<"\n";
+        stream<<"PA3temp;"<<QString::fromStdString(storage::getPA3Value())<<"\n";
+
+        if(storage::getButtonData("Button1").first){
+            stream<<"BUTTON1,2"<<";OK\n";
+        }else {
+            stream<<"BUTTON1,2"<<";NOT OK;"<<QString::fromStdString(storage::getButtonData("Button1").second)<<"\n";
+
+        }
+
+        if(storage::getButtonData("Button2").first){
+            stream<<"BUTTON3,4"<<";OK\n";
+        }else {
+            stream<<"BUTTON3,4"<<";NOT OK;>"<<QString::fromStdString(storage::getButtonData("Button2").second)<<"\n";
+        }
+
+
+
+        for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
+
+            if(led->second.first){
+                stream<<QString::fromStdString(led->first)<<";OK\n";
+            }else {
+                stream<<QString::fromStdString(led->first)<<";NOT OK;"<<QString::fromStdString(led->second.second)<<"\n";
+
+            }
+
+        }
+
+        if(storage::getNFCStatus()){
+            stream<<"NFC;OK\n";
+        }else {
+            stream<<"NFC;NOT OK;"<<QString::fromStdString(storage::getNFCDesc())<<"\n";
+        }
+
+        if(storage::getHALStatus()){
+            stream<<"HAL;OK\n";
+
+        }else {
+            stream<<"HAL;NOT OK;"<<QString::fromStdString(storage::getHALDesc())<<"\n";;
+
+        }
+
+        if(storage::getZEROStatus()){
+            stream<<"ZERO;OK\n";
+
+        }else {
+            stream<<"ZERO;NOT OK;"<<QString::fromStdString(storage::getZERODesc())<<"\n";
+
+        }
+
+        if(storage::getTEMPStatus()){
+            stream<<"TEMP;OK\n";
+
+        }else {
+
+            stream<<"TEMP;NOT OK;"<<QString::fromStdString(storage::getTEMPDesc())<<"\n";
+        }
+
+        if(storage::getCANRX_OK()){
+            stream<<"CANRX;OK\n";
+
+        }else{
+            stream<<"CANRX;NOT OK\n";
+
+        }
+
+        if(storage::getCANTX_OK()){
+            stream<<"CANTX;OK\n";
+
+        }else{
+            stream<<"CANTX;NOT OK\n";
+        }
+
+
+
+    }
+
+    file.close(); // we dont even the anything if the option is change SN
+
+    QMessageBox msgBox; //This should actually be down where we create the report
+    msgBox.setText("Report created"); //not on center of app
+    //msgBox.setGeometry(500,500,msgBox.width(), msgBox.height());
+    msgBox.setModal(false);
+    msgBox.exec();
+    qDebug()<<"Done good !";
+    }
+
+    storage::setMultipleFilesDialogStatus(0);
 }
 
 
@@ -1100,7 +1353,9 @@ void MainWindow::on_Serial_line_textEdited(const QString &arg1)
         ui->pushButton_14->setEnabled(false);
         ui->label_3->setVisible(true);
     }else {
+        if(ui -> zero_check_frame -> isEnabled()){ //Only if Report is ready to be reported
         ui->pushButton_14->setEnabled(true);
+        }
         ui->label_3->setVisible(false);
     }
 }

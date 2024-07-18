@@ -20,6 +20,7 @@
 #include "storage.h"
 #include "dialog.h"
 #include "dialogled.h"
+#include "multiplefilesdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

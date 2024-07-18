@@ -250,5 +250,12 @@ void storage::setPA3Value(const std::string & s)
     m_PA3 = s;
 }
 
+void storage::setMultipleFilesDialogStatus(int value)
+{
+    m_multipleFilesStatus = value;
+}
 
-
+int storage::getMultipleFileDialogStatus()
+{
+    return m_multipleFilesStatus;
+}
