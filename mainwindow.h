@@ -82,7 +82,12 @@ private slots:
 
     void on_Serial_line_editingFinished();
 
+    void on_Serial_line_textEdited(const QString &arg1);
+
+    void on_Serial_line_textChanged(const QString &arg1);
+
 private:
+    QString m_currentSN{""};
     int findClosestTemp(double target);
     QMap<int, double> lookupTable;
     Ui::MainWindow *ui;

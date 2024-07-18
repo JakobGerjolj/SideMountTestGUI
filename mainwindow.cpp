@@ -224,6 +224,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->can_frame->setEnabled(false);
     ui->pushButton_14->setEnabled(false);
     ui-> pushButton_3 -> setEnabled(false);
+    ui->label_3->setStyleSheet("background-color: rgb(200,200,0)");
 
     ui -> zero_textEdit_2 -> setVisible(false);
 
@@ -594,7 +595,7 @@ void MainWindow::readData(){
                 storage::setCANTX_OK(true);
                 //How do we seperate tx and rx
             }else {
-                ui->can_frame->setStyleSheet("");
+                //ui->can_frame->setStyleSheet("");
 
             }
 
@@ -761,7 +762,12 @@ void MainWindow::on_LED_OK_clicked()
     storage::setLedData("LED9", true, "");
     ui->can_frame->setEnabled(true);
     ui->zero_check_frame_2->setEnabled(true);
-    ui->pushButton_14->setEnabled(true);
+    if(!(ui -> Serial_line -> text().isEmpty())){
+        ui->pushButton_14->setEnabled(true);
+    }else{
+        ui->pushButton_14->setEnabled(false);
+    }
+
     ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 }
 
@@ -772,7 +778,13 @@ void MainWindow::on_LED_NOK_clicked()
     myDialog->show();
     ui->zero_check_frame_2->setEnabled(true);
     ui->can_frame->setEnabled(true);
-    ui->pushButton_14->setEnabled(true);
+
+    if(!(ui -> Serial_line -> text().isEmpty())){
+        ui->pushButton_14->setEnabled(true);
+    }else{
+        ui->pushButton_14->setEnabled(false);
+    }
+
   //  ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     connect(myDialog, &DialogLED::triggerLEDs, this, &MainWindow::onTriggerLED);
 
@@ -909,7 +921,8 @@ void MainWindow::on_pushButton_clicked() //upload test FW
     m_processSideMount->start();
     ui->pushButton->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
-    ui->status_label->setText("Uploading sidemount firmware");
+    ui -> status_label -> setStyleSheet("background-color: rgb(200,200,0)");
+    ui -> status_label -> setText("Uploading sidemount firmware");
 
     QObject::connect(m_processSideMount, &QProcess::readyReadStandardOutput, [&]() {
         QByteArray output = m_processSideMount->readAllStandardOutput();
@@ -923,6 +936,7 @@ void MainWindow::on_pushButton_clicked() //upload test FW
     connect(m_processSideMount, &QProcess::finished, this, [&](){
         ui->pushButton->setEnabled(true);
         ui->pushButton_2->setEnabled(true);
+        ui -> status_label -> setStyleSheet("background-color: rgb(0,200,0)");
         ui->status_label->setText("Uploaded sidemount firmware");
         // m_processOutput = m_processSideMount->readAllStandardOutput();
         qDebug()<<"______START_OF_STRING___________";
@@ -932,6 +946,7 @@ void MainWindow::on_pushButton_clicked() //upload test FW
             qDebug()<<"Error detected this is the error:";
             QString error;
             error= m_processOutput.mid(m_processOutput.indexOf("Error:")+6,35); // sending error, try up to \n
+            ui -> status_label -> setStyleSheet("background-color: rgb(200,0,0)");
             ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
         }
         //outp=QString::fromUtf8(output);
@@ -1000,8 +1015,9 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
 void MainWindow::on_settings_button_clicked()
 {
     settingsDialog* settDialog = new settingsDialog(this);
-    closeSerialPort();
+    //closeSerialPort();
     if(settDialog->exec() == QDialog::Accepted){
+        closeSerialPort();
         qDebug()<<"Accepted";
         qDebug()<<settDialog->getBotPath();
         qDebug()<<"Arduino port:"; // Getting settings
@@ -1039,6 +1055,9 @@ void MainWindow::on_ZERO_NOK_2_clicked()
 {
     m_TEMP_status = false;
     ui->zero_check_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
+
+
+
     ui->zero_textEdit_2->setVisible(true);
 }
 
@@ -1070,5 +1089,25 @@ int MainWindow::findClosestTemp(double target)
 void MainWindow::on_Serial_line_editingFinished()
 {
     qDebug()<<"Editing finished";
+}
+
+
+void MainWindow::on_Serial_line_textEdited(const QString &arg1)
+{
+    m_currentSN = arg1;
+    qDebug()<<m_currentSN;
+    if(m_currentSN.isEmpty()){
+        ui->pushButton_14->setEnabled(false);
+        ui->label_3->setVisible(true);
+    }else {
+        ui->pushButton_14->setEnabled(true);
+        ui->label_3->setVisible(false);
+    }
+}
+
+
+void MainWindow::on_Serial_line_textChanged(const QString &arg1)
+{
+
 }
 

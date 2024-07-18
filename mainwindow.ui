@@ -424,7 +424,7 @@ BOOTLOADER</string>
      <rect>
       <x>720</x>
       <y>660</y>
-      <width>301</width>
+      <width>181</width>
       <height>61</height>
      </rect>
     </property>
@@ -1332,6 +1332,19 @@ FIRMWARE</string>
       </rect>
      </property>
     </widget>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>680</y>
+      <width>131</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Enter serial name please!</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
