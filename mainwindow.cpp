@@ -341,7 +341,7 @@ void MainWindow::readData(){
 
             float temp4VSW;
             temp4VSW = listOfValues.at(1).left(4).toFloat();
-            temp4VSW = temp4VSW - 0.3;
+            temp4VSW = temp4VSW - 0.1;
 
             QString temp4VSWString;
             temp4VSWString = QString::number(temp4VSW);
@@ -366,7 +366,7 @@ void MainWindow::readData(){
             float temp=(listOfValues.at(1).left(4)).toFloat();
             // qDebug()<<"LEFT STRING";
             // qDebug()<<temp;
-            storage::setPinData("pin4V_SW", temp_bool, (listOfValues.at(1).left(4)).toFloat()); // MYB WORK
+            storage::setPinData("pin4V_SW", temp_bool, temp4VSW); // MYB WORK
 
             //process value so that 12V value * 11 5V value * 2
 
@@ -389,11 +389,11 @@ void MainWindow::readData(){
             }
 
 
-            storage::setPinData("pin3_3V_SW", temp_bool, listOfValues.at(2).left(4).toFloat());
+            storage::setPinData("pin3_3V_SW", temp_bool, temp3VSW);
 
             float temp5V;
             temp5V = listOfValues.at(3).left(4).toFloat();
-            temp5V = (temp5V*2) - 0.2;
+            temp5V = (temp5V*2) - 0.18;
 
             QString temp5VString;
             temp5VString = QString::number(temp5V);
@@ -438,12 +438,12 @@ void MainWindow::readData(){
 
 
             if(listOfValues.at(11) == '1'){
-                storage::setPinData("pin3_3V", true,  listOfValues.at(5).left(4).toFloat());
+                storage::setPinData("pin3_3V", true,  temp3V);
                 ui->label_pin3_3V->setText(temp3VString);
                 ui->isOK_labelpin33V->setStyleSheet("background-color: rgb(0,150,0)");
             }else{
 
-                storage::setPinData("pin3_3V", false, listOfValues.at(5).left(4).toFloat());
+                storage::setPinData("pin3_3V", false, temp3V);
                 ui->label_pin3_3V->setText(temp3VString);
                 ui->isOK_labelpin33V->setStyleSheet("");
             }
@@ -451,7 +451,7 @@ void MainWindow::readData(){
 
             float temp4V;
             temp4V = listOfValues.at(6).left(4).toFloat();
-            temp4V = temp4V - 0.3;
+            temp4V = temp4V - 0.1;
 
             QString temp4VString;
             temp4VString = QString::number(temp4V);
@@ -459,11 +459,11 @@ void MainWindow::readData(){
 
 
             if(listOfValues.at(12)=='1'){
-                storage::setPinData("pin4V", true, listOfValues.at(6).left(4).toFloat());
+                storage::setPinData("pin4V", true, temp4V);
                 ui->label_pin4V->setText(temp4VString);
                 ui->isOK_label_4V->setStyleSheet("background-color: rgb(0,150,0)");
             }else {
-                storage::setPinData("pin4V", false, listOfValues.at(6).left(4).toFloat());
+                storage::setPinData("pin4V", false, temp4V);
                 ui->label_pin4V->setText(temp4VString);
                 ui->isOK_label_4V->setStyleSheet("");
 
