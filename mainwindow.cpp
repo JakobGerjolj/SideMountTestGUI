@@ -854,24 +854,24 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
     qDebug()<<"Current path: "<<QDir::currentPath();
 
-    ui->NFC_status->setText("X");
-    ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
-    ui->buttons_check_frame->setStyleSheet("");
-    ui->nfc_check_frame->setStyleSheet("");
-    ui->hal_check_frame->setStyleSheet("");
-    ui->zero_check_frame->setStyleSheet("");
-    ui->zero_check_frame_2->setStyleSheet("");
-    ui->led_check_frame->setStyleSheet("");
-    ui->can_frame->setStyleSheet("");
-    ui->nfc_check_frame->setEnabled(false);
-    ui->hal_check_frame->setEnabled(false);
-    ui->zero_check_frame->setEnabled(false);
-    ui->led_check_frame->setEnabled(false);
-    ui->can_frame->setEnabled(false);
-    ui->can_frame->setStyleSheet("");
-    ui->zero_check_frame_2->setEnabled(false);
+    // ui->NFC_status->setText("X");
+    // ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
+    // ui->buttons_check_frame->setStyleSheet("");
+    // ui->nfc_check_frame->setStyleSheet("");
+    // ui->hal_check_frame->setStyleSheet("");
+    // ui->zero_check_frame->setStyleSheet("");
+    // ui->zero_check_frame_2->setStyleSheet("");
+    // ui->led_check_frame->setStyleSheet("");
+    // ui->can_frame->setStyleSheet("");
+    // ui->nfc_check_frame->setEnabled(false);
+    // ui->hal_check_frame->setEnabled(false);
+    // ui->zero_check_frame->setEnabled(false);
+    // ui->led_check_frame->setEnabled(false);
+    // ui->can_frame->setEnabled(false);
+    // ui->can_frame->setStyleSheet("");
+    // ui->zero_check_frame_2->setEnabled(false);
 
-    ui->zero_textEdit_2->setVisible(false);
+    // ui->zero_textEdit_2->setVisible(false);
 
 
 
@@ -1016,6 +1016,27 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
     filename=temps;
 
     if(storage::getMultipleFileDialogStatus() == 3 || storage::getMultipleFileDialogStatus() == 2 || storage::getMultipleFileDialogStatus() == 0){
+        //Here we cleanup if its 2 3 or 0
+        ui->NFC_status->setText("X");
+        ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
+        ui->buttons_check_frame->setStyleSheet("");
+        ui->nfc_check_frame->setStyleSheet("");
+        ui->hal_check_frame->setStyleSheet("");
+        ui->zero_check_frame->setStyleSheet("");
+        ui->zero_check_frame_2->setStyleSheet("");
+        ui->led_check_frame->setStyleSheet("");
+        ui->can_frame->setStyleSheet("");
+        ui->nfc_check_frame->setEnabled(false);
+        ui->hal_check_frame->setEnabled(false);
+        ui->zero_check_frame->setEnabled(false);
+        ui->led_check_frame->setEnabled(false);
+        ui->can_frame->setEnabled(false);
+        ui->can_frame->setStyleSheet("");
+        ui->zero_check_frame_2->setEnabled(false);
+
+        ui->zero_textEdit_2->setVisible(false);
+
+
         QString filenameChosen;
         if(storage::getMultipleFileDialogStatus() == 3 || storage::getMultipleFileDialogStatus() == 0){
             filenameChosen = filename;
