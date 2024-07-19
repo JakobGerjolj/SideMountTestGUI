@@ -329,7 +329,7 @@ void DialogLED::on_buttonBox_accepted()
         temp.prepend("R ");
 
     }
-    storage::setLedData("LED4", leds[3], temp.toStdString());
+    storage::setLedData("LED5", leds[3], temp.toStdString());
     temp=ui->led5_NOK_text->toPlainText();
     if(ui->led5_check_B->isChecked()){
         temp.prepend("B ");
@@ -344,7 +344,7 @@ void DialogLED::on_buttonBox_accepted()
         temp.prepend("R ");
 
     }
-    storage::setLedData("LED5", leds[4], temp.toStdString());
+    storage::setLedData("LED6", leds[4], temp.toStdString());
     temp=ui->led6_NOK_text->toPlainText();
     if(ui->led6_check_B->isChecked()){
         temp.prepend("B ");
@@ -359,7 +359,7 @@ void DialogLED::on_buttonBox_accepted()
         temp.prepend("R ");
 
     }
-    storage::setLedData("LED6", leds[5], temp.toStdString());
+    storage::setLedData("LED7", leds[5], temp.toStdString());
     temp=ui->led7_NOK_text->toPlainText();
     if(ui->led7_check_B->isChecked()){
         temp.prepend("B ");
@@ -374,7 +374,7 @@ void DialogLED::on_buttonBox_accepted()
         temp.prepend("R ");
 
     }
-    storage::setLedData("LED7", leds[6], temp.toStdString());
+    storage::setLedData("LED8", leds[6], temp.toStdString());
     temp=ui->led8_NOK_text->toPlainText();
     if(ui->led8_check_B->isChecked()){
         temp.prepend("B ");
@@ -389,7 +389,7 @@ void DialogLED::on_buttonBox_accepted()
         temp.prepend("R ");
 
     }
-    storage::setLedData("LED8", leds[7], temp.toStdString());
+    storage::setLedData("LED9", leds[7], temp.toStdString());
     temp=ui->led9_NOK_text->toPlainText();
     if(ui->led9_check_B->isChecked()){
         temp.prepend("B ");
@@ -404,7 +404,7 @@ void DialogLED::on_buttonBox_accepted()
         temp.prepend("R ");
 
     }
-    storage::setLedData("LED9", leds[8], ui->led9_NOK_text->toPlainText().toStdString());
+    storage::setLedData("LED10", leds[8], ui->led9_NOK_text->toPlainText().toStdString());
 
 }
 

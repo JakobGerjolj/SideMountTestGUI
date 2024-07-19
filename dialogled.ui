@@ -260,7 +260,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>LED 4:</string>
+    <string>LED 5:</string>
    </property>
   </widget>
   <widget class="QLabel" name="led4_NOK_label">
@@ -325,7 +325,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>LED 5:</string>
+    <string>LED 6:</string>
    </property>
   </widget>
   <widget class="QLabel" name="led5_NOK_label">
@@ -390,7 +390,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>LED 7:</string>
+    <string>LED 8:</string>
    </property>
   </widget>
   <widget class="QLabel" name="led7_NOK_label">
@@ -455,7 +455,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>LED 8:</string>
+    <string>LED 9:</string>
    </property>
   </widget>
   <widget class="QLabel" name="led8_NOK_label">
@@ -533,7 +533,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>LED 9:</string>
+    <string>LED 10:</string>
    </property>
   </widget>
   <widget class="QLabel" name="led9_OK_label">
@@ -559,7 +559,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>LED 6:</string>
+    <string>LED 7:</string>
    </property>
   </widget>
   <widget class="QPushButton" name="led6_NOK">

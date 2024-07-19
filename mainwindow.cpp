@@ -199,12 +199,12 @@ MainWindow::MainWindow(QWidget *parent)
     storage::addLedData("LED1");
     storage::addLedData("LED2");
     storage::addLedData("LED3");
-    storage::addLedData("LED4");
     storage::addLedData("LED5");
     storage::addLedData("LED6");
     storage::addLedData("LED7");
     storage::addLedData("LED8");
     storage::addLedData("LED9");
+    storage::addLedData("LED10");
     storage::addButtonData("BUTTON1");
     storage::addButtonData("BUTTON2");
     storage::setHALDesc("");
@@ -756,12 +756,13 @@ void MainWindow::on_LED_OK_clicked()
     storage::setLedData("LED1", true, "");
     storage::setLedData("LED2", true, "");
     storage::setLedData("LED3", true, "");
-    storage::setLedData("LED4", true, "");
+    //storage::setLedData("LED4", true, "");
     storage::setLedData("LED5", true, "");
     storage::setLedData("LED6", true, "");
     storage::setLedData("LED7", true, "");
     storage::setLedData("LED8", true, "");
     storage::setLedData("LED9", true, "");
+    storage::setLedData("LED10", true, "");
     ui->can_frame->setEnabled(true);
     ui->zero_check_frame_2->setEnabled(true);
     if(!(ui -> Serial_line -> text().isEmpty())){
@@ -1101,7 +1102,8 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
 
         for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
-
+            qDebug()<<QString::fromStdString(led->first);
+            if(led->first != "LED10"){
             if(led->second.first){
                 stream<<QString::fromStdString(led->first)<<";OK\n";
             }else {
@@ -1109,6 +1111,14 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
             }
 
+            }
+
+        }
+
+        if(ledMapa["LED10"].first){
+            stream<<"LED10"<<";OK\n";
+        }else{
+            stream<<"LED10"<<";NOT OK;"<<QString::fromStdString(ledMapa["LED10"].second)<<"\n";
         }
 
         if(storage::getNFCStatus()){
