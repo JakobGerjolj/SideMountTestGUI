@@ -518,6 +518,12 @@ void MainWindow::readData(){
             if(ui->NFC_status->text()=="DETECTED"){
                 ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
             }
+            QTimer::singleShot(2000,this,[this]() {
+                ui->NFC_status->setText("WAITING");
+                ui->nfc_frame->setStyleSheet("");
+                //Green stays for 2 secs then we do this
+            });
+
 #if defined(Q_OS_LINUX)
             ui->hal_frame->setStyleSheet("background-color: rgb(0,0,200)");
 #endif
