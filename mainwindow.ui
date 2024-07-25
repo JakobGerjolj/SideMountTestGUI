@@ -233,7 +233,7 @@ BOOTLOADER</string>
       </rect>
      </property>
      <property name="text">
-      <string>HAL</string>
+      <string>HALL</string>
      </property>
     </widget>
     <widget class="QPushButton" name="HAL_OK">
