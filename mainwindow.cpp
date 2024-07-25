@@ -342,7 +342,7 @@ void MainWindow::readData(){
 
             float temp4VSW;
             temp4VSW = listOfValues.at(1).left(4).toFloat();
-            temp4VSW = temp4VSW - 0.1;
+            temp4VSW = temp4VSW;
 
             QString temp4VSWString;
             temp4VSWString = QString::number(temp4VSW);
@@ -373,7 +373,7 @@ void MainWindow::readData(){
 
             float temp3VSW;
             temp3VSW = listOfValues.at(2).left(4).toFloat();
-            temp3VSW = temp3VSW - 0.15;
+            temp3VSW = temp3VSW;
 
             QString temp3VSWString;
             temp3VSWString = QString::number(temp3VSW);
@@ -394,7 +394,7 @@ void MainWindow::readData(){
 
             float temp5V;
             temp5V = listOfValues.at(3).left(4).toFloat();
-            temp5V = (temp5V*2) - 0.18;
+            temp5V = (temp5V*2);
 
             QString temp5VString;
             temp5VString = QString::number(temp5V);
@@ -413,7 +413,7 @@ void MainWindow::readData(){
             float temp12V;
             // qDebug()<<"RAW FROM LIST:"<<listOfValues.at(4);
             temp12V = listOfValues.at(4).left(4).toFloat();
-            temp12V = (temp12V * 11) - 1; //10 or 11 I dont know, should be 11 I think, but lets put 10 for now
+            temp12V = temp12V * 10.9; //10 or 11 I dont know, should be 11 I think, but lets put 10 for now
             // qDebug()<<"Float value of 12V: "<<temp12V;
             QString temp12VString;
             temp12VString = QString::number(temp12V);
@@ -431,7 +431,7 @@ void MainWindow::readData(){
 
             float temp3V;
             temp3V = listOfValues.at(5).left(4).toFloat();
-            temp3V = temp3V - 0.15;
+            temp3V = temp3V;
 
             QString temp3VString;
             temp3VString = QString::number(temp3V);
@@ -452,7 +452,7 @@ void MainWindow::readData(){
 
             float temp4V;
             temp4V = listOfValues.at(6).left(4).toFloat();
-            temp4V = temp4V - 0.1;
+            temp4V = temp4V;
 
             QString temp4VString;
             temp4VString = QString::number(temp4V);
