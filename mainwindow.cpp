@@ -269,7 +269,7 @@ void MainWindow::readData(){
 
 
 
-   // qDebug()<<str;
+    // qDebug()<<str;
     str.replace("\r\n","");
 
     //qDebug()<<str;
@@ -293,17 +293,17 @@ void MainWindow::readData(){
         }
     }
     if(isFullBuffer){
-       // qDebug()<<"Full buffer: "<<str;
-       // //Debug purpose
+        // qDebug()<<"Full buffer: "<<str;
+        // //Debug purpose
 
     }
 
 
     if(isFullBuffer){
 
-       // qDebug()<<"--------------------BUFFER IS FULL!!!!!!!!!!!-----------";
+        // qDebug()<<"--------------------BUFFER IS FULL!!!!!!!!!!!-----------";
         QString temp=buffer;
-       // qDebug()<<buffer;
+        // qDebug()<<buffer;
         temp.replace("<","");
         temp.replace(">","");
         QStringList listOfValues =temp.split(",");
@@ -510,19 +510,22 @@ void MainWindow::readData(){
 
             if(listOfValues.at(15)=="1"){//NFC
                 storage::setCANTX_OK(true);
-                QTimer::singleShot(1, this, [this](){
-                    ui->NFC_status->setText("DETECTED");
-                    ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
-                });
-            }
-            if(ui->NFC_status->text()=="DETECTED"){
+
+                ui->NFC_status->setText("DETECTED");
                 ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
+
+
+                if(ui->NFC_status->text()=="DETECTED"){
+                    ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
+                    QTimer::singleShot(2000,this,[this]() {//Might be problems here
+                        ui->NFC_status->setText("WAITING");
+                        ui->nfc_frame->setStyleSheet(""); //This is prob fine
+                        //Green stays for 2 secs then we do this
+                    });
+                }
+
             }
-            QTimer::singleShot(2000,this,[this]() {
-                ui->NFC_status->setText("WAITING");
-                ui->nfc_frame->setStyleSheet("");
-                //Green stays for 2 secs then we do this
-            });
+
 
 #if defined(Q_OS_LINUX)
             ui->hal_frame->setStyleSheet("background-color: rgb(0,0,200)");
@@ -556,10 +559,10 @@ void MainWindow::readData(){
 #endif
 #if defined(Q_OS_WIN)
             ui->t1_frame->setStyleSheet("background-color: rgb(163,188,227)");
-#endif
-            //Value that needs to be processed is listOfValues.at(18)
-            //and then write it into the values
-            //here we lookup the table
+#endif \
+    //Value that needs to be processed is listOfValues.at(18) \
+    //and then write it into the values \
+    //here we lookup the table
             int rawVolt = listOfValues.at(18).toInt();
 
             float Voltage = ((float)rawVolt/4095.0) * 3.0;
@@ -586,10 +589,10 @@ void MainWindow::readData(){
 #endif
 
             double result2 = ((10000*Voltage)/(3.3 - Voltage)) /1000.0;
-           // qDebug() << "This is the supposed resistance: " << result;
+            // qDebug() << "This is the supposed resistance: " << result;
 
             int TempForT2 = findClosestTemp(result);
-          //  qDebug()<<"This is the supposed Temp: "<< TempForT1;
+            //  qDebug()<<"This is the supposed Temp: "<< TempForT1;
 
             QString toDisplayT2 = QString::number(TempForT2) + "°C (" + listOfValues.at(19) + ")";
             storage::setPA3Value(toDisplayT2.toStdString());
@@ -679,10 +682,10 @@ void MainWindow::on_Buttons_NOK_clicked()
     myDialog->show();
     ui->nfc_check_frame->setEnabled(true);
 
-   // ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    // ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     qDebug()<<"Are they OK";
 
-     ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     if(myDialog->exec() == QDialog::Accepted){ // not work yet
         if(storage::areAllButtonsOK()){
             qDebug()<<storage::areAllButtonsOK();
@@ -794,7 +797,7 @@ void MainWindow::on_LED_NOK_clicked()
         ui->pushButton_14->setEnabled(false);
     }
 
-  //  ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    //  ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     connect(myDialog, &DialogLED::triggerLEDs, this, &MainWindow::onTriggerLED);
 
     if(myDialog->exec() == QDialog::Accepted){
@@ -883,7 +886,7 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
 
 
-   // QMessageBox * msgBox = new QMessageBox(QMessageBox::information,"Report status","Report created",this);
+    // QMessageBox * msgBox = new QMessageBox(QMessageBox::information,"Report status","Report created",this);
 
 
     //QMessageBox::information(this, "Report status", "Report created!");
@@ -994,9 +997,18 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
             //File already exists, change serial number?, overwrite it?, make a copy with a number at the end?
             //we can still make file just not save it
             if(indok == 1){
-                multipleFilesDialog* myDialog = new multipleFilesDialog(this);
+                multipleFilesDialog* myDialog = new multipleFilesDialog(this, "Confirm save");
                 //myDialog->show();
+
+                myDialog->setWindowFlags( ( (myDialog->windowFlags() | Qt::CustomizeWindowHint)
+                                          & ~Qt::WindowCloseButtonHint) );
                 myDialog->exec();
+
+                //connect(myDialog, &Dialog::rejected, this, [](){
+                //    qDebug()<<"REJECTED!!!!!!!!!!!!!";
+
+                //});
+
 
                 qDebug()<<"This is the number of status multipleFiles: "<<storage::getMultipleFileDialogStatus();
 
@@ -1006,12 +1018,12 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
 
             if(storage::getMultipleFileDialogStatus() == 3){
-            qDebug()<<"Adding number to not delete";
-            if(temps[temps.length() -7] != '('){
-                temps.insert(temps.length() - 4, " (" + QString::number(indok) + ")");
-            }else {
-                temps.replace(temps.length() -6,1, QString::number(indok));
-            }
+                qDebug()<<"Adding number to not delete";
+                if(temps[temps.length() -7] != '('){
+                    temps.insert(temps.length() - 4, " (" + QString::number(indok) + ")");
+                }else {
+                    temps.replace(temps.length() -6,1, QString::number(indok));
+                }
             }
         }else {
             break;
@@ -1039,8 +1051,9 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
         ui->led_check_frame->setEnabled(false);
         ui->can_frame->setEnabled(false);
         ui->can_frame->setStyleSheet("");
+        ui -> pushButton_14 -> setEnabled(false);
         ui->zero_check_frame_2->setEnabled(false);
-
+        ui -> pushButton_14 -> setEnabled(false);
         ui->zero_textEdit_2->setVisible(false);
 
 
@@ -1048,142 +1061,142 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
         if(storage::getMultipleFileDialogStatus() == 3 || storage::getMultipleFileDialogStatus() == 0){
             filenameChosen = filename;
         }else if (storage::getMultipleFileDialogStatus() == 2){
-           filenameChosen = nameToOverwrite;
+            filenameChosen = nameToOverwrite;
         }
 
         QFile file(filenameChosen);
         qDebug()<<"This is the filenameChosen: " << filenameChosen;
-    if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
-        QTextStream stream(&file);
-        //stream<<"--------------------------------------------------------\n";
-        stream<<"SN:"<<Serial<<";";
-        stream<<DateTime<<";";
-        stream<<Employee;
-        stream<<"\n";
-        stream<<"Device;"<<"Status;"<<"Description\n";
-        if(pin4V_SW_isOK=="NOT OK"){
-            stream<<"pin4V_SW;"<<pin4V_SW_isOK<<";"<<pin4V_SW_value<<"\n";}
-        else {
-            stream<<"pin4V_SW;"<<pin4V_SW_isOK<<";"<<pin4V_SW_value<<"\n";}
-        if(pin3_3V_SW_isOK=="NOT OK"){
-            stream<<"pin3_3V_SW;"<<pin3_3V_SW_isOK<<";"<<pin3_3V_SW_value<<"\n";}
-        else {
-            stream<<"pin3_3V_SW;"<<pin3_3V_SW_isOK<<";"<<pin3_3V_SW_value<<"\n";}
-        if(pin5V_SW_isOK=="NOT OK"){
-            stream<<"pin5V_SW;"<<pin5V_SW_isOK<<";"<<pin5_SW_value<<"\n";
-        }else  {
-            stream<<"pin5V_SW;"<<pin5V_SW_isOK<<";"<<pin5_SW_value<<"\n";
-        }
-        if(pin12V_isOK=="NOT OK"){
-            stream<<"pin12V;"<<pin12V_isOK<<";"<<pin12V_value<<"\n";
-        }else  stream<<"pin12V;"<<pin12V_isOK<<";"<<pin12V_value<<"\n";
-        if(pin3_3V_isOK=="NOT OK"){
-            stream<<"pin3_3V;"<<pin3_3V_isOK<<";"<<pin3_3V_value<<"\n";
-        }else  {
-            stream<<"pin3_3V;"<<pin3_3V_isOK<<";"<<pin3_3V_value<<"\n";
-        }
-        if(pin4V_isOK=="NOT OK"){
-            stream<<"pin4V;"<<pin4V_isOK<<";"<<pin4V_value<<"\n";
-        }else  {
-            stream<<"pin4V;"<<pin4V_isOK<<";"<<pin4V_value<<"\n";
-        }
+        if(file.open(QIODevice::WriteOnly | QIODevice::Text)){
+            QTextStream stream(&file);
+            //stream<<"--------------------------------------------------------\n";
+            stream<<"SN:"<<Serial<<";";
+            stream<<DateTime<<";";
+            stream<<Employee;
+            stream<<"\n";
+            stream<<"Device;"<<"Status;"<<"Description\n";
+            if(pin4V_SW_isOK=="NOT OK"){
+                stream<<"pin4V_SW;"<<pin4V_SW_isOK<<";"<<pin4V_SW_value<<"\n";}
+            else {
+                stream<<"pin4V_SW;"<<pin4V_SW_isOK<<";"<<pin4V_SW_value<<"\n";}
+            if(pin3_3V_SW_isOK=="NOT OK"){
+                stream<<"pin3_3V_SW;"<<pin3_3V_SW_isOK<<";"<<pin3_3V_SW_value<<"\n";}
+            else {
+                stream<<"pin3_3V_SW;"<<pin3_3V_SW_isOK<<";"<<pin3_3V_SW_value<<"\n";}
+            if(pin5V_SW_isOK=="NOT OK"){
+                stream<<"pin5V_SW;"<<pin5V_SW_isOK<<";"<<pin5_SW_value<<"\n";
+            }else  {
+                stream<<"pin5V_SW;"<<pin5V_SW_isOK<<";"<<pin5_SW_value<<"\n";
+            }
+            if(pin12V_isOK=="NOT OK"){
+                stream<<"pin12V;"<<pin12V_isOK<<";"<<pin12V_value<<"\n";
+            }else  stream<<"pin12V;"<<pin12V_isOK<<";"<<pin12V_value<<"\n";
+            if(pin3_3V_isOK=="NOT OK"){
+                stream<<"pin3_3V;"<<pin3_3V_isOK<<";"<<pin3_3V_value<<"\n";
+            }else  {
+                stream<<"pin3_3V;"<<pin3_3V_isOK<<";"<<pin3_3V_value<<"\n";
+            }
+            if(pin4V_isOK=="NOT OK"){
+                stream<<"pin4V;"<<pin4V_isOK<<";"<<pin4V_value<<"\n";
+            }else  {
+                stream<<"pin4V;"<<pin4V_isOK<<";"<<pin4V_value<<"\n";
+            }
 
 
-        stream<<"PA2temp;"<<QString::fromStdString(storage::getPA2Value())<<"\n";
-        stream<<"PA3temp;"<<QString::fromStdString(storage::getPA3Value())<<"\n";
+            stream<<"PA2temp;"<<QString::fromStdString(storage::getPA2Value())<<"\n";
+            stream<<"PA3temp;"<<QString::fromStdString(storage::getPA3Value())<<"\n";
 
-        if(storage::getButtonData("Button1").first){
-            stream<<"BUTTON1,2"<<";OK\n";
-        }else {
-            stream<<"BUTTON1,2"<<";NOT OK;"<<QString::fromStdString(storage::getButtonData("Button1").second)<<"\n";
-
-        }
-
-        if(storage::getButtonData("Button2").first){
-            stream<<"BUTTON3,4"<<";OK\n";
-        }else {
-            stream<<"BUTTON3,4"<<";NOT OK;>"<<QString::fromStdString(storage::getButtonData("Button2").second)<<"\n";
-        }
-
-
-
-        for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
-            qDebug()<<QString::fromStdString(led->first);
-            if(led->first != "LED10"){
-            if(led->second.first){
-                stream<<QString::fromStdString(led->first)<<";OK\n";
+            if(storage::getButtonData("Button1").first){
+                stream<<"BUTTON1,2"<<";OK\n";
             }else {
-                stream<<QString::fromStdString(led->first)<<";NOT OK;"<<QString::fromStdString(led->second.second)<<"\n";
+                stream<<"BUTTON1,2"<<";NOT OK;"<<QString::fromStdString(storage::getButtonData("Button1").second)<<"\n";
 
             }
 
+            if(storage::getButtonData("Button2").first){
+                stream<<"BUTTON3,4"<<";OK\n";
+            }else {
+                stream<<"BUTTON3,4"<<";NOT OK;>"<<QString::fromStdString(storage::getButtonData("Button2").second)<<"\n";
             }
 
+
+
+            for(auto led=ledMapa.begin();led!=ledMapa.end(); ++led){
+                qDebug()<<QString::fromStdString(led->first);
+                if(led->first != "LED10"){
+                    if(led->second.first){
+                        stream<<QString::fromStdString(led->first)<<";OK\n";
+                    }else {
+                        stream<<QString::fromStdString(led->first)<<";NOT OK;"<<QString::fromStdString(led->second.second)<<"\n";
+
+                    }
+
+                }
+
+            }
+
+            if(ledMapa["LED10"].first){
+                stream<<"LED10"<<";OK\n";
+            }else{
+                stream<<"LED10"<<";NOT OK;"<<QString::fromStdString(ledMapa["LED10"].second)<<"\n";
+            }
+
+            if(storage::getNFCStatus()){
+                stream<<"NFC;OK\n";
+            }else {
+                stream<<"NFC;NOT OK;"<<QString::fromStdString(storage::getNFCDesc())<<"\n";
+            }
+
+            if(storage::getHALStatus()){
+                stream<<"HAL;OK\n";
+
+            }else {
+                stream<<"HAL;NOT OK;"<<QString::fromStdString(storage::getHALDesc())<<"\n";;
+
+            }
+
+            if(storage::getZEROStatus()){
+                stream<<"ZERO;OK\n";
+
+            }else {
+                stream<<"ZERO;NOT OK;"<<QString::fromStdString(storage::getZERODesc())<<"\n";
+
+            }
+
+            if(storage::getTEMPStatus()){
+                stream<<"TEMP;OK\n";
+
+            }else {
+
+                stream<<"TEMP;NOT OK;"<<QString::fromStdString(storage::getTEMPDesc())<<"\n";
+            }
+
+            if(storage::getCANRX_OK()){
+                stream<<"CANRX;OK\n";
+
+            }else{
+                stream<<"CANRX;NOT OK\n";
+
+            }
+
+            if(storage::getCANTX_OK()){
+                stream<<"CANTX;OK\n";
+
+            }else{
+                stream<<"CANTX;NOT OK\n";
+            }
+
+
+
         }
 
-        if(ledMapa["LED10"].first){
-            stream<<"LED10"<<";OK\n";
-        }else{
-            stream<<"LED10"<<";NOT OK;"<<QString::fromStdString(ledMapa["LED10"].second)<<"\n";
-        }
+        file.close(); // we dont even the anything if the option is change SN
 
-        if(storage::getNFCStatus()){
-            stream<<"NFC;OK\n";
-        }else {
-            stream<<"NFC;NOT OK;"<<QString::fromStdString(storage::getNFCDesc())<<"\n";
-        }
-
-        if(storage::getHALStatus()){
-            stream<<"HAL;OK\n";
-
-        }else {
-            stream<<"HAL;NOT OK;"<<QString::fromStdString(storage::getHALDesc())<<"\n";;
-
-        }
-
-        if(storage::getZEROStatus()){
-            stream<<"ZERO;OK\n";
-
-        }else {
-            stream<<"ZERO;NOT OK;"<<QString::fromStdString(storage::getZERODesc())<<"\n";
-
-        }
-
-        if(storage::getTEMPStatus()){
-            stream<<"TEMP;OK\n";
-
-        }else {
-
-            stream<<"TEMP;NOT OK;"<<QString::fromStdString(storage::getTEMPDesc())<<"\n";
-        }
-
-        if(storage::getCANRX_OK()){
-            stream<<"CANRX;OK\n";
-
-        }else{
-            stream<<"CANRX;NOT OK\n";
-
-        }
-
-        if(storage::getCANTX_OK()){
-            stream<<"CANTX;OK\n";
-
-        }else{
-            stream<<"CANTX;NOT OK\n";
-        }
-
-
-
-    }
-
-    file.close(); // we dont even the anything if the option is change SN
-
-    QMessageBox msgBox; //This should actually be down where we create the report
-    msgBox.setText("Report created"); //not on center of app
-    //msgBox.setGeometry(500,500,msgBox.width(), msgBox.height());
-    msgBox.setModal(false);
-    msgBox.exec();
-    qDebug()<<"Done good !";
+        QMessageBox msgBox; //This should actually be down where we create the report
+        msgBox.setText("Report created"); //not on center of app
+        //msgBox.setGeometry(500,500,msgBox.width(), msgBox.height());
+        msgBox.setModal(false);
+        msgBox.exec();
+        qDebug()<<"Done good !";
     }
 
     storage::setMultipleFilesDialogStatus(0);
@@ -1211,7 +1224,7 @@ void MainWindow::on_pushButton_clicked() //upload test FW
     m_processSideMount->start();
     ui->pushButton->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
-    ui -> status_label -> setStyleSheet("background-color: rgb(200,200,0)");
+    ui -> status_label -> setStyleSheet("background-color: rgb(255,255,0)");
     ui -> status_label -> setText("Uploading sidemount firmware");
 
     QObject::connect(m_processSideMount, &QProcess::readyReadStandardOutput, [&]() {
@@ -1271,6 +1284,7 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
     m_processBootLoader->start();
     ui->pushButton->setEnabled(false);
     ui->pushButton_2->setEnabled(false);
+    ui -> status_label -> setStyleSheet("background-color: rgb(255,255,0)");
     ui->status_label->setText("Uploading bootloader");
 
 
@@ -1287,11 +1301,13 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
         ui->pushButton->setEnabled(true);
         ui->pushButton_2->setEnabled(true);
         ui->status_label->setText("Uploaded bootloader");
+        ui -> status_label -> setStyleSheet("background-color: rgb(0,200,0)");
         if(m_processOutput.contains("Error:")){
             qDebug()<<"Error detected this is the error:";
             QString error;
             error= m_processOutput.mid(m_processOutput.indexOf("Error:")+6,35); // sending error, try up to \n
             ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
+            ui -> status_label -> setStyleSheet("background-color: rgb(200,0,0)");
         }else {
 
 
@@ -1391,7 +1407,7 @@ void MainWindow::on_Serial_line_textEdited(const QString &arg1)
         ui->label_3->setVisible(true);
     }else {
         if(ui -> zero_check_frame -> isEnabled()){ //Only if Report is ready to be reported
-        ui->pushButton_14->setEnabled(true);
+            ui->pushButton_14->setEnabled(true);
         }
         ui->label_3->setVisible(false);
     }
@@ -1400,6 +1416,31 @@ void MainWindow::on_Serial_line_textEdited(const QString &arg1)
 
 void MainWindow::on_Serial_line_textChanged(const QString &arg1)
 {
+
+}
+
+
+void MainWindow::on_pushButton_4_clicked()
+{
+
+    ui->NFC_status->setText("X");
+    ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
+    ui->buttons_check_frame->setStyleSheet("");
+    ui->nfc_check_frame->setStyleSheet("");
+    ui->hal_check_frame->setStyleSheet("");
+    ui->zero_check_frame->setStyleSheet("");
+    ui->zero_check_frame_2->setStyleSheet("");
+    ui->led_check_frame->setStyleSheet("");
+    ui->can_frame->setStyleSheet("");
+    ui->nfc_check_frame->setEnabled(false);
+    ui->hal_check_frame->setEnabled(false);
+    ui->zero_check_frame->setEnabled(false);
+    ui->led_check_frame->setEnabled(false);
+    ui->can_frame->setEnabled(false);
+    ui->can_frame->setStyleSheet("");
+    ui->zero_check_frame_2->setEnabled(false);
+    ui -> pushButton_14 -> setEnabled(false);
+    ui->zero_textEdit_2->setVisible(false);
 
 }
 

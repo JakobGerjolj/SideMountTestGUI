@@ -6,11 +6,19 @@ multipleFilesDialog::multipleFilesDialog(QWidget *parent, QString title)
     , ui(new Ui::multipleFilesDialog)
 {
     ui->setupUi(this);
+
+    QString ToDisplay= QString::fromStdString("Side_Mount_test."+storage::getSERIAL() + ".txt already exists.\nDo you want to replace it?");
+    ui -> label -> setText(ToDisplay);
+    ui -> pushButton_3 -> setVisible(false);
 }
 
 multipleFilesDialog::~multipleFilesDialog()
 {
+    if(storage::getMultipleFileDialogStatus() == 0){
+        storage::setMultipleFilesDialogStatus(1);
+    }
     delete ui;
+
 }
 
 void multipleFilesDialog::on_pushButton_clicked() //Go back and change SN

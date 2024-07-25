@@ -87,6 +87,8 @@ private slots:
 
     void on_Serial_line_textChanged(const QString &arg1);
 
+    void on_pushButton_4_clicked();
+
 private:
     QString m_currentSN{""};
     int findClosestTemp(double target);
