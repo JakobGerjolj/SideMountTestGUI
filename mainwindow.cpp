@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QDateTime temp=QDateTime::currentDateTime();
     ui->dateTime->setText(temp.toString("dd.MM.yyyy hh:mm"));
-    QStringList boys ={ "Matej Koranter","Nejc Česen","Jaka Dejak","Jakob Gerjolj","Anže Štravs"};
+    QStringList boys ={ "Jakob Gerjolj"};
     ui->comboBox->addItems(boys);
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
     //Filling lookup table
