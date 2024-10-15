@@ -293,7 +293,7 @@ void MainWindow::readData(){
 
     QString str = QString::fromUtf8(data);
 
-
+    //qDebug() << "\nData from serial: " << data << "\n";
 
     // qDebug()<<str;
     str.replace("\r\n","");
@@ -327,313 +327,122 @@ void MainWindow::readData(){
 
     if(isFullBuffer){
 
-        // qDebug()<<"--------------------BUFFER IS FULL!!!!!!!!!!!-----------";
+        //qDebug()<<"--------------------BUFFER IS FULL!!!!!!!!!!!-----------";
         QString temp=buffer;
-        // qDebug()<<buffer;
+        //qDebug()<<buffer;
         temp.replace("<","");
         temp.replace(">","");
         QStringList listOfValues =temp.split(",");
 
-        if(listOfValues.size()==21){
-            if(listOfValues.at(0)=="0"){
-                //ui->check_pins_frame->setVisible(false);
-                // ui->check_pins_frame_2->setVisible(true);
-                // ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
-                // ui->verticalLayout_2->setStretch(0,3);
-                // ui->verticalLayout_2->setStretch(1,3);
-                // ui->verticalLayout_2->setStretch(2,1);
-                // ui->verticalLayout_2->setStretch(3,1);
-                // ui->verticalLayout_2->setStretch(4,1);
-                // ui->verticalLayout_2->setStretch(5,1);
-                // ui->verticalLayout_2->setStretch(6,1);
-                // ui->verticalLayout_2->setStretch(7,1);
-                // ui->verticalLayout_2->setStretch(8,1);
-            }else{
-                //ui->check_pins_frame->setVisible(false);
-                // ui->check_pins_frame_2->setVisible(true);
-                // ui->check_pins_frame_2->setStyleSheet("background-color: rgb(0,200,0)");
-                //ui->label_3->setText("PINS OK");
-                // ui->verticalLayout_2->setStretch(0,1);
-                // ui->verticalLayout_2->setStretch(1,1);
-                // ui->verticalLayout_2->setStretch(2,1);
-                // ui->verticalLayout_2->setStretch(3,1);
-                // ui->verticalLayout_2->setStretch(4,1);
-                // ui->verticalLayout_2->setStretch(5,1);
-                // ui->verticalLayout_2->setStretch(6,1);
-                // ui->verticalLayout_2->setStretch(7,1);
-                // ui->verticalLayout_2->setStretch(8,1);
-                //ui->check_pins_frame->setStyleSheet("background-color: rgb(0,200,0)");
+        bool suc;
+
+        qDebug() << "\nSize of list: " << listOfValues.size() << "\n";
+        if(listOfValues.size()==9){
+
+            unsigned int id = listOfValues.at(0).toUInt(&suc, 16);
+
+            if(id == 0x18FF80FD){
+
+                //will prob implement a watchdog for this data
+
+                ui -> rawBytes_status -> setText(listOfValues.at(1) + " " + listOfValues.at(2) + " " + listOfValues.at(3) + " "
+                                            + listOfValues.at(4) + " " + listOfValues.at(5) + " " + listOfValues.at(6) + " " +
+                                             listOfValues.at(7) + " " +listOfValues.at(8)
+                                                     );
+
+                unsigned int temperature = listOfValues.at(8).toUInt();
+
+                int calculated_temperature = (int)temperature - 50;
+
+                ui -> temperature_value -> setText(QString::number(calculated_temperature) + " °C");
 
             }
 
-            float temp4VSW;
-            temp4VSW = listOfValues.at(1).left(4).toFloat();
-            temp4VSW = temp4VSW;
+            if(id == 0x0CFF81FD) {
 
-            QString temp4VSWString;
-            temp4VSWString = QString::number(temp4VSW);
-            temp4VSWString += "V";
+                unsigned int position = listOfValues.at(3).toUInt(&suc, 16);
+                float CalcPosition = (float)position * 0.4;
+
+                // qDebug() << "\nPosition of lever: " << CalcPosition << "\n";
+
+                ui -> raw_position -> setText(QString::number(CalcPosition));
+
+                int gear = listOfValues.at(4).toUInt(&suc, 16);
+
+                // qDebug() << "\nGear: " << gear;
+
+                unsigned int zero = listOfValues.at(7).toUInt(&suc, 16);
+
+                if(gear == 1){
+
+                    ui -> gear_value -> setText("NEUTRAL");
+
+                }else if(gear == 2){
+
+                    ui -> gear_value -> setText("FORWARD");
+
+                }else if(gear == 3){
+
+                    ui -> gear_value -> setText("REVERSE");
+
+                }else{
+
+                    ui -> gear_value -> setText("UNKNOWN");
+                }
+
+                if(zero == 0){
+
+                    ui -> zero_value -> setText("NOT ACTIVE");
+
+                }else {
+
+                    ui -> zero_value -> setText("ACTIVE");
+
+                }
 
 
-
-            // ui->label_pin4V_SW->setText(temp4VSWString);
-
-            bool temp_bool;
-            // qDebug()<<"REAL VALUE FROM ARDUINO:";
-            // qDebug()<<listOfValues.at(1);
-
-            //Need to format so 5.00V goes into 5.00 float
-            if(listOfValues.at(7)=="0"){
-                temp_bool=false;
-                // ui->isOK_label_4VSW->setStyleSheet("");
-            }else {
-                temp_bool=true;
-                // ui->isOK_label_4VSW->setStyleSheet("background-color: rgb(0,150,0)");
-            }
-            float temp=(listOfValues.at(1).left(4)).toFloat();
-            // qDebug()<<"LEFT STRING";
-            // qDebug()<<temp;
-            storage::setPinData("pin4V_SW", temp_bool, temp4VSW); // MYB WORK
-
-            //process value so that 12V value * 11 5V value * 2
-
-            float temp3VSW;
-            temp3VSW = listOfValues.at(2).left(4).toFloat();
-            temp3VSW = temp3VSW;
-
-            QString temp3VSWString;
-            temp3VSWString = QString::number(temp3VSW);
-            temp3VSWString += "V";
-
-
-            // ui->label_pin3_3V_SW->setText(temp3VSWString); //pin3V_SW
-            if(listOfValues.at(8)=="0"){
-                temp_bool=false;
-                // ui->isOK_label_33VSW->setStyleSheet("");
-            }else {
-                // ui->isOK_label_33VSW->setStyleSheet("background-color: rgb(0,150,0)");
-                temp_bool=true;
             }
 
+            if(id == 0x444){
 
-            storage::setPinData("pin3_3V_SW", temp_bool, temp3VSW);
+                unsigned int status = listOfValues.at(1).toUInt(&suc, 16);
 
-            float temp5V;
-            temp5V = listOfValues.at(3).left(4).toFloat();
-            temp5V = (temp5V*2);
-
-            QString temp5VString;
-            temp5VString = QString::number(temp5V);
-            temp5VString += "V";
-
-            // ui->label_pin5_SW->setText(temp5VString);
-            if(listOfValues.at(9)=='0'){
-                temp_bool=false;
-                // ui->isOK_label_5VSW->setStyleSheet("");
-            }else {
-                // ui->isOK_label_5VSW->setStyleSheet("background-color: rgb(0,150,0)");
-                temp_bool=true;}
-
-            storage::setPinData("pin5V_SW", temp_bool, temp5V); //need to add arduino
-
-            float temp12V;
-            // qDebug()<<"RAW FROM LIST:"<<listOfValues.at(4);
-            temp12V = listOfValues.at(4).left(4).toFloat();
-            temp12V = temp12V * 10.9; //10 or 11 I dont know, should be 11 I think, but lets put 10 for now
-            // qDebug()<<"Float value of 12V: "<<temp12V;
-            QString temp12VString;
-            temp12VString = QString::number(temp12V);
-            temp12VString += "V";
-            // qDebug()<<"String Value of 12V: "<<temp12VString;
-            // ui->label_12V->setText(temp12VString);
-            if(listOfValues.at(10)=='0'){
-                temp_bool=false;
-                // ui->isOK_label12V->setStyleSheet("");
-            }else {
-                // ui->isOK_label12V->setStyleSheet("background-color: rgb(0,150,0)");
-                temp_bool=true;}
-
-            storage::setPinData("pin12V", temp_bool, temp12V);
-
-            float temp3V;
-            temp3V = listOfValues.at(5).left(4).toFloat();
-            temp3V = temp3V;
-
-            QString temp3VString;
-            temp3VString = QString::number(temp3V);
-            temp3VString += "V";
+                //handle status here when defined
 
 
-            if(listOfValues.at(11) == '1'){
-                storage::setPinData("pin3_3V", true,  temp3V);
-                // ui->label_pin3_3V->setText(temp3VString);
-                // ui->isOK_labelpin33V->setStyleSheet("background-color: rgb(0,150,0)");
-            }else{
+                unsigned int AGC = listOfValues.at(2).toUInt(&suc, 16);
+                ui -> AGC_value -> setText(QString::number(AGC));
 
-                storage::setPinData("pin3_3V", false, temp3V);
-                // ui->label_pin3_3V->setText(temp3VString);
-                // ui->isOK_labelpin33V->setStyleSheet("");
-            }
+                uint8_t byte1_Magnitude = listOfValues.at(3).toUInt(&suc, 16);
+                uint8_t byte2_Magnitude = listOfValues.at(4).toUInt(&suc, 16);
+                uint16_t Magnitude = (byte2_Magnitude << 8) | byte1_Magnitude;
 
+                ui -> magnitude_value -> setText (QString::number(Magnitude));
 
-            float temp4V;
-            temp4V = listOfValues.at(6).left(4).toFloat();
-            temp4V = temp4V;
-
-            QString temp4VString;
-            temp4VString = QString::number(temp4V);
-            temp4VString += "V";
-
-
-            if(listOfValues.at(12)=='1'){
-                storage::setPinData("pin4V", true, temp4V);
-                // ui->label_pin4V->setText(temp4VString);
-                // ui->isOK_label_4V->setStyleSheet("background-color: rgb(0,150,0)");
-            }else {
-                storage::setPinData("pin4V", false, temp4V);
-                // ui->label_pin4V->setText(temp4VString);
-                // ui->isOK_label_4V->setStyleSheet("");
-
-            }
-//            ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
-
-#if defined(Q_OS_LINUX)
-            ui->button_frame->setStyleSheet("background-color: rgb(0,0,200)");
-#endif
-#if defined(Q_OS_WIN)
-            // ui->button_frame->setStyleSheet("background-color: rgb(163,188,227)");
-#endif
-
-            //JUST A TX CHECK
-            if(listOfValues.at(13)!= "X"){
-                storage::setCANTX_OK(true);
-            }
-
-            // ui->button_counter_value_2 -> setStyleSheet("");
-            // ui->button_counter_value_3 -> setStyleSheet("");
-            // ui->button_counter_value_4 -> setStyleSheet("");
-            //ui->last_button_value->setText(listOfValues.at(13)); //BUTTON
-            if(listOfValues.at(13) == "4"){
-                // ui->button_counter_value->setText(listOfValues.at(14));
-            }
-            if(listOfValues.at(13) == "3"){
-                // ui->button_counter_value_2->setText(listOfValues.at(14));
-            }
-            if(listOfValues.at(13) == "2"){
-                // ui->button_counter_value_3->setText(listOfValues.at(14));
-            }
-            if(listOfValues.at(13) == "1"){
-                // ui->button_counter_value_4 -> setText(listOfValues.at(14));
-            }
-
-
-#if defined(Q_OS_LINUX)
-            ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
-#endif
-#if defined(Q_OS_WIN)
-            //ui->nfc_frame_indi->setStyleSheet("background-color: rgb(163,188,227)");
-#endif
-
-            if(listOfValues.at(15)=="1"){//NFC
-                storage::setCANTX_OK(true);
-
-                // ui->NFC_status->setText("DETECTED");
-                //ui->nfc_frame_indi->setStyleSheet("background-color: rgb(0,200,0)");
-
-
-                // if(ui->NFC_status->text()=="DETECTED"){
-                //     ui->nfc_frame_indi->setStyleSheet("background-color: rgb(0,200,0)");
-                //     QTimer::singleShot(2000,this,[this]() {//Might be problems here
-                //         ui->NFC_status->setText("WAITING");
-                //         ui->nfc_frame_indi->setStyleSheet(""); //This is prob fine
-                //         //Green stays for 2 secs then we do this
-                //     });
-                // }
 
             }
 
 
-#if defined(Q_OS_LINUX)
-            ui->hal_frame->setStyleSheet("background-color: rgb(0,0,200)");
-#endif
-#if defined(Q_OS_WIN)
-            // ui->hal_frame->setStyleSheet("background-color: rgb(163,188,227)");
-#endif
 
-            int inDegrees = (int)(((float)(listOfValues.at(16).toInt()) / 4095.0)*360);
+            //qDebug() << "\nID: " << id << "\n";
 
-            QString joined = QString::number(inDegrees) + "° (" + listOfValues.at(16) + ")";
+            //qDebug()<<"We received full data of 9 elements";
 
-            // ui->hal_value->setText(joined); //HAL
-
-
-            if(listOfValues.at(17)=="1"){
-                // ui->zero_frame->setStyleSheet("background-color: rgb(0,200,0)");
-            }else {
-#if defined(Q_OS_LINUX)
-                ui->zero_frame->setStyleSheet("background-color: rgb(0,0,200)");
-#endif
-#if defined(Q_OS_WIN)
-                // ui->zero_frame->setStyleSheet("background-color: rgb(163,188,227)");
-#endif
-
-            }
-            ui->zero_value->setText(listOfValues.at(17));//ZERO
-
-#if defined(Q_OS_LINUX)
-            ui->t1_frame->setStyleSheet("background-color: rgb(0,0,200)");
-#endif
-#if defined(Q_OS_WIN)
-            // ui->t1_frame->setStyleSheet("background-color: rgb(163,188,227)");
-#endif \
-    //Value that needs to be processed is listOfValues.at(18) \
-    //and then write it into the values \
-    //here we lookup the table
-            int rawVolt = listOfValues.at(18).toInt();
-
-            float Voltage = ((float)rawVolt/4095.0) * 3.0;
-
-            qDebug() << "This is the supposed Voltage: " << Voltage;
+            // qDebug() << "\n" << listOfValues.at(0) << "\n";
+            // qDebug() << "\n" << listOfValues.at(1) << "\n";
+            // qDebug() << "\n" << listOfValues.at(2) << "\n";
+            // qDebug() << "\n" << listOfValues.at(3) << "\n";
+            // qDebug() << "\n" << listOfValues.at(4) << "\n";
+            // qDebug() << "\n" << listOfValues.at(5) << "\n";
+            // qDebug() << "\n" << listOfValues.at(6) << "\n";
+            // qDebug() << "\n" << listOfValues.at(7) << "\n";
+            // qDebug() << "\n" << listOfValues.at(8) << "\n";
 
 
+            // if(listOfValues.at(0)=="0"){
 
-            double result = ((10000*Voltage)/(3.3 - Voltage)) /1000.0;
-            qDebug() << "This is the supposed resistance: " << result;
 
-            int TempForT1 = findClosestTemp(result);
-            qDebug()<<"This is the supposed Temp: "<< TempForT1;
-
-            QString toDisplayT1 = QString::number(TempForT1) + "°C (" + listOfValues.at(18) + ")";
-            storage::setPA2Value(toDisplayT1.toStdString());
-            // ui->t1_value->setText(toDisplayT1); //T1
-
-#if defined(Q_OS_LINUX)
-            ui->t2_frame->setStyleSheet("background-color: rgb(0,0,200)");
-#endif
-#if defined(Q_OS_WIN)
-            //ui->t2_frame->setStyleSheet("background-color: rgb(163,188,227)");
-#endif
-
-            double result2 = ((10000*Voltage)/(3.3 - Voltage)) /1000.0;
-            // qDebug() << "This is the supposed resistance: " << result;
-
-            int TempForT2 = findClosestTemp(result);
-            //  qDebug()<<"This is the supposed Temp: "<< TempForT1;
-
-            QString toDisplayT2 = QString::number(TempForT2) + "°C (" + listOfValues.at(19) + ")";
-            storage::setPA3Value(toDisplayT2.toStdString());
-            // ui->t2_value->setText(toDisplayT2); //T2
-
-            if(listOfValues.at(20) == "1"){
-                // ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");//Set it to green until we press the report button
-                storage::setCANRX_OK(true);
-                storage::setCANTX_OK(true);//Restart porgram after changing board
-                //or we make a button refresh board oziroma next board
-                //How do we seperate tx and rx
-            }else {
-                //ui->can_frame->setStyleSheet("");
-
-            }
+            // }
 
         }
     }
