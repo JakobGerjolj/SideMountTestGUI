@@ -11,12 +11,35 @@ MainWindow::MainWindow(QWidget *parent)
     m_report=report;
     m_processBootLoader= new QProcess;
     m_processSideMount = new QProcess;
-    openSerialPort();
+
     ui->setupUi(this);
     QDateTime temp=QDateTime::currentDateTime();
-    ui->dateTime->setText(temp.toString("dd.MM.yyyy hh:mm"));
+   // ui->dateTime->setText(temp.toString("dd.MM.yyyy hh:mm"));
     QStringList boys ={ "Jakob Gerjolj"};
-    ui->comboBox->addItems(boys);
+   // ui->comboBox->addItems(boys);
+
+    int indeks = 0;
+    int arduinoIndeks;
+
+    Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()) {
+        ui -> comboBox -> addItem(port.portName() + " - " + port.manufacturer());
+
+        if(port.manufacturer().contains("Arduino")){
+
+            m_ArduinoPort = port.portName();
+            arduinoIndeks = indeks;
+            qDebug() << "We found arduino!";
+        }
+
+        indeks++;
+
+    }
+
+    ui -> comboBox -> setCurrentIndex(arduinoIndeks);
+
+    openSerialPort();
+
+
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
     //Filling lookup table
     lookupTable.insert(-40, 188.5);
@@ -212,23 +235,26 @@ MainWindow::MainWindow(QWidget *parent)
     storage::setNFCDesc("");
     storage::setCANRX_OK(false);
     storage::setCANTX_OK(false);
-    ui->nfc_textEdit->setVisible(false);
-    ui->hal_textEdit->setVisible(false);
-    ui->zero_textEdit_2->setVisible(true);
-    ui->zero_textEdit->setVisible(false);
-    ui->nfc_check_frame->setEnabled(false);
-    ui->hal_check_frame->setEnabled(false);
-    ui->zero_check_frame->setEnabled(false);
-    ui->zero_check_frame_2->setEnabled(false);
-    ui->led_check_frame->setEnabled(false);
-    ui->can_frame->setEnabled(false);
-    ui->pushButton_14->setEnabled(false);
-    ui-> pushButton_3 -> setEnabled(false);
-    ui->label_3->setStyleSheet("background-color: rgb(200,200,0)");
+    // ui->nfc_textEdit->setVisible(false);
+    // ui->hal_textEdit->setVisible(false);
+    // ui->zero_textEdit_2->setVisible(true);
+    // ui->zero_textEdit->setVisible(false);
+    // ui->nfc_check_frame->setEnabled(false);
+    // ui->hal_check_frame->setEnabled(false);
+    // ui->zero_check_frame->setEnabled(false);
+    // ui->zero_check_frame_2->setEnabled(false);
+    // ui->led_check_frame->setEnabled(false);
+    // ui->can_frame->setEnabled(false);
+    // ui->pushButton_14->setEnabled(false);
+    // ui-> pushButton_3 -> setEnabled(false);
+    // ui->label_3->setStyleSheet("background-color: rgb(200,200,0)");
 
-    ui -> zero_textEdit_2 -> setVisible(false);
+    // ui -> zero_textEdit_2 -> setVisible(false);
 
-    ui->Serial_line->setStyleSheet("background-color: rgb(219,114,114)");
+    // ui->Serial_line->setStyleSheet("background-color: rgb(219,114,114)");
+    ui -> station_frame_indi -> setStyleSheet("background-color: rgb(200,0,0)");
+    ui -> dock_frame_indi -> setStyleSheet("background-color: rgb(200,0,0)");
+    ui -> nfc_frame_light -> setStyleSheet("background-color: rgb(200,0,0)");
     m_timer=new QTimer;
     connect(m_timer, &QTimer::timeout, this, &MainWindow::emitConstantSignal);
     m_timer->start(1000);
@@ -311,8 +337,8 @@ void MainWindow::readData(){
         if(listOfValues.size()==21){
             if(listOfValues.at(0)=="0"){
                 //ui->check_pins_frame->setVisible(false);
-                ui->check_pins_frame_2->setVisible(true);
-                ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
+                // ui->check_pins_frame_2->setVisible(true);
+                // ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
                 // ui->verticalLayout_2->setStretch(0,3);
                 // ui->verticalLayout_2->setStretch(1,3);
                 // ui->verticalLayout_2->setStretch(2,1);
@@ -324,8 +350,8 @@ void MainWindow::readData(){
                 // ui->verticalLayout_2->setStretch(8,1);
             }else{
                 //ui->check_pins_frame->setVisible(false);
-                ui->check_pins_frame_2->setVisible(true);
-                ui->check_pins_frame_2->setStyleSheet("background-color: rgb(0,200,0)");
+                // ui->check_pins_frame_2->setVisible(true);
+                // ui->check_pins_frame_2->setStyleSheet("background-color: rgb(0,200,0)");
                 //ui->label_3->setText("PINS OK");
                 // ui->verticalLayout_2->setStretch(0,1);
                 // ui->verticalLayout_2->setStretch(1,1);
@@ -350,7 +376,7 @@ void MainWindow::readData(){
 
 
 
-            ui->label_pin4V_SW->setText(temp4VSWString);
+            // ui->label_pin4V_SW->setText(temp4VSWString);
 
             bool temp_bool;
             // qDebug()<<"REAL VALUE FROM ARDUINO:";
@@ -359,10 +385,10 @@ void MainWindow::readData(){
             //Need to format so 5.00V goes into 5.00 float
             if(listOfValues.at(7)=="0"){
                 temp_bool=false;
-                ui->isOK_label_4VSW->setStyleSheet("");
+                // ui->isOK_label_4VSW->setStyleSheet("");
             }else {
                 temp_bool=true;
-                ui->isOK_label_4VSW->setStyleSheet("background-color: rgb(0,150,0)");
+                // ui->isOK_label_4VSW->setStyleSheet("background-color: rgb(0,150,0)");
             }
             float temp=(listOfValues.at(1).left(4)).toFloat();
             // qDebug()<<"LEFT STRING";
@@ -380,12 +406,12 @@ void MainWindow::readData(){
             temp3VSWString += "V";
 
 
-            ui->label_pin3_3V_SW->setText(temp3VSWString); //pin3V_SW
+            // ui->label_pin3_3V_SW->setText(temp3VSWString); //pin3V_SW
             if(listOfValues.at(8)=="0"){
                 temp_bool=false;
-                ui->isOK_label_33VSW->setStyleSheet("");
+                // ui->isOK_label_33VSW->setStyleSheet("");
             }else {
-                ui->isOK_label_33VSW->setStyleSheet("background-color: rgb(0,150,0)");
+                // ui->isOK_label_33VSW->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;
             }
 
@@ -400,12 +426,12 @@ void MainWindow::readData(){
             temp5VString = QString::number(temp5V);
             temp5VString += "V";
 
-            ui->label_pin5_SW->setText(temp5VString);
+            // ui->label_pin5_SW->setText(temp5VString);
             if(listOfValues.at(9)=='0'){
                 temp_bool=false;
-                ui->isOK_label_5VSW->setStyleSheet("");
+                // ui->isOK_label_5VSW->setStyleSheet("");
             }else {
-                ui->isOK_label_5VSW->setStyleSheet("background-color: rgb(0,150,0)");
+                // ui->isOK_label_5VSW->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;}
 
             storage::setPinData("pin5V_SW", temp_bool, temp5V); //need to add arduino
@@ -419,12 +445,12 @@ void MainWindow::readData(){
             temp12VString = QString::number(temp12V);
             temp12VString += "V";
             // qDebug()<<"String Value of 12V: "<<temp12VString;
-            ui->label_12V->setText(temp12VString);
+            // ui->label_12V->setText(temp12VString);
             if(listOfValues.at(10)=='0'){
                 temp_bool=false;
-                ui->isOK_label12V->setStyleSheet("");
+                // ui->isOK_label12V->setStyleSheet("");
             }else {
-                ui->isOK_label12V->setStyleSheet("background-color: rgb(0,150,0)");
+                // ui->isOK_label12V->setStyleSheet("background-color: rgb(0,150,0)");
                 temp_bool=true;}
 
             storage::setPinData("pin12V", temp_bool, temp12V);
@@ -440,13 +466,13 @@ void MainWindow::readData(){
 
             if(listOfValues.at(11) == '1'){
                 storage::setPinData("pin3_3V", true,  temp3V);
-                ui->label_pin3_3V->setText(temp3VString);
-                ui->isOK_labelpin33V->setStyleSheet("background-color: rgb(0,150,0)");
+                // ui->label_pin3_3V->setText(temp3VString);
+                // ui->isOK_labelpin33V->setStyleSheet("background-color: rgb(0,150,0)");
             }else{
 
                 storage::setPinData("pin3_3V", false, temp3V);
-                ui->label_pin3_3V->setText(temp3VString);
-                ui->isOK_labelpin33V->setStyleSheet("");
+                // ui->label_pin3_3V->setText(temp3VString);
+                // ui->isOK_labelpin33V->setStyleSheet("");
             }
 
 
@@ -461,12 +487,12 @@ void MainWindow::readData(){
 
             if(listOfValues.at(12)=='1'){
                 storage::setPinData("pin4V", true, temp4V);
-                ui->label_pin4V->setText(temp4VString);
-                ui->isOK_label_4V->setStyleSheet("background-color: rgb(0,150,0)");
+                // ui->label_pin4V->setText(temp4VString);
+                // ui->isOK_label_4V->setStyleSheet("background-color: rgb(0,150,0)");
             }else {
                 storage::setPinData("pin4V", false, temp4V);
-                ui->label_pin4V->setText(temp4VString);
-                ui->isOK_label_4V->setStyleSheet("");
+                // ui->label_pin4V->setText(temp4VString);
+                // ui->isOK_label_4V->setStyleSheet("");
 
             }
 //            ui->check_pins_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
@@ -475,7 +501,7 @@ void MainWindow::readData(){
             ui->button_frame->setStyleSheet("background-color: rgb(0,0,200)");
 #endif
 #if defined(Q_OS_WIN)
-            ui->button_frame->setStyleSheet("background-color: rgb(163,188,227)");
+            // ui->button_frame->setStyleSheet("background-color: rgb(163,188,227)");
 #endif
 
             //JUST A TX CHECK
@@ -483,21 +509,21 @@ void MainWindow::readData(){
                 storage::setCANTX_OK(true);
             }
 
-            ui->button_counter_value_2 -> setStyleSheet("");
-            ui->button_counter_value_3 -> setStyleSheet("");
-            ui->button_counter_value_4 -> setStyleSheet("");
+            // ui->button_counter_value_2 -> setStyleSheet("");
+            // ui->button_counter_value_3 -> setStyleSheet("");
+            // ui->button_counter_value_4 -> setStyleSheet("");
             //ui->last_button_value->setText(listOfValues.at(13)); //BUTTON
             if(listOfValues.at(13) == "4"){
-                ui->button_counter_value->setText(listOfValues.at(14));
+                // ui->button_counter_value->setText(listOfValues.at(14));
             }
             if(listOfValues.at(13) == "3"){
-                ui->button_counter_value_2->setText(listOfValues.at(14));
+                // ui->button_counter_value_2->setText(listOfValues.at(14));
             }
             if(listOfValues.at(13) == "2"){
-                ui->button_counter_value_3->setText(listOfValues.at(14));
+                // ui->button_counter_value_3->setText(listOfValues.at(14));
             }
             if(listOfValues.at(13) == "1"){
-                ui->button_counter_value_4 -> setText(listOfValues.at(14));
+                // ui->button_counter_value_4 -> setText(listOfValues.at(14));
             }
 
 
@@ -505,24 +531,24 @@ void MainWindow::readData(){
             ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
 #endif
 #if defined(Q_OS_WIN)
-            ui->nfc_frame->setStyleSheet("background-color: rgb(163,188,227)");
+            //ui->nfc_frame_indi->setStyleSheet("background-color: rgb(163,188,227)");
 #endif
 
             if(listOfValues.at(15)=="1"){//NFC
                 storage::setCANTX_OK(true);
 
-                ui->NFC_status->setText("DETECTED");
-                ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
+                // ui->NFC_status->setText("DETECTED");
+                //ui->nfc_frame_indi->setStyleSheet("background-color: rgb(0,200,0)");
 
 
-                if(ui->NFC_status->text()=="DETECTED"){
-                    ui->nfc_frame->setStyleSheet("background-color: rgb(0,200,0)");
-                    QTimer::singleShot(2000,this,[this]() {//Might be problems here
-                        ui->NFC_status->setText("WAITING");
-                        ui->nfc_frame->setStyleSheet(""); //This is prob fine
-                        //Green stays for 2 secs then we do this
-                    });
-                }
+                // if(ui->NFC_status->text()=="DETECTED"){
+                //     ui->nfc_frame_indi->setStyleSheet("background-color: rgb(0,200,0)");
+                //     QTimer::singleShot(2000,this,[this]() {//Might be problems here
+                //         ui->NFC_status->setText("WAITING");
+                //         ui->nfc_frame_indi->setStyleSheet(""); //This is prob fine
+                //         //Green stays for 2 secs then we do this
+                //     });
+                // }
 
             }
 
@@ -531,24 +557,24 @@ void MainWindow::readData(){
             ui->hal_frame->setStyleSheet("background-color: rgb(0,0,200)");
 #endif
 #if defined(Q_OS_WIN)
-            ui->hal_frame->setStyleSheet("background-color: rgb(163,188,227)");
+            // ui->hal_frame->setStyleSheet("background-color: rgb(163,188,227)");
 #endif
 
             int inDegrees = (int)(((float)(listOfValues.at(16).toInt()) / 4095.0)*360);
 
             QString joined = QString::number(inDegrees) + "° (" + listOfValues.at(16) + ")";
 
-            ui->hal_value->setText(joined); //HAL
+            // ui->hal_value->setText(joined); //HAL
 
 
             if(listOfValues.at(17)=="1"){
-                ui->zero_frame->setStyleSheet("background-color: rgb(0,200,0)");
+                // ui->zero_frame->setStyleSheet("background-color: rgb(0,200,0)");
             }else {
 #if defined(Q_OS_LINUX)
                 ui->zero_frame->setStyleSheet("background-color: rgb(0,0,200)");
 #endif
 #if defined(Q_OS_WIN)
-                ui->zero_frame->setStyleSheet("background-color: rgb(163,188,227)");
+                // ui->zero_frame->setStyleSheet("background-color: rgb(163,188,227)");
 #endif
 
             }
@@ -558,7 +584,7 @@ void MainWindow::readData(){
             ui->t1_frame->setStyleSheet("background-color: rgb(0,0,200)");
 #endif
 #if defined(Q_OS_WIN)
-            ui->t1_frame->setStyleSheet("background-color: rgb(163,188,227)");
+            // ui->t1_frame->setStyleSheet("background-color: rgb(163,188,227)");
 #endif \
     //Value that needs to be processed is listOfValues.at(18) \
     //and then write it into the values \
@@ -579,7 +605,7 @@ void MainWindow::readData(){
 
             QString toDisplayT1 = QString::number(TempForT1) + "°C (" + listOfValues.at(18) + ")";
             storage::setPA2Value(toDisplayT1.toStdString());
-            ui->t1_value->setText(toDisplayT1); //T1
+            // ui->t1_value->setText(toDisplayT1); //T1
 
 #if defined(Q_OS_LINUX)
             ui->t2_frame->setStyleSheet("background-color: rgb(0,0,200)");
@@ -596,10 +622,10 @@ void MainWindow::readData(){
 
             QString toDisplayT2 = QString::number(TempForT2) + "°C (" + listOfValues.at(19) + ")";
             storage::setPA3Value(toDisplayT2.toStdString());
-            ui->t2_value->setText(toDisplayT2); //T2
+            // ui->t2_value->setText(toDisplayT2); //T2
 
             if(listOfValues.at(20) == "1"){
-                ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");//Set it to green until we press the report button
+                // ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");//Set it to green until we press the report button
                 storage::setCANRX_OK(true);
                 storage::setCANTX_OK(true);//Restart porgram after changing board
                 //or we make a button refresh board oziroma next board
@@ -640,7 +666,7 @@ void MainWindow::handleConstantSignal()
 {
     QDateTime temp=QDateTime::currentDateTime();
     storage::setDateTime(temp);
-    ui->dateTime->setText(temp.toString("dd.MM.yyyy hh:mm"));
+    // ui->dateTime->setText(temp.toString("dd.MM.yyyy hh:mm"));
 
 }
 
@@ -669,9 +695,9 @@ void MainWindow::on_Buttons_OK_clicked()
 {
     storage::setButtonData("Button1", true, "");
     storage::setButtonData("Button2", true, "");
-    ui->nfc_check_frame->setEnabled(true);
+    // ui->nfc_check_frame->setEnabled(true);
 
-    ui->buttons_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+    // ui->buttons_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 }
 
 
@@ -680,17 +706,17 @@ void MainWindow::on_Buttons_NOK_clicked()
 
     Dialog* myDialog = new Dialog(this,"What is wrong with buttons: ");
     myDialog->show();
-    ui->nfc_check_frame->setEnabled(true);
+    // ui->nfc_check_frame->setEnabled(true);
 
     // ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     qDebug()<<"Are they OK";
 
-    ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    // ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     if(myDialog->exec() == QDialog::Accepted){ // not work yet
         if(storage::areAllButtonsOK()){
             qDebug()<<storage::areAllButtonsOK();
-            ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
-            ui->nfc_check_frame->setEnabled(true);
+            // ui->buttons_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+            // ui->nfc_check_frame->setEnabled(true);
         }
 
     }
@@ -702,9 +728,9 @@ void MainWindow::on_Buttons_NOK_clicked()
 void MainWindow::on_NFC_OK_clicked()
 {
     m_NFC_status=true;
-    ui->hal_check_frame->setEnabled(true);
-    ui->nfc_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
-    ui->nfc_textEdit->setVisible(false);
+    // ui->hal_check_frame->setEnabled(true);
+    // ui->nfc_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+    // ui->nfc_textEdit->setVisible(false);
 
 }
 
@@ -712,10 +738,10 @@ void MainWindow::on_NFC_OK_clicked()
 void MainWindow::on_NFC_NOK_clicked()
 {
     m_NFC_status=false;
-    ui->nfc_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
-    ui->nfc_textEdit->setVisible(true);
-    ui->nfc_textEdit->setPlaceholderText("Describe the NFC problem...");
-    ui->hal_check_frame->setEnabled(true);
+    // ui->nfc_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    // ui->nfc_textEdit->setVisible(true);
+    // ui->nfc_textEdit->setPlaceholderText("Describe the NFC problem...");
+    // ui->hal_check_frame->setEnabled(true);
 
 }
 
@@ -723,9 +749,9 @@ void MainWindow::on_NFC_NOK_clicked()
 void MainWindow::on_HAL_OK_clicked()
 {
     m_HAL_status=true;
-    ui->hal_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
-    ui->hal_textEdit->setVisible(false);
-    ui->zero_check_frame->setEnabled(true);
+    // ui->hal_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+    // ui->hal_textEdit->setVisible(false);
+    // ui->zero_check_frame->setEnabled(true);
 
 }
 
@@ -733,10 +759,10 @@ void MainWindow::on_HAL_OK_clicked()
 void MainWindow::on_HAL_NOK_clicked()
 {
     m_HAL_status=false;
-    ui->hal_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
-    ui->hal_textEdit->setVisible(true);
-    ui->hal_textEdit->setPlaceholderText("Describe the HAL problem...");
-    ui->zero_check_frame->setEnabled(true);
+    // ui->hal_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    // ui->hal_textEdit->setVisible(true);
+    // ui->hal_textEdit->setPlaceholderText("Describe the HAL problem...");
+    // ui->zero_check_frame->setEnabled(true);
 
 }
 
@@ -744,19 +770,19 @@ void MainWindow::on_HAL_NOK_clicked()
 void MainWindow::on_ZERO_OK_clicked()
 {
     m_ZERO_status=true;
-    ui->zero_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
-    ui->zero_textEdit->setVisible(false);
-    ui->led_check_frame->setEnabled(true);
+    // ui->zero_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+    // ui->zero_textEdit->setVisible(false);
+    // ui->led_check_frame->setEnabled(true);
 }
 
 
 void MainWindow::on_ZERO_NOK_clicked()
 {
     m_ZERO_status=false;
-    ui->zero_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
-    ui->zero_textEdit->setVisible(true);
-    ui->zero_textEdit->setPlaceholderText("Describe the ZERO problem...");
-    ui->led_check_frame->setEnabled(true);
+    // ui->zero_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    // ui->zero_textEdit->setVisible(true);
+    // ui->zero_textEdit->setPlaceholderText("Describe the ZERO problem...");
+    // ui->led_check_frame->setEnabled(true);
 }
 
 
@@ -772,15 +798,15 @@ void MainWindow::on_LED_OK_clicked()
     storage::setLedData("LED8", true, "");
     storage::setLedData("LED9", true, "");
     storage::setLedData("LED10", true, "");
-    ui->can_frame->setEnabled(true);
-    ui->zero_check_frame_2->setEnabled(true);
-    if(!(ui -> Serial_line -> text().isEmpty())){
-        ui->pushButton_14->setEnabled(true);
-    }else{
-        ui->pushButton_14->setEnabled(false);
-    }
+    // ui->can_frame->setEnabled(true);
+    // ui->zero_check_frame_2->setEnabled(true);
+    // if(!(ui -> Serial_line -> text().isEmpty())){
+        // ui->pushButton_14->setEnabled(true);
+    // }else{
+        // ui->pushButton_14->setEnabled(false);
+    // }
 
-    ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+    // ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
 }
 
 
@@ -788,25 +814,25 @@ void MainWindow::on_LED_NOK_clicked()
 {
     DialogLED* myDialog = new DialogLED(this);
     myDialog->show();
-    ui->zero_check_frame_2->setEnabled(true);
-    ui->can_frame->setEnabled(true);
+    // ui->zero_check_frame_2->setEnabled(true);
+    // ui->can_frame->setEnabled(true);
 
-    if(!(ui -> Serial_line -> text().isEmpty())){
-        ui->pushButton_14->setEnabled(true);
-    }else{
-        ui->pushButton_14->setEnabled(false);
-    }
+    // if(!(ui -> Serial_line -> text().isEmpty())){
+    //     ui->pushButton_14->setEnabled(true);
+    // }else{
+    //     ui->pushButton_14->setEnabled(false);
+    // }
 
     //  ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
     connect(myDialog, &DialogLED::triggerLEDs, this, &MainWindow::onTriggerLED);
 
     if(myDialog->exec() == QDialog::Accepted){
         if(storage::areAllLEDsOK()){
-            ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
-            ui->can_frame->setEnabled(true);
-            ui->pushButton_14->setEnabled(true);
+            // ui->led_check_frame->setStyleSheet("background-color: rgb(0,200,0)");
+            // ui->can_frame->setEnabled(true);
+            // ui->pushButton_14->setEnabled(true);
         }else {
-            ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
+            // ui->led_check_frame->setStyleSheet("background-color: rgb(200,0,0)");
 
         }
 
@@ -827,13 +853,13 @@ void MainWindow::on_pushButton_3_clicked()
 
 void MainWindow::on_LED_OK_2_clicked()
 {
-    ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");
+    // ui->can_frame->setStyleSheet("background-color: rgb(0,200,0)");
 }
 
 
 void MainWindow::on_LED_NOK_2_clicked()
 {
-    ui->can_frame->setStyleSheet("background-color: rgb(200,0,0)");
+    // ui->can_frame->setStyleSheet("background-color: rgb(200,0,0)");
 }
 
 
@@ -891,13 +917,13 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
     //QMessageBox::information(this, "Report status", "Report created!");
 
-    storage::setNFCDesc(ui->nfc_textEdit->toPlainText().toStdString());
-    storage::setHALDesc(ui->hal_textEdit->toPlainText().toStdString());
-    storage::setZERODesc(ui->zero_textEdit->toPlainText().toStdString());
-    storage::setTEMPDesc(ui->zero_textEdit_2->toPlainText().toStdString());
-    storage::setSERIAL(ui->Serial_line->text().toStdString());
-    // storage::setDateTime(ui->dateTimeEdit->dateTime());
-    storage::setEmployee(ui->comboBox->currentText().toStdString());
+    // storage::setNFCDesc(ui->nfc_textEdit->toPlainText().toStdString());
+    // storage::setHALDesc(ui->hal_textEdit->toPlainText().toStdString());
+    // storage::setZERODesc(ui->zero_textEdit->toPlainText().toStdString());
+    // storage::setTEMPDesc(ui->zero_textEdit_2->toPlainText().toStdString());
+    // storage::setSERIAL(ui->Serial_line->text().toStdString());
+    // // storage::setDateTime(ui->dateTimeEdit->dateTime());
+    // storage::setEmployee(ui->comboBox->currentText().toStdString());
     storage::setNFCStatus(m_NFC_status);
     storage::setHALStatus(m_HAL_status);
     storage::setZEROStatus(m_ZERO_status);
@@ -1036,25 +1062,25 @@ void MainWindow::on_pushButton_14_clicked() // REPORT BUTTON
 
     if(storage::getMultipleFileDialogStatus() == 3 || storage::getMultipleFileDialogStatus() == 2 || storage::getMultipleFileDialogStatus() == 0){
         //Here we cleanup if its 2 3 or 0
-        ui->NFC_status->setText("X");
-        ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
-        ui->buttons_check_frame->setStyleSheet("");
-        ui->nfc_check_frame->setStyleSheet("");
-        ui->hal_check_frame->setStyleSheet("");
-        ui->zero_check_frame->setStyleSheet("");
-        ui->zero_check_frame_2->setStyleSheet("");
-        ui->led_check_frame->setStyleSheet("");
-        ui->can_frame->setStyleSheet("");
-        ui->nfc_check_frame->setEnabled(false);
-        ui->hal_check_frame->setEnabled(false);
-        ui->zero_check_frame->setEnabled(false);
-        ui->led_check_frame->setEnabled(false);
-        ui->can_frame->setEnabled(false);
-        ui->can_frame->setStyleSheet("");
-        ui -> pushButton_14 -> setEnabled(false);
-        ui->zero_check_frame_2->setEnabled(false);
-        ui -> pushButton_14 -> setEnabled(false);
-        ui->zero_textEdit_2->setVisible(false);
+        // ui->NFC_status->setText("X");
+        //ui->nfc_frame_indi->setStyleSheet("background-color: rgb(0,0,200)");
+        // ui->buttons_check_frame->setStyleSheet("");
+        // ui->nfc_check_frame->setStyleSheet("");
+        // ui->hal_check_frame->setStyleSheet("");
+        // ui->zero_check_frame->setStyleSheet("");
+        // ui->zero_check_frame_2->setStyleSheet("");
+        // ui->led_check_frame->setStyleSheet("");
+        // ui->can_frame->setStyleSheet("");
+        // ui->nfc_check_frame->setEnabled(false);
+        // ui->hal_check_frame->setEnabled(false);
+        // ui->zero_check_frame->setEnabled(false);
+        // ui->led_check_frame->setEnabled(false);
+        // ui->can_frame->setEnabled(false);
+        // ui->can_frame->setStyleSheet("");
+        // ui -> pushButton_14 -> setEnabled(false);
+        // ui->zero_check_frame_2->setEnabled(false);
+        // ui -> pushButton_14 -> setEnabled(false);
+        // ui->zero_textEdit_2->setVisible(false);
 
 
         QString filenameChosen;
@@ -1222,10 +1248,10 @@ void MainWindow::on_pushButton_clicked() //upload test FW
     m_processSideMount->setProgram(programmerPath);
     m_processSideMount->setArguments(arguments);
     m_processSideMount->start();
-    ui->pushButton->setEnabled(false);
-    ui->pushButton_2->setEnabled(false);
-    ui -> status_label -> setStyleSheet("background-color: rgb(255,255,0)");
-    ui -> status_label -> setText("Uploading sidemount firmware");
+    // ui->pushButton->setEnabled(false);
+    // ui->pushButton_2->setEnabled(false);
+    // ui -> status_label -> setStyleSheet("background-color: rgb(255,255,0)");
+    // ui -> status_label -> setText("Uploading sidemount firmware");
 
     QObject::connect(m_processSideMount, &QProcess::readyReadStandardOutput, [&]() {
         QByteArray output = m_processSideMount->readAllStandardOutput();
@@ -1237,10 +1263,10 @@ void MainWindow::on_pushButton_clicked() //upload test FW
 
 
     connect(m_processSideMount, &QProcess::finished, this, [&](){
-        ui->pushButton->setEnabled(true);
-        ui->pushButton_2->setEnabled(true);
-        ui -> status_label -> setStyleSheet("background-color: rgb(0,200,0)");
-        ui->status_label->setText("Uploaded sidemount firmware");
+        // ui->pushButton->setEnabled(true);
+        // ui->pushButton_2->setEnabled(true);
+        // ui -> status_label -> setStyleSheet("background-color: rgb(0,200,0)");
+        // ui->status_label->setText("Uploaded sidemount firmware");
         // m_processOutput = m_processSideMount->readAllStandardOutput();
         qDebug()<<"______START_OF_STRING___________";
         qDebug()<<m_processOutput;
@@ -1249,8 +1275,8 @@ void MainWindow::on_pushButton_clicked() //upload test FW
             qDebug()<<"Error detected this is the error:";
             QString error;
             error= m_processOutput.mid(m_processOutput.indexOf("Error:")+6,35); // sending error, try up to \n
-            ui -> status_label -> setStyleSheet("background-color: rgb(200,0,0)");
-            ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
+            // ui -> status_label -> setStyleSheet("background-color: rgb(200,0,0)");
+            // ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
         }
         //outp=QString::fromUtf8(output);
         //qDebug()<<outp;
@@ -1282,10 +1308,10 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
     m_processBootLoader->setProgram(programmerPath);
     m_processBootLoader->setArguments(arguments);
     m_processBootLoader->start();
-    ui->pushButton->setEnabled(false);
-    ui->pushButton_2->setEnabled(false);
-    ui -> status_label -> setStyleSheet("background-color: rgb(255,255,0)");
-    ui->status_label->setText("Uploading bootloader");
+    // ui->pushButton->setEnabled(false);
+    // ui->pushButton_2->setEnabled(false);
+    // ui -> status_label -> setStyleSheet("background-color: rgb(255,255,0)");
+    // ui->status_label->setText("Uploading bootloader");
 
 
     QObject::connect(m_processBootLoader, &QProcess::readyReadStandardOutput, [&]() {
@@ -1298,16 +1324,16 @@ void MainWindow::on_pushButton_2_clicked() //upload bootloader
 
 
     connect(m_processBootLoader, &QProcess::finished, this, [&](){
-        ui->pushButton->setEnabled(true);
-        ui->pushButton_2->setEnabled(true);
-        ui->status_label->setText("Uploaded bootloader");
-        ui -> status_label -> setStyleSheet("background-color: rgb(0,200,0)");
+        // ui->pushButton->setEnabled(true);
+        // ui->pushButton_2->setEnabled(true);
+        // ui->status_label->setText("Uploaded bootloader");
+        // ui -> status_label -> setStyleSheet("background-color: rgb(0,200,0)");
         if(m_processOutput.contains("Error:")){
             qDebug()<<"Error detected this is the error:";
             QString error;
             error= m_processOutput.mid(m_processOutput.indexOf("Error:")+6,35); // sending error, try up to \n
-            ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
-            ui -> status_label -> setStyleSheet("background-color: rgb(200,0,0)");
+            // ui-> status_label->setText("Error in uploading: " + error); // do the same for bootloader
+            // ui -> status_label -> setStyleSheet("background-color: rgb(200,0,0)");
         }else {
 
 
@@ -1351,8 +1377,8 @@ void MainWindow::on_actionSettings_changed()
 void MainWindow::on_ZERO_OK_2_clicked()
 {
     m_TEMP_status = true;
-    ui->zero_check_frame_2->setStyleSheet("background-color: rgb(0,200,0)");
-    ui->zero_textEdit_2->setVisible(false);
+    // ui->zero_check_frame_2->setStyleSheet("background-color: rgb(0,200,0)");
+    // ui->zero_textEdit_2->setVisible(false);
     //ui->led_check_frame->setEnabled(true);
 }
 
@@ -1360,11 +1386,11 @@ void MainWindow::on_ZERO_OK_2_clicked()
 void MainWindow::on_ZERO_NOK_2_clicked()
 {
     m_TEMP_status = false;
-    ui->zero_check_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
+    // ui->zero_check_frame_2->setStyleSheet("background-color: rgb(200,0,0)");
 
 
 
-    ui->zero_textEdit_2->setVisible(true);
+    // ui->zero_textEdit_2->setVisible(true);
 }
 
 int MainWindow::findClosestTemp(double target)
@@ -1403,13 +1429,13 @@ void MainWindow::on_Serial_line_textEdited(const QString &arg1)
     m_currentSN = arg1;
     qDebug()<<m_currentSN;
     if(m_currentSN.isEmpty()){
-        ui->pushButton_14->setEnabled(false);
-        ui->label_3->setVisible(true);
+        // ui->pushButton_14->setEnabled(false);
+        // ui->label_3->setVisible(true);
     }else {
-        if(ui -> zero_check_frame -> isEnabled()){ //Only if Report is ready to be reported
-            ui->pushButton_14->setEnabled(true);
-        }
-        ui->label_3->setVisible(false);
+        // if(ui -> zero_check_frame -> isEnabled()){ //Only if Report is ready to be reported
+        //     ui->pushButton_14->setEnabled(true);
+        // }
+        // ui->label_3->setVisible(false);
     }
 }
 
@@ -1423,24 +1449,36 @@ void MainWindow::on_Serial_line_textChanged(const QString &arg1)
 void MainWindow::on_pushButton_4_clicked()
 {
 
-    ui->NFC_status->setText("X");
-    ui->nfc_frame->setStyleSheet("background-color: rgb(0,0,200)");
-    ui->buttons_check_frame->setStyleSheet("");
-    ui->nfc_check_frame->setStyleSheet("");
-    ui->hal_check_frame->setStyleSheet("");
-    ui->zero_check_frame->setStyleSheet("");
-    ui->zero_check_frame_2->setStyleSheet("");
-    ui->led_check_frame->setStyleSheet("");
-    ui->can_frame->setStyleSheet("");
-    ui->nfc_check_frame->setEnabled(false);
-    ui->hal_check_frame->setEnabled(false);
-    ui->zero_check_frame->setEnabled(false);
-    ui->led_check_frame->setEnabled(false);
-    ui->can_frame->setEnabled(false);
-    ui->can_frame->setStyleSheet("");
-    ui->zero_check_frame_2->setEnabled(false);
-    ui -> pushButton_14 -> setEnabled(false);
-    ui->zero_textEdit_2->setVisible(false);
+    //ui->NFC_status->setText("X");
+    //ui->nfc_frame_indi->setStyleSheet("background-color: rgb(0,0,200)");
+    // ui->buttons_check_frame->setStyleSheet("");
+    // ui->nfc_check_frame->setStyleSheet("");
+    // ui->hal_check_frame->setStyleSheet("");
+    // ui->zero_check_frame->setStyleSheet("");
+    // ui->zero_check_frame_2->setStyleSheet("");
+    // ui->led_check_frame->setStyleSheet("");
+    // ui->can_frame->setStyleSheet("");
+    // ui->nfc_check_frame->setEnabled(false);
+    // ui->hal_check_frame->setEnabled(false);
+    // ui->zero_check_frame->setEnabled(false);
+    // ui->led_check_frame->setEnabled(false);
+    // ui->can_frame->setEnabled(false);
+    // ui->can_frame->setStyleSheet("");
+    // ui->zero_check_frame_2->setEnabled(false);
+    // ui -> pushButton_14 -> setEnabled(false);
+    // ui->zero_textEdit_2->setVisible(false);
+
+}
+
+
+void MainWindow::on_comboBox_activated(int index)
+{
+    closeSerialPort();
+
+    m_ArduinoPort = (ui -> comboBox -> currentText()).section(' ', 0, 0);
+
+    openSerialPort();
+
 
 }
 

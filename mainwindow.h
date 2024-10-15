@@ -89,6 +89,8 @@ private slots:
 
     void on_pushButton_4_clicked();
 
+    void on_comboBox_activated(int index);
+
 private:
     QString m_currentSN{""};
     int findClosestTemp(double target);
