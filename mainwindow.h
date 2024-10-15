@@ -14,6 +14,7 @@
 #include <QtWidgets>
 #include <QGraphicsEffect>
 #include <QTimer>
+#include <QElapsedTimer>
 #include <QDir>
 #include "report.h"
 #include "settingsdialog.h"
@@ -47,6 +48,8 @@ public slots:
     void emitConstantSignal();
 
 private slots:
+
+    void checkDataAva();
 
     void readData();
     void openSerialPort();
@@ -91,7 +94,28 @@ private slots:
 
     void on_comboBox_activated(int index);
 
+    void on_setWarning_button_clicked();
+
 private:
+    qint64 statusMessageTime;
+    qint64 commandMessageTime;
+    qint64 magnetMessageTime;
+
+
+    qint64 dockTimer;
+    qint64 powerTimer;
+    qint64 NFCTimer;
+
+    qint64 responseTimer;
+    bool responseExpected;
+
+    qint64 clearResponseTimer;
+
+    bool dockErase;
+    bool powerErase;
+    bool NFCErase;
+
+    QElapsedTimer elapsedTimer;
     QString m_currentSN{""};
     int findClosestTemp(double target);
     QMap<int, double> lookupTable;
@@ -116,6 +140,7 @@ private:
     QString m_processOutput;
     Report *m_report;
     QTimer *m_timer;
+    QTimer *m_avaTimer;
 
 
 };

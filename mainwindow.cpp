@@ -39,6 +39,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     openSerialPort();
 
+    elapsedTimer.start();
+
+    m_avaTimer = new QTimer(this);
+
+    connect(m_avaTimer, &QTimer::timeout, this, &MainWindow::checkDataAva);
+
+    m_avaTimer -> start(500);
 
     connect(m_serial, &QSerialPort::readyRead, this, &MainWindow::readData);
     //Filling lookup table
@@ -230,6 +237,20 @@ MainWindow::MainWindow(QWidget *parent)
     storage::addLedData("LED10");
     storage::addButtonData("BUTTON1");
     storage::addButtonData("BUTTON2");
+
+    ui -> waiting_response -> setVisible(false);
+
+    ui -> raw_position -> setText("NA");
+    ui -> gear_value -> setText("NA");
+    ui -> zero_value -> setText("NA");
+
+    ui -> rawBytes_status -> setText("NA");
+    ui -> temperature_value -> setText("NA");
+
+    ui -> status_value -> setText("NA");
+    ui -> AGC_value -> setText("NA");
+    ui -> magnitude_value -> setText("NA");
+
     storage::setHALDesc("");
     storage::setZERODesc("");
     storage::setNFCDesc("");
@@ -336,12 +357,16 @@ void MainWindow::readData(){
 
         bool suc;
 
-        qDebug() << "\nSize of list: " << listOfValues.size() << "\n";
+        //qDebug() << "\nSize of list: " << listOfValues.size() << "\n";
         if(listOfValues.size()==9){
 
             unsigned int id = listOfValues.at(0).toUInt(&suc, 16);
 
             if(id == 0x18FF80FD){
+
+                //qDebug() << "\nWE got status msg\n";
+
+                statusMessageTime = elapsedTimer.elapsed();
 
                 //will prob implement a watchdog for this data
 
@@ -359,6 +384,10 @@ void MainWindow::readData(){
             }
 
             if(id == 0x0CFF81FD) {
+
+                commandMessageTime = elapsedTimer.elapsed();
+
+                //qDebug() << "\nWE GOT COMMAND MSG\n";
 
                 unsigned int position = listOfValues.at(3).toUInt(&suc, 16);
                 float CalcPosition = (float)position * 0.4;
@@ -405,6 +434,8 @@ void MainWindow::readData(){
 
             if(id == 0x444){
 
+                magnetMessageTime = elapsedTimer.elapsed();
+
                 unsigned int status = listOfValues.at(1).toUInt(&suc, 16);
 
                 //handle status here when defined
@@ -419,6 +450,54 @@ void MainWindow::readData(){
 
                 ui -> magnitude_value -> setText (QString::number(Magnitude));
 
+
+            }
+
+            if(id == 0x18FF82FD){
+
+                // qint64 dockTimer;
+                // qint64 powerTimer;
+                // qint64 NFCTimer;
+
+                unsigned int button_pressed = listOfValues.at(2).toUInt(&suc, 16);
+
+                if(button_pressed == 5 || button_pressed == 6){
+
+                    dockTimer = elapsedTimer.elapsed();
+                    ui -> dock_frame_indi -> setStyleSheet("background-color: rgb(0,200,0)");
+
+                }else if(button_pressed == 1 || button_pressed == 2){
+
+                    powerTimer = elapsedTimer.elapsed();
+                    ui -> station_frame_indi -> setStyleSheet("background-color: rgb(0,200,0)");
+
+                }
+
+                unsigned int nfc_approached = listOfValues.at(3).toUInt(&suc, 16);
+
+                if(nfc_approached == 1 || nfc_approached == 2 || nfc_approached == 3){
+
+                    NFCTimer = elapsedTimer.elapsed();
+                    ui -> nfc_frame_light -> setStyleSheet("background-color: rgb(0,200,0)");
+
+                }
+
+            }
+
+            bool sus;
+
+            if(id == 0x333){
+
+                if((listOfValues.at(1).toUInt(&sus, 16) == 0x02) && responseExpected == true){
+
+
+                    ui -> waiting_response -> setVisible(false);
+                    ui -> setWarning_button -> setStyleSheet("background-color: rgb(0,200,0)");
+                    ui -> setWarning_button -> setText("PASS");
+                    responseExpected = false;
+                    clearResponseTimer = elapsedTimer.elapsed();
+
+                }
 
             }
 
@@ -482,6 +561,74 @@ void MainWindow::handleConstantSignal()
 void MainWindow::emitConstantSignal()
 {
     emit constantSignal();
+
+}
+
+void MainWindow::checkDataAva()
+{
+
+    if((statusMessageTime + 3000) <= elapsedTimer.elapsed()){
+
+        ui -> rawBytes_status -> setText("NA");
+        ui -> temperature_value -> setText("NA");
+
+    }
+
+    if((commandMessageTime + 3000) <= elapsedTimer.elapsed()){
+
+        ui -> raw_position -> setText("NA");
+        ui -> gear_value -> setText("NA");
+        ui -> zero_value -> setText("NA");
+
+    }
+
+    if((magnetMessageTime + 3000) <= elapsedTimer.elapsed()){
+
+        ui -> status_value -> setText("NA");
+        ui -> AGC_value -> setText("NA");
+        ui -> magnitude_value -> setText("NA");
+
+    }
+
+    if((dockTimer + 3000) <= elapsedTimer.elapsed()){
+
+        ui -> dock_frame_indi -> setStyleSheet("background-color: rgb(200,0,0)");
+
+    }
+
+    if((powerTimer + 3000) <= elapsedTimer.elapsed()){
+
+        ui -> station_frame_indi -> setStyleSheet("background-color: rgb(200,0,0)");
+
+    }
+
+    if((NFCTimer + 3000) <= elapsedTimer.elapsed()){
+
+        ui -> nfc_frame_light -> setStyleSheet("background-color: rgb(200,0,0)");
+
+    }
+
+    if((clearResponseTimer + 3000) <= elapsedTimer.elapsed()){
+
+        ui -> setWarning_button -> setStyleSheet("");
+        ui -> setWarning_button -> setText("TEST COMMUNICATION");
+
+    }
+
+    if((responseTimer + 2000) <= elapsedTimer.elapsed()){
+
+        if(responseExpected){
+
+            ui -> setWarning_button -> setStyleSheet("background-color: rgb(200,0,0)");
+            ui -> setWarning_button -> setText("FAILED");
+            ui -> waiting_response -> setVisible(false);
+            responseExpected = false;
+            clearResponseTimer = elapsedTimer.elapsed();
+
+        }
+
+    }
+
 
 }
 
@@ -1288,6 +1435,22 @@ void MainWindow::on_comboBox_activated(int index)
 
     openSerialPort();
 
+
+}
+
+
+void MainWindow::on_setWarning_button_clicked()
+{
+
+    ui -> waiting_response -> setVisible(true);
+
+    QString testS="<LED>";
+    writeData(testS.toUtf8());
+
+    responseTimer = elapsedTimer.elapsed();
+    responseExpected = true;
+
+    //Handle that we expect a response with a timer
 
 }
 
